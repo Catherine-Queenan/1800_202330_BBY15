@@ -8,7 +8,7 @@ This browser based web application to ...
 List team members and/or short bio's here... 
 * My name is Catherine, and as a professional in the dog industry I am excited for this project to come to fruition!
 * My name is Calvin! Excited to be here!
-* Hi, my name is Joyce! I'm excited to work the project as a team.
+* My name is Joyce! I'm excited to work the project as a team.
 	
 ## 3. Technologies and Resources Used
 List technologies (with version numbers), API's, icons, fonts, images, media or data sources, and other resources that were used.
