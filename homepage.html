@@ -5,6 +5,14 @@
     <title>Neighbourhood Bark - Home page</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script> 
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script> 
+    <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>  
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
+
     <link rel="stylesheet" href="/styles/hp-style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
 </head>
@@ -12,13 +20,12 @@
 <body>
     <div class="container">
         <header class="header">
-            <img src="/images/Neighbourhood Bark No Text.jpg" width="80" height="80">
+            <img id="hp-logo" src="/images/Neighbourhood Bark No Text.jpg">
             <p>Neighbourhood Bark</p>
         </header>
         <div id="user-name">
             <div class="user">
-                <a href="#"><img src="/images/trainerIcon.png"
-                    width="70" height="70"></a>
+                <a href="#"><img src="/images/trainerIcon.png" width="70" height="70"></a>
                 <a href="#"><span id="name-goes-here"></span></a>
             </div>
         </div>
@@ -67,4 +74,10 @@
         </div>
 </body>
 
+
+<script src="./scripts/firebaseAPI_BBY15.js"></script>
+<script src="./scripts/authentication.js"></script>
+<script src="./scripts/homepage.js"></script>
+<!-- <script src="./scripts/skeleton.js"></script> -->
+<script src="./scripts/script.js"></script>
 </html>
