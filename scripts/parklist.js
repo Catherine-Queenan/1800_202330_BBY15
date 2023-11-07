@@ -27,9 +27,9 @@ function addPark(code, name, city, province, busyness, details, lat, lng) {
 function addMultipleParks() {
     // Example parks, you can add more or modify as needed
     const parksToAdd = [
-        { code: "BBY01", name: "Burnaby Lake Park Trail", city: "Burnaby", province: "BC", busyness: "low", details: "A lovely place for small pups", lat: 49.2467097082573, lng: -122.9187029619698 },
-        { code: "AM01", name: "Buntzen Lake Trail", city: "Anmore", province: "BC", busyness: "moderate", details: "Close to town, and relaxing", lat: 49.3399431028579, lng: -122.85908496766939 },
-        { code: "NV01", name: "Mount Seymour Trail", city: "North Vancouver", province: "BC", busyness: "crowd", details: "Amazing ski slope views", lat: 49.38847101455571, lng: -122.94092543551031 }
+        { code: "BBY01", name: "Burnaby Lake Park ", city: "Burnaby", province: "BC", busyness: "low", details: "A lovely place for small pups", lat: 49.2467097082573, lng: -122.9187029619698 },
+        { code: "AM01", name: "Buntzen Park", city: "Anmore", province: "BC", busyness: "moderate", details: "Close to town, and relaxing", lat: 49.3399431028579, lng: -122.85908496766939 },
+        { code: "NV01", name: "Mount Seymour Park", city: "North Vancouver", province: "BC", busyness: "crowd", details: "Amazing ski slope views", lat: 49.38847101455571, lng: -122.94092543551031 }
     ];
 
     parksToAdd.forEach((park) => {
@@ -52,11 +52,13 @@ function displayCardsDynamically(collection) {
                 var title = doc.data().name;       // get value of the "name" key
                 var details = doc.data().details;  // get value of the "details" key
                 var parkCode = doc.data().code;    //get unique ID to each park to be used for fetching right image
+                var parkCity = doc.data().city; //gets the length field
                 var docID = doc.id;
                 let newcard = cardTemplate.content.cloneNode(true); // Clone the HTML template to create a new card (newcard) that will be filled with Firestore data.
 
                 //update title and text and image
                 newcard.querySelector('.card-title').innerHTML = title;
+                newcard.querySelector('.card-city').innerHTML = parkCity;
                 newcard.querySelector('.card-text').innerHTML = details;
                 newcard.querySelector('.card-image').src = `./images/${parkCode}.jpg`; //Example: NV01.jpg
                 newcard.querySelector('a').href = "eachPark.html?docID="+docID;
