@@ -38,31 +38,10 @@
     <nav id="navbar"></nav>
       
     <div class="container">
-        <h1>Some popular parks</h1>
-        <!-- Here is the container for cards  -->
-        <div class="container">
-            <div id="parks-go-here" class="row row-cols-auto">
-            </div>
-        </div>
+        <h1><span id="parkName"> this park</span></h1>
+        <img class="park-img responsive" src="" />
+        <div id="details-go-here"></div>
     </div>
-
-    <!-- Templates for general use, not displayed -->
-    <template id="parkCardTemplate">
-        <div class="card py-2 mx-2" style="width: 18rem">
-            <img class="card-image card-img-top" src=" ..." alt="..." />
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-length">placeholder</p>
-                <br />
-                <p class="card-text">
-                    Some quick example text to build on the card title and make up the
-                    bulk of the card's content.
-                </p>
-                <a class="btn btn-primary card-href">Read more ...</a>
-            </div>
-        </div>
-    </template>
-
 
     <footer id="footer"></footer>
     <!---------------------------------------------->
@@ -72,7 +51,7 @@
     <!-- Link to scripts of your own -->
     <script src="./scripts/firebaseAPI_BBY15.js"></script>
     <script src="./scripts/skeleton.js"></script>
-    <script src="./scripts/parklist.js"></script>
+    <script src="./scripts/eachPark.js"></script>
     <!-- <script src="./scripts/script.js"></script> -->
 
 </body>
