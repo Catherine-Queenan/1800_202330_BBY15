@@ -2,6 +2,10 @@ body {
     background-color:#f2efe7;
 }
 
+a[href] {
+    text-decoration: none;
+}
+
 .btn-primary {
     color:#45503b;
     background-color:#fd5821;
@@ -22,4 +26,48 @@ body {
     color: #45503b;
     background-color: #f5c78e;
     border-color:#f5c78e;
+}
+
+.navbar {
+    color:#f5c78e;
+    background-color:#45503b;
+}
+
+#navLogo { 
+    height: 70px;
+    width: auto;
+    max-width: 100%;
+}
+
+.navbar-brand {
+    color:#c9d5b5;
+}
+
+.navbar-brand:hover {
+    color:#fd5821;
+}
+
+.navbar-brand:active {
+    color:#f5c78e;
+}
+
+.navbar-collapse {
+    list-style-type: none;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    margin-left: 35px;
+}
+
+#name-goes-here { 
+    font-size: large;
+    margin-left: 10px;
+}
+
+#email-goes-here { 
+    font-size: large;
+    margin-left: 10px;
 }
