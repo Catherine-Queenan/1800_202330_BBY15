@@ -80,7 +80,7 @@ header p {
 }
 
 #pup-prof {
-    grid-area: nav2;
+    grid-area: nav5;
 }
 
 #map {
@@ -92,11 +92,11 @@ header p {
 }
 
 #settings {
-    grid-area: nav5;
+    grid-area: nav6;
 }
 
 #help {
-    grid-area: nav6;
+    grid-area: nav2;
 }
 
 #search {
