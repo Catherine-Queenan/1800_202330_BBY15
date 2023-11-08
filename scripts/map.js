@@ -15,7 +15,7 @@ function showMap() {
     map.on('load', () => {
       // Defines map pin icon for events
       map.loadImage(
-        'https://cdn.iconscout.com/icon/free/png-256/pin-locate-marker-location-navigation-16-28668.png',
+        'https://cdn-icons-png.flaticon.com/128/3564/3564555.png',
         (error, image) => {
           if (error) throw error;
   
@@ -68,7 +68,7 @@ function showMap() {
       'source': 'places',
       'layout': {
         'icon-image': 'eventpin', // Pin Icon
-        'icon-size': 0.1, // Pin Size
+        'icon-size': 0.30, // Pin Size
         'icon-allow-overlap': true // Allows icons to overlap
       }
     });
@@ -105,7 +105,7 @@ function showMap() {
 
 // Add the image to the map style.
 map.loadImage(
-'https://cdn-icons-png.flaticon.com/512/61/61168.png',
+'https://cdn-icons-png.flaticon.com/128/2950/2950966.png',
 (error, image) => {
   if (error) throw error;
 
@@ -141,7 +141,7 @@ map.loadImage(
         'source': 'userLocation',
         'layout': {
           'icon-image': 'userpin', // Pin Icon
-          'icon-size': 0.05, // Pin Size
+          'icon-size': 0.30, // Pin Size
           'icon-allow-overlap': true // Allows icons to overlap
         }
       });
