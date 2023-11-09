@@ -6,6 +6,12 @@ a[href] {
     text-decoration: none;
 }
 
+.navbar-toggler {
+    color:#c9d5b5;
+    border-color:#c9d5b5;
+    border-width: 3px;;
+}
+
 .btn-primary {
     color:#45503b;
     background-color:#fd5821;
