@@ -1,9 +1,11 @@
 body {
     background-color:#f2efe7;
+    font-family: 'Barlow', sans-serif;
 }
 
 a[href] {
     text-decoration: none;
+    font-family: 'Quicksand', sans-serif;
 }
 
 .navbar-toggler {
