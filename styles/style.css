@@ -89,3 +89,40 @@ a[href] {
     font-size: large;
     margin-left: 10px;
 }
+
+#search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 65%;
+    min-width: 700px;
+    padding-right: 1rem;
+    background-color: white;
+    border-radius: 30px;
+}
+
+.search-box input {
+    padding: 1.5rem;
+    width: 80%;
+    font-size: 1rem;
+    font-weight: 500;
+    border: 0;
+    outline: 0;
+}
+
+.search-box i {
+    font-size: 1.3rem;
+    cursor: pointer;
+}
+
+.search-box input::placeholder {
+    font-size: 1rem;
+    font-weight: 500;
+}
