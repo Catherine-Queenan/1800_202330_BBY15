@@ -135,7 +135,7 @@ function showMap() {
 
     // Add the image to the map style.
     map.loadImage(
-      'https://cdn-icons-png.flaticon.com/128/2950/2950966.png',
+      'https://cdn-icons-png.flaticon.com/128/1643/1643664.png',
       (error, image) => {
         if (error) throw error;
 
@@ -171,7 +171,7 @@ function showMap() {
               'source': 'userLocation',
               'layout': {
                 'icon-image': 'userpin', // Pin Icon
-                'icon-size': 0.30, // Pin Size
+                'icon-size': 0.22, // Pin Size
                 'icon-allow-overlap': true // Allows icons to overlap
               }
             });
