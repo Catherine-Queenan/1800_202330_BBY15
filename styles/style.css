@@ -1,3 +1,7 @@
+* {
+    font-size: 1em;
+}
+
 body {
     background-color:#f2efe7;
     font-family: 'Barlow', sans-serif;
@@ -6,6 +10,11 @@ body {
 a[href] {
     text-decoration: none;
     font-family: 'Quicksand', sans-serif;
+}
+
+.nav-link {
+    color:#f5c78e;
+    font-weight: bolder;
 }
 
 .navbar-toggler {
@@ -34,6 +43,7 @@ a[href] {
     color: #45503b;
     background-color: #f5c78e;
     border-color:#f5c78e;
+    font-weight: bolder;
 }
 
 .navbar {

@@ -11,7 +11,9 @@ body {
 
 a[href] {
     text-decoration: none;
-    color: black;
+    color:#fd5821;
+    font-weight: 500;
+    font-size: 1.5em;
 }
 
 .container {
