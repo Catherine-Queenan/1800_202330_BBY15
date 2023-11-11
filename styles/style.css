@@ -5,11 +5,23 @@
 body {
     background-color:#f2efe7;
     font-family: 'Barlow', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+footer {
+    margin-top: auto;
 }
 
 a[href] {
     text-decoration: none;
     font-family: 'Quicksand', sans-serif;
+}
+
+.bg-light {
+    color:#45503b;
+    letter-spacing: 0.2em;
 }
 
 .nav-link {

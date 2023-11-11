@@ -1,3 +1,5 @@
+
+// Function to retrieve and print the name from the user, if they are signed in.
 function getNameFromAuth() {
     firebase.auth().onAuthStateChanged(user => {
         // Check if a user is signed in:
@@ -7,8 +9,7 @@ function getNameFromAuth() {
             console.log(user.displayName);  //print the user name in the browser console
             userName = user.displayName;
 
-            //method #1:  insert with JS
-            // document.getElementById("name-goes-here").innerText = userName;
+            
             //method #3:  insert using querySelector
             document.querySelector("#name-goes-here").innerText = userName;
 
