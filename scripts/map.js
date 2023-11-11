@@ -8,15 +8,20 @@ function showMap() {
     zoom: 8 // Starting zoom
   });
 
-
   // Create a function to add markers to the map 
   function addParkMarker(park) {
-    new mapboxgl.Marker({
+    const popupContent = `
+    <h4>${park.name}</h4>
+    <p>${park.details.substring(0, 150)}...</p>
+    <a href="eachPark.html?docID=${park.code}" class="popup-readmore">Read More</a>
+  `;
+
+    const marker = new mapboxgl.Marker({
       color: '#9c3b00',
-      scale: 0.5
+      scale: 0.6
     })
       .setLngLat([park.lng, park.lat])
-      .setPopup(new mapboxgl.Popup().setHTML(`<h4>${park.name}</h4><p>${park.details}</p>`))
+      .setPopup(new mapboxgl.Popup().setHTML(popupContent))
       .addTo(map);
   }
 
@@ -42,6 +47,19 @@ function showMap() {
 
     // Add user controls to map
     map.addControl(new mapboxgl.NavigationControl());
+
+    // Add geolocate control to the map
+    map.addControl(
+      new mapboxgl.GeolocateControl({
+        positionOptions: {
+          enableHighAccuracy: true
+        },
+        // When active the map will receive updates to the device's location as it changes
+        trackUserLocation: true,
+        // Draw an arrow next to the location dot to indicate which direction the device is heading
+        showUserHeading: true
+      })
+    )
 
     // Defines map pin icon for events
     map.loadImage(
@@ -72,7 +90,7 @@ function showMap() {
             features.push({
               'type': 'Feature',
               'properties': {
-                'description': `<strong>${event_name}</strong><p>${preview}</p> <br> <a href="/hike.html?id=${doc.id}" target="_blank" title="Opens in a new window">Read more</a>`
+                'description': `<strong>${event_name}</strong><p>${preview}</p> <br> <a href="/park.html?id=${doc.id}" target="_blank" title="Opens in a new window">Read more</a>`
               },
               'geometry': {
                 'type': 'Point',
@@ -207,3 +225,4 @@ function showMap() {
 
 // Call the function to display the map with the user's location and event pins
 showMap();
+
