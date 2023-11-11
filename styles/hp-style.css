@@ -8,13 +8,6 @@ body {
     
 }
 
-a[href] {
-    text-decoration: none;
-    color:#fd5821;
-    font-weight: 500;
-    font-size: 1.5em;
-}
-
 .containerhp {
     display: grid;
     width: 100%;
@@ -35,18 +28,12 @@ a[href] {
     border-radius: 10%;
 }
 
-header {
+.header {
     grid-area: header;
     background-color: #45503b;
     display: flex;
     align-items: center;
     justify-content: flex-start;
-}
-
-header p {
-    font-size: xx-large;
-    color: #f5c78e;
-    margin-left: 30px;
 }
 
 #hp-logo { 
