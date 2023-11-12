@@ -1,63 +1,65 @@
+function addDogProfiles() {
+    var name = document.getElementById("name").value;
+    var breed = document.getElementById("breed").value;
+    var gender = document.getElementById("gender").value;
+    var age = document.getElementById("age").value;
+    var status = document.getElementById("status").value;
+    var about = document.getElementById("about").value;
+    var birthday = document.getElementById("birthday").value;
+    var userId = firebase.auth().currentUser.uid;
 
-// saving user's pup
-// var currentPup;               //points to the document of the user who is logged in
-// function populatePupInfo() {
-//             firebase.auth().onAuthStateChanged(user => {
-//                 // Check if user is signed in:
-//                 if (user) {
+    // Get a reference to the dog-profiles collection
+    const dogProfilesCollection = db.collection("dog-profiles");
 
-//                     //go to the correct user document by referencing to the user uid
-//                     currentPup = db.collection("pup-profiles").doc(user.uid)
-//                     //get the document for current user.
-//                     currentPup.get()
-//                         .then(userDoc => {
-//                             //get the data fields of the user
-//                             var pupName = userDoc.data().name;
-//                             var pupBreed = userDoc.data().breed;                           
+    // Check if the dog-profiles collection exists
+    dogProfilesCollection.get()
+        .then(function (querySnapshot) {
+            if (querySnapshot.empty) {
+                // Create the dog-profiles collection if it doesn't exist
+                db.collection("dog-profiles").doc('placeholder').set({}); // Use 'set' to create the collection
+            }
 
-//                             //if the data fields are not empty, then write them in to the form.
-//                             if (pupName != null) {
-//                                 document.getElementById("nameInput").value = pupNameName;
-//                             }
-//                             if (pupBreed != null) {
-//                                 document.getElementById("breedInput").value = pupBreed;
-//                             }
-//                         })
-//                 } else {
-//                     // No user is signed in.
-//                     console.log ("No user is signed in");
-//                 }
-//             });
-//         }
+            // add user details to database
+            dogProfilesCollection.add({
+                name: name,
+                breed: breed,
+                gender: gender,
+                age: age,
+                status: status, 
+                about: about, 
+                birthday: birthday,
+                ownerId: userId
+            }).then(function (docRef) {
+                console.log("Dogs details saved successfully with ID: ", docRef.id);
 
-// //call the function to run it 
-// populatePupInfo();
+                // add dog profile ID to user's document
+                db.collection("users").doc(userId).update({
+                    dogs: firebase.firestore.FieldValue.arrayUnion(docRef.id)
+                })
+                    .then(function () {
+                        console.log("Dog profile ID added to user's document successfully");
+                    })
+                    .catch(function (error) {
+                        console.error("Error adding dog profile ID to user's document: ", error);
+                        alert("Error adding dog profile ID to user's document!");
+                    });
 
-function editPupInfo() {
-    //Enable the form fields
-    document.getElementById('pupInfoFields').disabled = false;
-}
-
-function savePupInfo() {
-    //enter code here
-    //a) get user entered values
-    pupName = document.getElementById('nameInput').value;       //get the value of the field with id="nameInput"
-    pupBreed = document.getElementById('breedInput').value;     //get the value of the field with id="breedInput"
-    //b) update pup's document in Firestore
-    var user = firebase.auth().currentUser;
-    if (user) {
-        var currentUser = db.collection("users").doc(user.uid);
-        var userID = user.uid;
-
-        // Get the document for the current user.
-        db.collection("pup-profiles").add({
-            name: pupName,
-            breed: pupBreed
+                    // clear form input fields
+                    document.getElementById("name").value = "";
+                    document.getElementById("breed").value = "";
+                    document.getElementById("gender").value = "";
+                    document.getElementById("age").value = "";
+                    document.getElementById("status").value = "";
+                    document.getElementById("about").value = "";
+                    document.getElementById("birthday").value = "";
+                })
+                .catch(function (error) {
+                    console.error("Error saving dog profiles: ", error);
+                    alert("Error saving dog profile!");
+                });
         })
-    .then(() => {
-        console.log("Document successfully updated!");
-    })
-    //c) disable edit 
-    document.getElementById('pupInfoFields').disabled = true;
-}
-}
+        .catch(function (error) {
+            console.error("Error checking dog-profiles collection: ", error);
+            alert("Error checking dog-profiles collection!");
+        });
+    }

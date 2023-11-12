@@ -14,7 +14,7 @@ function getNameFromAuth() {
             document.querySelector("#name-goes-here").innerText = userName;
 
         } else {
-            // No user is signed in.
+            console.log('No such document!');
         }
     });
 }
