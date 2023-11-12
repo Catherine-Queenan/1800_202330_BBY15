@@ -1,5 +1,14 @@
 
 /* Here's the new one with bootstrap */
+body {
+    background-image: linear-gradient(to bottom, #f2efe7, #f2efe7c7, #f2efe700), url(/images/background_dogs.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    font-weight: 300;
+}
+
 .section-lg-bottom {
     padding-bottom: 150px;
 } 
