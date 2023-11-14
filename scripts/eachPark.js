@@ -60,7 +60,7 @@ function savePost() {
             })
         } else {
             // No user is signed in.
-                          console.log("Error, no user signed in");
+            console.log("Error, no user signed in");
         }
     });
 }
