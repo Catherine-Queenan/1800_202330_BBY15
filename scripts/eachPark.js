@@ -43,7 +43,6 @@ function listenFileSelect() {
 listenFileSelect();
 
 function savePost() {
-    alert ("SAVE POST is triggered");
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             // User is signed in.
