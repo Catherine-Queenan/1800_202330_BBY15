@@ -26,7 +26,8 @@ a[href] {
     column-gap: 20px;
 }
 
-.user {
+.message {
+    font-family: 'Quicksand', sans-serif;
     grid-area: user2;
     display: flex;
     align-items: center;
@@ -38,4 +39,30 @@ a[href] {
     grid-area: nav2;
     /* display: flex; */
     /* align-items: center; */
+    width: 100vw;
+}
+
+.mdl-card {
+    background-color: #c9d5b5;
+}
+
+.firebaseui-card-header {
+    font-family: 'Quicksand', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* .mdl-button--raised.mdl-button--colored {
+    background-color: #c9d5b5;
+    background: #c9d5b5;
+} */
+
+.mdl-button.mdl-button--colored {
+    /* background-color: #c9d5b5; */
+    background: #45503b;
+}
+
+.firebaseui-textfield.mdl-textfield .firebaseui-label::after {
+    background-color: #45503b;
 }
