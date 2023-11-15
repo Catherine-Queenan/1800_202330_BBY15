@@ -51,6 +51,7 @@ function savePost() {
             db.collection("posts").add({
                 owner: user.uid,
                 description: desc,
+                parkID: parkName,
                 last_updated: firebase.firestore.FieldValue
                     .serverTimestamp() //current system time
             }).then(doc => {
@@ -148,11 +149,7 @@ function populateReviews() {
             console.log(reviews);
             reviews.forEach((doc) => {
                 var title = doc.data().title;
-                // var level = doc.data().level;
-                // var season = doc.data().season;
                 var description = doc.data().description;
-                // var flooded = doc.data().flooded;
-                // var scrambled = doc.data().scrambled;
                 var time = doc.data().timestamp.toDate();
                 var rating = doc.data().rating; // Get the rating value
                 console.log(rating)
@@ -164,10 +161,6 @@ function populateReviews() {
                 reviewCard.querySelector(".time").innerHTML = new Date(
                     time
                 ).toLocaleString();
-                // reviewCard.querySelector(".level").innerHTML = `Level: ${level}`;
-                // reviewCard.querySelector(".season").innerHTML = `Season: ${season}`;
-                // reviewCard.querySelector(".scrambled").innerHTML = `Scrambled: ${scrambled}`;
-                // reviewCard.querySelector(".flooded").innerHTML = `Flooded: ${flooded}`;
                 reviewCard.querySelector(".description").innerHTML = `Description: ${description}`;
 
                 // Populate the star rating based on the rating value

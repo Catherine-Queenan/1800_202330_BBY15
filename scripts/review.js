@@ -32,11 +32,7 @@ stars.forEach((star, index) => {
 function writeReview() {
     console.log("inside write review");
     let parkTitle = document.getElementById("title").value;
-    // let parkLevel = document.getElementById("level").value;
-    // let parkSeason = document.getElementById("season").value;
     let parkDescription = document.getElementById("description").value;
-    // let parkFlooded = document.querySelector('input[name="flooded"]:checked').value;
-    // let parkScrambled = document.querySelector('input[name="scrambled"]:checked').value;
 
     // Get the star rating
 		// Get all the elements with the class "star" and store them in the 'stars' variable
@@ -64,13 +60,10 @@ function writeReview() {
         // Get the document for the current user.
         db.collection("reviews").add({
             parkDocID: parkDocID,
+            user: currentUser,
             userID: userID,
             title: parkTitle,
-            // level: parkLevel,
-            // season: parkSeason,
             description: parkDescription,
-            // flooded: parkFlooded,
-            // scrambled: parkScrambled,
             rating: parkRating, // Include the rating in the review
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         }).then(() => {

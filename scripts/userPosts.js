@@ -30,16 +30,16 @@ showMyPosts();
 // from the post document extracted (name, description, image)
 //------------------------------------------------------------
 function displayMyPostCard(doc) {
-          var title = doc.data().name; // get value of the "name" key
           var desc = doc.data().description; //gets the length field
           var image = doc.data().image; //the field that contains the URL 
+          var parkID = doc.data().parkID; 
 
           //clone the new card
           let newcard = document.getElementById("postCardTemplate").content.cloneNode(true);
-          //populate with title, image
-          newcard.querySelector('.card-title').innerHTML = title;
+          //populate with image and caption
           newcard.querySelector('.card-image').src = image;
           newcard.querySelector('.card-description').innerHTML = desc;
+          newcard.querySelector('.parkID').innerHTML = parkID; //BUG HERE
           //append to the posts
           document.getElementById("myposts-go-here").append(newcard);
 }
