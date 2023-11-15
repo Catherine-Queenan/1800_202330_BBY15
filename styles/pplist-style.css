@@ -53,6 +53,11 @@ body {
     font-weight: bolder;
 }
 
+.draggable {
+    pointer-events: none;
+    /* Disable pointer events for draggable cards */
+}
+
 #yourPups {
     margin: auto;
     width: 100%;
