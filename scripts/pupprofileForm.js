@@ -47,8 +47,11 @@ function addDogProfiles() {
                     document.getElementById("about").value = "";
                     document.getElementById("birthday").value = "";
 
+                    // Create unique pupprofile URL
+                    var pupprofileUrl = 'eachPupprofile.html?id=' + docRef.id;
+
                     // Redirect to eachPupprofile.html
-                    window.location.href = 'eachPupprofile.html';
+                    window.location.href = pupprofileUrl;
                 }).catch(function (error) {
                     console.error("Error updating user document with dog profile ID: ", error);
                     alert("Error updating user document with dog profile ID!");
