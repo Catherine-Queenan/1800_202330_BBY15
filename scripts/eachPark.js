@@ -50,6 +50,7 @@ function savePost() {
             var desc = document.getElementById("description").value;
             db.collection("posts").add({
                 owner: user.uid,
+                name: user.displayName,
                 description: desc,
                 parkID: parkName,
                 last_updated: firebase.firestore.FieldValue

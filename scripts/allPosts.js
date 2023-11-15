@@ -24,7 +24,7 @@ showPosts();
 function displayPostCard(doc) {
        var desc = doc.data().description; //gets the length field
        var image = doc.data().image; //the field that contains the URL
-       var user = firebaseui.auth.currentUser;
+       var user = doc.data().name; // display name
 
 
        //clone the new card
