@@ -3,12 +3,14 @@
 // stand alone posts collection
 //------------------------------------------------
 function showPosts() {
+    console.log("I am in show post");
     db.collection("posts")
            //.orderBy(...)       //optional ordering
            //.limit(3)           //optional limit
            .get()
            .then(snap => {
                snap.forEach(doc => {
+                console.log(doc.data());
                    displayPostCard(doc);
                })
            })

@@ -66,3 +66,12 @@ body {
         display: none;
     }
 }
+
+.navbar-brand {
+    color:#c9d5b5;
+}
+
+.navbar-brand:hover {
+    color:#c9d5b5;
+    cursor: default;
+}
