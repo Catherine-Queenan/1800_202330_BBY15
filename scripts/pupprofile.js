@@ -16,35 +16,29 @@ function addDogProfiles() {
         .then(function (querySnapshot) {
             if (querySnapshot.empty) {
                 // Create the dog-profiles collection if it doesn't exist
-                db.collection("dog-profiles").doc('placeholder').set({}); // Use 'set' to create the collection
+                db.collection("dog-profiles").add({}); // Use 'set' to create the collection
             }
 
-            // add user details to database
+            // Add user details to the database
             dogProfilesCollection.add({
                 name: name,
                 breed: breed,
                 gender: gender,
                 age: age,
-                status: status, 
-                about: about, 
+                status: status,
+                about: about,
                 birthday: birthday,
                 ownerId: userId
             }).then(function (docRef) {
                 console.log("Dogs details saved successfully with ID: ", docRef.id);
 
-                // add dog profile ID to user's document
+                // Add dog profile ID to the user's document
                 db.collection("users").doc(userId).update({
                     dogs: firebase.firestore.FieldValue.arrayUnion(docRef.id)
-                })
-                    .then(function () {
-                        console.log("Dog profile ID added to user's document successfully");
-                    })
-                    .catch(function (error) {
-                        console.error("Error adding dog profile ID to user's document: ", error);
-                        alert("Error adding dog profile ID to user's document!");
-                    });
+                }).then(function () {
+                    console.log("Dog profile ID added to user's document successfully");
 
-                    // clear form input fields
+                    // Clear form input fields
                     document.getElementById("name").value = "";
                     document.getElementById("breed").value = "";
                     document.getElementById("gender").value = "";
@@ -52,14 +46,19 @@ function addDogProfiles() {
                     document.getElementById("status").value = "";
                     document.getElementById("about").value = "";
                     document.getElementById("birthday").value = "";
-                })
-                .catch(function (error) {
-                    console.error("Error saving dog profiles: ", error);
-                    alert("Error saving dog profile!");
+
+                    // Redirect to eachPupprofile.html
+                    window.location.href = 'eachPupprofile.html';
+                }).catch(function (error) {
+                    console.error("Error updating user document with dog profile ID: ", error);
+                    alert("Error updating user document with dog profile ID!");
                 });
-        })
-        .catch(function (error) {
+            }).catch(function (error) {
+                console.error("Error saving dog profiles: ", error);
+                alert("Error saving dog profile!");
+            });
+        }).catch(function (error) {
             console.error("Error checking dog-profiles collection: ", error);
             alert("Error checking dog-profiles collection!");
         });
-    }
+}
