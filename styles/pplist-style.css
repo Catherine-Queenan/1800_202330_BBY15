@@ -4,7 +4,7 @@
 }
 
 body {
-    background-color: #f9f9fa
+    background-color: #f2efe7;
 }
 
 .flex {
@@ -45,7 +45,7 @@ body {
 
 .card-block {
     padding: 1.25rem;
-    background-color: #fff !important
+    background-color: #c9d5b5 !important
 }
 
 .card-header span {

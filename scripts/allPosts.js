@@ -3,11 +3,11 @@
 // stand alone posts collection
 //------------------------------------------------
 function showPosts() {
-    let params = new URL(window.location.href); // Get the URL from the search bar
-    let parkID = params.searchParams.get("name");
+    // let params = new URL(window.location.href); // Attempt to link to specific park.
+    // let parkID = params.searchParams.get("name");
     // let timestamp = params.searchParams.get("last_updated");
     db.collection("posts")
-            .where("name", "==", parkID)
+            // .where("name", "==", parkID) Attempt to link to specific park.
             .get()
             .then(snap => {
                snap.forEach(doc => {
