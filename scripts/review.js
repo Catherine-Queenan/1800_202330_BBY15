@@ -74,3 +74,21 @@ function writeReview() {
         window.location.href = 'review.html';
     }
 }
+
+function saveReviewIDforUser(reviewDocID) {
+  firebase.auth().onAuthStateChanged(user => {
+        console.log("user id is: " + user.uid);
+        console.log("postdoc id is: " + reviewDocID);
+        db.collection("users").doc(user.uid).update({
+              myposts: firebase.firestore.FieldValue.arrayUnion(reviewDocID)
+        })
+        .then(() =>{
+              console.log("5. Saved to user's document!");
+                              alert ("Review is complete!");
+              //window.location.href = "showposts.html";
+         })
+         .catch((error) => {
+              console.error("Error writing document: ", error);
+         });
+  })
+}

@@ -43,3 +43,4 @@ function displayMyPostCard(doc) {
           //append to the posts
           document.getElementById("myposts-go-here").append(newcard);
 }
+
