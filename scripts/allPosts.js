@@ -3,12 +3,13 @@
 // stand alone posts collection
 //------------------------------------------------
 function showPosts() {
-    console.log("I am in show post");
+    let params = new URL(window.location.href); // Get the URL from the search bar
+    let parkID = params.searchParams.get("name");
+    // let timestamp = params.searchParams.get("last_updated");
     db.collection("posts")
-           //.orderBy(...)       //optional ordering
-           //.limit(3)           //optional limit
-           .get()
-           .then(snap => {
+            .where("name", "==", parkID)
+            .get()
+            .then(snap => {
                snap.forEach(doc => {
                 console.log(doc.data());
                    displayPostCard(doc);

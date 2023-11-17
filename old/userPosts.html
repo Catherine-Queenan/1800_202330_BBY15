@@ -38,24 +38,30 @@
 <body>
     <nav id="navbar"></nav>
 
-    <div class="user container mt-4">
-        <img src="https://cdn-icons-png.flaticon.com/128/9480/9480279.png" width="70" height="70">
-        <span id="name-goes-here" style="font-family:'Quicksand'"></span>
-    </div>
-    <div class="user container mt-4">
-        <img src="https://cdn-icons-png.flaticon.com/128/11117/11117306.png" width="70" height="auto">
-        <span id="email-goes-here"></span>
-    </div>
+    <nav class="container mt-4">
+        <button class="btn btn-outline-secondary" onclick="history.back()">Back</button>
+    </nav>
 
     <div class="container mt-4">
-        <nav>
-            <h1>View your adventures here!</h1>
-            <div class="form-group d-flex">
-                <a class="btn btn-outline-secondary" href="/userPosts.html">View Your Posts</a>
-            </div>
-        </nav>
+        <h1>My Posts</h1>
+        <div id="myposts-go-here" class="row row-cols-auto">
+        </div>
     </div>
-            
+
+
+
+<!-- Templates for general use, not displayed -->
+<!-- Has a "card-image", "card-title", and "card-description" -->
+    <template id="postCardTemplate">
+            <div class="card py-2 mx-2 bg-light" style="width: 10rem;">
+                <img class="card-image card-img-top" src=" ..." alt="...">
+                <div class="card-body">
+                    <p class="card-description">placeholder</p>
+                    <p class="parkID">placeholder</p>
+                </div>
+            </div>
+    </template>
+      
     <footer id="footer"></footer>
 
 
@@ -67,7 +73,7 @@
     <script src="./scripts/firebaseAPI_BBY15.js"></script>
     <script src="./scripts/skeleton.js"></script>
     <script src="./scripts/script.js"></script>
-    <script src="./scripts/accountSettings.js"></script>
+    <script src="./scripts/userPosts.js"></script>
 
 </body>
 

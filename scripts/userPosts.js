@@ -39,7 +39,7 @@ function displayMyPostCard(doc) {
           //populate with image and caption
           newcard.querySelector('.card-image').src = image;
           newcard.querySelector('.card-description').innerHTML = desc;
-          newcard.querySelector('.parkID').innerHTML = parkID; //BUG HERE
+          newcard.querySelector('.parkID').innerHTML = parkID;
           //append to the posts
           document.getElementById("myposts-go-here").append(newcard);
 }
