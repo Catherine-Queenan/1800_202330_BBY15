@@ -161,7 +161,7 @@ function populateReviews() {
                 reviewCard.querySelector(".time").innerHTML = new Date(
                     time
                 ).toLocaleString();
-                reviewCard.querySelector(".description").innerHTML = `Description: ${description}`;
+                reviewCard.querySelector(".description").innerHTML = description;
 
                 // Populate the star rating based on the rating value
 
