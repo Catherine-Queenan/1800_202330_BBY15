@@ -65,3 +65,36 @@ function addDogProfiles() {
             alert("Error checking dog-profiles collection!");
         });
 }
+
+document.querySelector('.pupprofile-img .file input').addEventListener('change', function () {
+    var img = document.querySelector('.pupprofile-img img');
+    img.src = URL.createObjectURL(this.files[0]);
+    img.onload = function () {
+        URL.revokeObjectURL(this.src);
+        updateImageDimensions(img);
+    };
+});
+
+function updateImageDimensions(img) {
+    var container = img.parentNode;
+    var containerWidth = container.offsetWidth;
+    var containerHeight = container.offsetHeight;
+
+    var imageRatio = img.naturalWidth / img.naturalHeight;
+    var containerRatio = containerWidth / containerHeight;
+
+    if (imageRatio > containerRatio) {
+        img.style.width = '100%';
+        img.style.height = 'auto';
+    } else {
+        img.style.width = 'auto';
+        img.style.height = '100%';
+    }
+}
+
+window.addEventListener('resize', function () {
+    var img = document.querySelector('.pupprofile-img img');
+    if (img.src) {
+        updateImageDimensions(img);
+    }
+});

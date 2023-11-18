@@ -18,7 +18,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 
                             // Create card template using jQuery UI draggable
                             var cardTemplate = `
-                                <div class="col-md-3" pup-card" onclick="viewProfile('${dogId}')">
+                                <div class="col-md-3 pup-card" onclick="viewProfile('${dogId}')">
                                     <div class="card-sub" style="cursor: pointer";>
                                         <img class="card-img-top img-fluid" src="${data.imageURL}" alt="Pup profile img">
                                         <div class="card-block">

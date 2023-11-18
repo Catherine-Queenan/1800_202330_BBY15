@@ -101,6 +101,40 @@ textarea {
     resize: none;
 }
 
+.pupprofile-img{
+    text-align: center;
+    background-color: #fff;
+    max-width: 90%;
+    margin: 0 auto;
+    position: relative;
+}
+.pupprofile-img img{
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    object-fit: contain;
+}
+.pupprofile-img .file {
+    position: absolute;
+    bottom: 0; /* Position the button at the bottom of the container */
+    left: 50%;
+    transform: translateX(-50%); /* Center the button horizontally */
+    overflow: hidden;
+    width: 100%;
+    border: none;
+    border-radius: 0;
+    font-size: 15px;
+    background: #212529b8;
+    margin-top: 10px;
+}
+.pupprofile-img .file input {
+    position: absolute;
+    opacity: 0;
+    right: 0;
+    top: 0;
+}
+
 @media(max-width: 768.5px) {
     .wrapper {
         margin: 30px;
@@ -115,5 +149,9 @@ textarea {
     .wrapper {
         padding: 25px;
         margin: 20px;
+    }
+    .btn-lg {
+        font-size: 18px;
+        padding: 10px 20px;
     }
 }
