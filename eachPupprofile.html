@@ -68,17 +68,14 @@
                                 </div>
 
                                 <div class="image-container text-center">
-                                    <!-- profile image here -->
-                                    <div class="avatar-upload">
-                                        <div class="avatar-edit">
-                                            <!-- <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
-                                            <label for="imageUpload"></label> -->
-                                        </div>
-                                        <div class="avatar-preview">
-                                            <div id="imagePreview" style="background-image: url('');">
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <div class="profile-pic" id="profilePic">
+                                        <label class="-label" for="file" onmouseover="changeImage()">
+                                          <span class="glyphicon glyphicon-camera"></span>
+                                          <span>Change Image</span>
+                                        </label>
+                                        <input id="file" type="file" onchange="loadFile(event)" />
+                                        <img src="https://returntofreedom.org/store/wp-content/uploads/default-placeholder.png" id="output" width="200" />
+                                      </div>
                                 </div>
 
                         <div class="row">
@@ -107,10 +104,6 @@
                                                 <div class="existing-mode" id="pupNameEditing" contenteditable="false">
                                                     Pup Name
                                                 </div>
-                                                <!-- editing mode -->
-                                                <div class="edit-mode d-none">
-                                                    <input type="text" class="form-control" id="name" name="name" required>
-                                                </div>
                                             </div>
                                         </div>
                                         <hr />
@@ -123,10 +116,6 @@
                                                 style="text-transform: capitalize;">
                                                 <div class="existing-mode" id="pupBreedEditing" contenteditable="false">Pup Breed</div>
                                             </div>
-                                            <!-- editing mode -->
-                                            <div class="edit-mode d-none">
-                                                <input type="text" class="form-control" id="breed" name="breed" required>
-                                            </div>    
                                         </div>
                                         <hr />
 
@@ -137,10 +126,6 @@
                                             <div class="col-md-8 col-6 edit-field" id="pupBday">
                                                 <div class="existing-mode" id="pupBdEditing" contenteditable="false">Pup Birth date</div>
                                             </div>
-                                            <!-- editing mode -->
-                                            <div class="edit-mode d-none">
-                                                <input type="date" class="form-control" id="birthday" name="birthday" required>
-                                            </div>   
                                         </div>
                                         <hr />
 
@@ -153,12 +138,9 @@
                                                 <!-- Pup Age -->
                                                 <div class="existing-mode" contenteditable="false">Pup age</div>
                                             </div>
-                                            <!-- editing mode -->
-                                            <div class="edit-mode d-none">
-                                                <input type="number" id="age" name="age" class="form-control" placeholder="Enter Age" min="0">
-                                            </div>   
                                         </div>
                                         <hr />
+
                                         <div class="row">
                                             <div class="col-sm-3 col-md-2 col-5">
                                                 <label style="font-weight:bold;">Gender</label>
@@ -166,19 +148,6 @@
                                             <div class="col-md-8 col-6 edit-field" id="pupGender">
                                                 <div class="existing-mode" contenteditable="false">Pup gender</div>
                                             </div>
-                                            <!-- editing mode -->
-                                            <div class="edit-mode d-none">
-                                                <div class="d-flex align-items-center mt-2">
-                                                    <label class="option">
-                                                        <input type="radio" name="gender" id="gender" value="male" required>Male
-                                                        <span class="checkmark"></span>
-                                                    </label>
-                                                    <label class="option ms-4">
-                                                        <input type="radio" name="gender" id="gender" value="female" required>Female
-                                                        <span class="checkmark"></span>
-                                                    </label>
-                                                </div>
-                                            </div>   
 
                                         </div>
                                         <hr />
@@ -189,15 +158,6 @@
                                             <div class="col-md-8 col-6 edit-field" id="pupStatus">
                                                 <div class="existing-mode" contenteditable="false">Intact spayed or neutered</div>
                                             </div>
-                                            <!-- editing mode -->
-                                            <div class="edit-mode d-none">
-                                                <select id="status" required>
-                                                    <option value="" selected hidden>Choose Option</option>
-                                                    <option value="Intact">Intact</option>
-                                                    <option value="Spayed">Spayed</option>
-                                                    <option value="Neutered">Neutered</option>
-                                                </select>
-                                            </div>   
                                         </div>
                                         <hr />
                                         <div class="row">
@@ -207,10 +167,6 @@
                                             <div class="col-md-8 col-6 edit-field" id="pupAbout">
                                                 <div class="existing-mode" contenteditable="false">About your pup</div>
                                             </div>
-                                            <!-- editing mode -->
-                                            <div class="edit-mode d-none">
-                                                <textarea class="form-control" id="about" rows="4" placeholder="Tell us about your pup"></textarea>
-                                            </div>   
                                         </div>
                                         <hr />
 

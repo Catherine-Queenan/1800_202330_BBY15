@@ -55,79 +55,159 @@ firebase.auth().onAuthStateChanged(function (user) {
   }
 });
 
+
+
 // display image from user's input
-function readURL(input) {
-  if (input.files && input.files[0]) {
-    var reader = new FileReader();
-    reader.onload = function (e) {
-      $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
-      $('#imagePreview').hide();
-      $('#imagePreview').fadeIn(650);
-    }
-    reader.readAsDataURL(input.files[0]);
-  }
+// function readURL(input) {
+//   if (input.files && input.files[0]) {
+//     var reader = new FileReader();
+//     reader.onload = function (e) {
+//       $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
+//       $('#imagePreview').hide();
+//       $('#imagePreview').fadeIn(650);
+//     }
+//     reader.readAsDataURL(input.files[0]);
+//   }
+// }
+// $("#imageUpload").change(function () {
+//   readURL(this);
+// });
+
+function loadFile(event) {
+  var image = document.getElementById("output");
+  image.src = URL.createObjectURL(event.target.files[0]);
 }
-$("#imageUpload").change(function () {
-  readURL(this);
-});
+
+
 
 
 // starts editing and save mode
 let isEditMode = false;
-
 // Declare the object to store edited values
 let editedValues = {};
 
-function saveChangesToFirebase() {
-  // Get the dog profile ID from the URL
-  const pupId = getDogProfileIdFromURL();
+async function saveChangesToFirebase() {
+  return new Promise((resolve, reject) => {
+    // Get the dog profile ID from the URL
+    const pupId = getDogProfileIdFromURL();
 
-  // Create an object to store the updated data
-  let updatedData = {};
+    // Create an object to store the updated data
+    let updatedData = {};
 
-  // Define the elements to edit
-  const elementsToEdit = [
-    { id: "pupNameId", type: "text", field: "name" },
-    { id: "pupAge", type: "number", field: "age" },
-    { id: "pupBreed", type: "text", field: "breed" },
-    { id: "pupAbout", type: "textarea", field: "about" },
-    { id: "pupBday", type: "date", field: "birthday" },
-    { id: "pupGender", type: "radio", field: "gender" },
-    { id: "pupStatus", type: "select", field: "status" }
-  ];
+    // Define the elements to edit
+    const elementsToEdit = [
+      { id: "pupNameId", type: "text", field: "name" },
+      { id: "pupAge", type: "number", field: "age" },
+      { id: "pupBreed", type: "text", field: "breed" },
+      { id: "pupAbout", type: "textarea", field: "about" },
+      { id: "pupBday", type: "date", field: "birthday" },
+      { id: "pupGender", type: "radio", field: "gender" },
+      { id: "pupStatus", type: "select", field: "status" }
+    ];
 
-  // Iterate through elements and update the data object
-  elementsToEdit.forEach((elementInfo) => {
-    const element = document.getElementById(elementInfo.id);
-    let newValue;
+    // Iterate through elements and update the data object
+    elementsToEdit.forEach((elementInfo) => {
+      const element = document.getElementById(elementInfo.id);
+      let newValue;
 
-    if (elementInfo.type === "radio") {
-      // Handle radio buttons
-      const checkedRadio = element.querySelector('input[name="gender"]:checked');
-      newValue = checkedRadio ? checkedRadio.value : "";
-    } else if (elementInfo.type === "select") {
-      // Handle select element
-      const selectElement = element.querySelector("select");
-      newValue = selectElement ? selectElement.value : "";
+      if (elementInfo.type === "radio") {
+        // Handle radio buttons
+        const checkedRadio = element.querySelector('input[name="gender"]:checked');
+        newValue = checkedRadio ? checkedRadio.value : "";
+      } else if (elementInfo.type === "select") {
+        // Handle select element
+        const selectElement = element.querySelector("select");
+        newValue = selectElement ? selectElement.value : "";
+      } else {
+        // Handle other input types
+        const inputElement = element.querySelector(elementInfo.type === "textarea" ? "textarea" : "input");
+        newValue = inputElement ? inputElement.value : "";
+      }
+
+      // Check if the value has changed
+      if (editedValues[elementInfo.id] !== newValue) {
+        updatedData[elementInfo.field] = newValue;
+      }
+    });
+
+    // Update the page with the new data
+    updatePageWithNewData(updatedData);
+
+    if (pupId && Object.keys(updatedData).length > 0) {
+      const db = firebase.firestore();
+      const pupRef = db.collection("dog-profiles").doc(pupId);
+
+      // Log for debugging
+      console.log("Updating document in Firebase:", pupId, updatedData);
+
+      // Update the document with the new data
+      pupRef.update(updatedData)
+        .then(() => {
+          console.log("Document successfully updated in Firebase!");
+          resolve();  // Resolve the promise
+        })
+        .catch((error) => {
+          console.error("Error updating document in Firebase: ", error);
+          reject(error);  // Reject the promise with the error
+        })
+        .finally(() => {
+          // Reload the page after Firebase update
+          location.reload();
+        });
     } else {
-      // Handle other input types
-      const inputElement = element.querySelector(elementInfo.type === "textarea" ? "textarea" : "input");
-      newValue = inputElement ? inputElement.value : "";
-    }
-
-    // Check if the value has changed
-    if (editedValues[elementInfo.id] !== newValue) {
-      updatedData[elementInfo.field] = newValue;
+      console.error("Invalid pupId or updatedData", { pupId, updatedData });
+      reject(new Error("Invalid pupId or updatedData"));
     }
   });
-
-  // Update the page with the new data
-  updatePageWithNewData(updatedData);
-
-  return updatedData;
 }
 
 
+function updateFirebaseData(updatedData) {
+  // Get the dog profile ID from the URL
+  const pupId = getDogProfileIdFromURL();
+
+  console.log("pupId in updateFirebaseData:", pupId);
+  console.log("updatedData in updateFirebaseData:", updatedData);
+
+  return new Promise((resolve, reject) => {
+    if (pupId && Object.keys(updatedData).length > 0) {
+      const db = firebase.firestore();
+      const pupRef = db.collection("dog-profiles").doc(pupId);
+
+      // Log for debugging
+      console.log("Updating document in Firebase:", pupId, updatedData);
+
+      // Update the document with the new data
+      pupRef.update(updatedData)
+        .then(() => {
+          console.log("Document successfully updated in Firebase!");
+          resolve();  // Resolve the promise
+        })
+        .catch((error) => {
+          console.error("Error updating document in Firebase: ", error);
+          reject(error);  // Reject the promise with the error
+        });
+    } else {
+      console.log("Invalid pupId or updatedData. Cannot update Firebase.");
+      reject(new Error("Invalid pupId or updatedData"));  // Reject the promise with an error
+    }
+  });
+}
+
+function updatePageWithNewData(updatedData) {
+  // Loop through all properties in updatedData
+  for (const field in updatedData) {
+    if (updatedData.hasOwnProperty(field)) {
+      const element = document.getElementById(field);
+
+      // Check if the element exists on the page
+      if (element) {
+        // Update the element content with the new data
+        element.textContent = updatedData[field];
+      }
+    }
+  }
+}
 
 
 function toggleEditModeElements() {
@@ -231,56 +311,19 @@ function toggleEditModeElements() {
   });
 }
 
+
 // Function to extract dog profile ID from the URL
 function getDogProfileIdFromURL() {
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.get("id");
 }
 
-// Function to update the page with the new data
-function updatePageWithNewData(updatedData) {
-  // Loop through all properties in updatedData
-  for (const field in updatedData) {
-    if (updatedData.hasOwnProperty(field)) {
-      const element = document.getElementById(field);
-
-      // Check if the element exists on the page
-      if (element) {
-        // Update the element content with the new data
-        element.textContent = updatedData[field];
-      }
-    }
-  }
-}
 
 
-function updateFirebaseData(updatedData) {
-  // Get the dog profile ID from the URL
-  const pupId = getDogProfileIdFromURL();
-
-  return new Promise((resolve, reject) => {
-    if (pupId && Object.keys(updatedData).length > 0) {
-      const db = firebase.firestore();
-      const pupRef = db.collection("dog-profiles").doc(pupId);
-
-      // Update the document with the new data
-      pupRef.update(updatedData)
-        .then(() => {
-          console.log("Document successfully updated!");
-          resolve();  // Resolve the promise
-        })
-        .catch((error) => {
-          console.error("Error updating document: ", error);
-          reject(error);  // Reject the promise with the error
-        });
-    } else {
-      reject(new Error("Invalid pupId or updatedData"));  // Reject the promise with an error
-    }
-  });
-}
-
-// Function to toggle the edit mode
 function toggleEditMode() {
+
+  console.log("Entering toggleEditMode");
+
   var editIcon = document.getElementById("editIcon");
   var editButton = document.getElementById("edit-pupprofile-btn");
 
@@ -308,22 +351,14 @@ function toggleEditMode() {
     // Disable the edit button
     editButton.disabled = true;
 
-    // Save changes to Firebase when exiting edit mode
-    const updatedData = saveChangesToFirebase();
-
-    // Update Firebase data and then reload the page
-    updateFirebaseData(updatedData)
-      .then(() => {
-        // Reload the page after Firebase update
-        location.reload();
-      })
-      .catch((error) => {
-        console.error("Error updating document: ", error);
-        // Handle the error, such as displaying an error message to the user
-      });
+     // Save changes to Firebase when exiting edit mode
+     saveChangesToFirebase()
+     .catch((error) => {
+       console.error("Error updating document: ", error);
+       // Handle the error, such as displaying an error message to the user
+     });
   }
 }
-
 
 document.getElementById("edit-pupprofile-btn").addEventListener("click", function () {
   // Toggle edit mode
