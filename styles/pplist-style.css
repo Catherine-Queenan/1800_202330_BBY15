@@ -13,22 +13,6 @@ body {
     flex: 1 1 auto
 }
 
-@media (max-width:991.98px) {
-    .padding {
-        padding: 1.5rem
-    }
-}
-
-@media (max-width:767.98px) {
-    .padding {
-        padding: 1rem
-    }
-
-    .pup-card-container > .pup-card {
-        margin-top: 10px;
-    }
-}
-
 .padding {
     padding: 3rem !important
 }
@@ -37,14 +21,17 @@ body {
     cursor: move;
     border: none;
     -webkit-box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.05), 0 -2px 1px -2px rgba(0, 0, 0, 0.04), 0 0 0 -1px rgba(0, 0, 0, 0.05);
-    box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.05), 0 -2px 1px -2px rgba(0, 0, 0, 0.04), 0 0 0 -1px rgba(0, 0, 0, 0.05)
+    box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.05), 0 -2px 1px -2px rgba(0, 0, 0, 0.04), 0 0 0 -1px rgba(0, 0, 0, 0.05);
+    text-align: center;
 }
 
 .card-img-top {
-    width: 100%;
-    height: 180px;
-    border-top-left-radius: calc(.25rem - 1px);
-    border-top-right-radius: calc(.25rem - 1px)
+    object-fit: cover; /* This property ensures the image covers the entire container */
+    display: block;
+    margin: 0 auto; /* Center the image using margin */
+    width: 150px; /* Set a fixed pixel value for width */
+    height: 150px; /* Set a fixed pixel value for height */
+    border-radius: 50%; /* Set border-radius to 50% for a circular shape */
 }
 
 .card-block {
@@ -66,4 +53,22 @@ body {
     margin: auto;
     width: 100%;
     padding: 10px;
+}
+
+
+@media (max-width:991.98px) {
+    .padding {
+        padding: 1.5rem
+    }
+}
+
+@media (max-width:767.98px) {
+    .padding {
+        padding: 1rem
+    }
+
+    .pup-card-container>.pup-card {
+        margin-top: 10px;
+    }
+
 }
