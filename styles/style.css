@@ -146,3 +146,7 @@ a[href] {
 .acordion-button-collapsed::after {
     color:#f5c78e;
 }
+
+.material-icons{
+    cursor: pointer;
+}
