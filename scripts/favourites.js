@@ -63,6 +63,7 @@ function getfavorites(user) {
                     newcard.querySelector('.card-text').innerHTML = details;
                     newcard.querySelector('.card-image').src = `./images/${parkCode}.jpg`; //Example: NV01.jpg
                     newcard.querySelector('a').href = "eachPark.html?docID=" + docID;
+                    
 
 										//Finally, attach this new card to the gallery
                     parkCardGroup.appendChild(newcard);
