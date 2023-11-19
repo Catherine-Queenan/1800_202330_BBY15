@@ -138,3 +138,11 @@ a[href] {
     font-size: 1rem;
     font-weight: 500;
 }
+
+.acordion-button.collapsed {
+    color:#f5c78e;
+}
+
+.acordion-button-collapsed::after {
+    color:#f5c78e;
+}
