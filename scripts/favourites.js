@@ -6,7 +6,7 @@ function doAll() {
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
             insertNameFromFirestore(user);
-            getBookmarks(user)
+            getfavorites(user)
         } else {
             console.log("No user is signed in");
         }
@@ -30,22 +30,22 @@ function insertNameFromFirestore(user) {
 
 //----------------------------------------------------------
 // This function takes input param User's Firestore document pointer
-// and retrieves the "saved" array (of bookmarks) 
+// and retrieves the "saved" array (of favorites) 
 // and dynamically displays them in the gallery
 //----------------------------------------------------------
-function getBookmarks(user) {
+function getfavorites(user) {
     db.collection("users").doc(user.uid).get()
         .then(userDoc => {
 
-					  // Get the Array of bookmarks
-            var bookmarks = userDoc.data().bookmarks;
-            console.log(bookmarks);
+					  // Get the Array of favorites
+            var favorites = userDoc.data().favorites;
+            console.log(favorites);
 						
 						// Get pointer the new card template
             let newcardTemplate = document.getElementById("savedCardTemplate");
 
-						// Iterate through the ARRAY of bookmarked hikes (document ID's)
-            bookmarks.forEach(thisParkID => {
+						// Iterate through the ARRAY of favoriteed hikes (document ID's)
+            favorites.forEach(thisParkID => {
                 console.log(thisParkID);
                 db.collection("parks").doc(thisParkID).get().then(doc => {
                     var title = doc.data().name; // get value of the "name" key
