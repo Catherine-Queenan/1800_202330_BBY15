@@ -69,11 +69,11 @@
 
                                 <div class="image-container text-center">
                                     <div class="profile-pic" id="profilePic">
-                                        <label class="-label" for="file" onmouseover="changeImage()">
+                                        <label class="-label" for="file" onclick="uploadImage(event)">
                                           <span class="glyphicon glyphicon-camera"></span>
                                           <span>Change Image</span>
                                         </label>
-                                        <input id="file" type="file" onchange="loadFile(event)" />
+                                        <input id="file" type="file" onchange="uploadImage(event)" />
                                         <img src="https://returntofreedom.org/store/wp-content/uploads/default-placeholder.png" id="output" width="200" />
                                       </div>
                                 </div>

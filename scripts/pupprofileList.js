@@ -16,11 +16,14 @@ firebase.auth().onAuthStateChanged(function (user) {
                         if (doc.exists) {
                             var data = doc.data();
 
+                            // Check if ppimg-url exists, otherwise use a default image URL
+                            var imgUrl = data['ppimg-url'] || 'https://returntofreedom.org/store/wp-content/uploads/default-placeholder.png';
+
                             // Create card template using jQuery UI draggable
                             var cardTemplate = `
                                 <div class="col-md-3 pup-card" onclick="viewProfile('${dogId}')">
                                     <div class="card-sub" style="cursor: pointer";>
-                                        <img class="card-img-top img-fluid" src="${data.imageURL}" alt="Pup profile img">
+                                        <img class="card-img-top img-fluid" src="${imgUrl}" alt="Pup profile img">
                                         <div class="card-block">
                                             <h4 class="card-title">${data.name}</h4>
                                             <!-- Add other relevant dog profile information to the card template -->

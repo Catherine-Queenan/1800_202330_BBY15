@@ -1,10 +1,10 @@
 // Retrieve user id
 firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
-    var userId = user.uid;
+    const userId = user.uid;
 
     // Retrieve dogs array for the user
-    var userRef = db.collection("users").doc(userId);
+    const userRef = db.collection("users").doc(userId);
     userRef.get().then((doc) => {
       if (doc.exists) {
         var dogsArray = doc.data().dogs;
@@ -50,44 +50,171 @@ firebase.auth().onAuthStateChanged(function (user) {
     }).catch((error) => {
       console.log("Error getting document:", error);
     });
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const pupprofileId = urlParams.get('id');
+
+    // Retrieve and display user's image
+    const storageRef = storage.ref();
+    const imagesRef = storageRef.child('images/' + pupprofileId + '_*');
+
+    imagesRef.listAll().then((result) => {
+      if (result.items.length > 0) {
+        result.items[0].getDownloadURL().then((downloadURL) => {
+          document.getElementById('output').src = downloadURL;
+        });
+      }
+    }).catch((error) => {
+      console.error('Error checking user images: ', error);
+    });
+
+
   } else {
     console.log("User is not signed in.");
   }
 });
 
 
+// ===== Upload pup profile image related =====
+window.onload = function () {
+  // get the pupprofileId from current URL 
+  const urlParams = new URLSearchParams(window.location.search);
+  const pupprofileId = urlParams.get('id');
 
-// display image from user's input
-// function readURL(input) {
-//   if (input.files && input.files[0]) {
-//     var reader = new FileReader();
-//     reader.onload = function (e) {
-//       $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
-//       $('#imagePreview').hide();
-//       $('#imagePreview').fadeIn(650);
-//     }
-//     reader.readAsDataURL(input.files[0]);
-//   }
-// }
-// $("#imageUpload").change(function () {
-//   readURL(this);
-// });
+  if (pupprofileId) {
+    // get the corresponding dog-profile data from Firebase Database 
+    const userImageRef = db.collection("dog-profiles").doc(pupprofileId);
 
-function loadFile(event) {
-  var image = document.getElementById("output");
-  image.src = URL.createObjectURL(event.target.files[0]);
+    // check if the ppimg-url exists
+    userImageRef.get().then((doc) => {
+      if (doc.exists) {
+        // check if there is existing URL
+        const existingUrl = doc.data()['ppimg-url'];
+    
+        if (existingUrl) {
+          // console.log("URL already exists:", existingUrl);
+
+          const profilePicImg = document.getElementById('profilePic').getElementsByTagName('img')[0];
+          profilePicImg.src = existingUrl;
+        } else {
+          // update URL
+          userImageRef.update({
+            'ppimg-url': downloadURL
+          }).then(() => {
+            console.log("Document successfully updated!");
+    
+            // Set the upload image's URL into the id=profilePic element
+            const profilePicImg = document.getElementById('profilePic').getElementsByTagName('img')[0];
+            profilePicImg.src = downloadURL;
+          }).catch((error) => {
+            console.error("Error updating document: ", error);
+          });
+        }
+      } else {
+        console.log("No such document!");
+      }
+    }).catch((error) => {
+      console.log("Error getting document:", error);
+    });
+  } else {
+    console.error('No pupprofileId found in the URL.');
+  }
+}
+
+
+function uploadImage(event) {
+  // get the current URL id 
+  const urlParams = new URLSearchParams(window.location.search);
+  const pupprofileId = urlParams.get('id');
+
+  if (pupprofileId) {
+    const fileInput = event.target;
+
+    if (fileInput && fileInput.files && fileInput.files.length > 0) {
+      const file = fileInput.files[0];
+      const storageRef = storage.ref();
+
+      // Generate a unique by using pupprofileId
+      const imageName = pupprofileId + '_' + new Date().getTime();
+
+      // Upload images to Firebase Storage
+      const uploadTask = storageRef.child('images/' + imageName).put(file);
+
+      //  Listen for state changes, errors, and completion of the upload
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          // Handle progress
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('Upload is ' + progress + '% done');
+        },
+        (error) => {
+          // Handle error
+          console.error('Error uploading image: ', error);
+        },
+        () => {
+          // Handle successful upload
+          console.log('Image uploaded successfully');
+
+          // Get the download URL for the image
+          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+            // Display the image on the webpage
+            document.getElementById('output').src = downloadURL;
+
+            // Store the upload images' URL into Firebase Database 
+            const userImageRef = db.collection("dog-profiles").doc(pupprofileId);
+
+            userImageRef.update({
+              'ppimg-url': downloadURL
+            }).then(() => {
+              console.log("Document successfully updated!");
+
+              // Set the upload image's URL into the id=profilePic element
+              const profilePicImg = document.getElementById('profilePic').getElementsByTagName('img')[0];
+              profilePicImg.src = downloadURL;
+            }).catch((error) => {
+              console.error("Error updating document: ", error);
+            });
+          });
+        }
+      );
+    } else {
+      console.error('No file selected.');
+    }
+  } else {
+    console.error('No pupprofileId found in the URL.');
+  }
 }
 
 
 
 
-// starts editing and save mode
+
+// ======Starts editing and save mode======
 let isEditMode = false;
 // Declare the object to store edited values
 let editedValues = {};
 
+async function getExistingDataFromFirebase(pupId) {
+  try {
+    const db = firebase.firestore();
+    const pupRef = db.collection("dog-profiles").doc(pupId);
+    const doc = await pupRef.get();
+
+    if (doc.exists) {
+      return doc.data();
+    } else {
+      console.log("No such document!");
+      return {};
+    }
+  } catch (error) {
+    console.error("Error getting existing data from Firebase:", error);
+    throw error;
+  }
+}
+
 async function saveChangesToFirebase() {
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     // Get the dog profile ID from the URL
     const pupId = getDogProfileIdFromURL();
 
@@ -104,6 +231,9 @@ async function saveChangesToFirebase() {
       { id: "pupGender", type: "radio", field: "gender" },
       { id: "pupStatus", type: "select", field: "status" }
     ];
+
+    // Fetch existing data from Firebase using pupId
+    const existingData = await getExistingDataFromFirebase(pupId);
 
     // Iterate through elements and update the data object
     elementsToEdit.forEach((elementInfo) => {
@@ -130,6 +260,13 @@ async function saveChangesToFirebase() {
       }
     });
 
+    // Check if there's no updated data
+    if (Object.keys(updatedData).length === 0) {
+      // No changes, resolve the promise without updating
+      resolve();
+      return;
+    }
+
     // Update the page with the new data
     updatePageWithNewData(updatedData);
 
@@ -140,27 +277,24 @@ async function saveChangesToFirebase() {
       // Log for debugging
       console.log("Updating document in Firebase:", pupId, updatedData);
 
-      // Update the document with the new data
-      pupRef.update(updatedData)
-        .then(() => {
-          console.log("Document successfully updated in Firebase!");
-          resolve();  // Resolve the promise
-        })
-        .catch((error) => {
-          console.error("Error updating document in Firebase: ", error);
-          reject(error);  // Reject the promise with the error
-        })
-        .finally(() => {
-          // Reload the page after Firebase update
-          location.reload();
-        });
+      try {
+        // Update the document with the new data
+        await pupRef.update(updatedData);
+        console.log("Document successfully updated in Firebase!");
+        resolve();  // Resolve the promise
+      } catch (error) {
+        console.error("Error updating document in Firebase: ", error);
+        reject(error);  // Reject the promise with the error
+      } finally {
+        // Reload the page after Firebase update
+        location.reload();
+      }
     } else {
       console.error("Invalid pupId or updatedData", { pupId, updatedData });
       reject(new Error("Invalid pupId or updatedData"));
     }
   });
 }
-
 
 function updateFirebaseData(updatedData) {
   // Get the dog profile ID from the URL
@@ -318,10 +452,8 @@ function getDogProfileIdFromURL() {
   return urlParams.get("id");
 }
 
-
-
+// Change between edit and save pup profile by clicking the button
 function toggleEditMode() {
-
   console.log("Entering toggleEditMode");
 
   var editIcon = document.getElementById("editIcon");
@@ -345,24 +477,30 @@ function toggleEditMode() {
     toggleEditModeElements();
   } else {
     console.log("Exiting edit mode");
+
     editIcon.classList.remove("fa-check");
     editIcon.classList.add("fa-edit");
 
     // Disable the edit button
     editButton.disabled = true;
 
-     // Save changes to Firebase when exiting edit mode
-     saveChangesToFirebase()
-     .catch((error) => {
-       console.error("Error updating document: ", error);
-       // Handle the error, such as displaying an error message to the user
-     });
+    // Save changes to Firebase when exiting edit mode
+    saveChangesToFirebase()
+      .then(() => {
+        // Reload the page after Firebase update
+        location.reload();
+      })
+      .catch((error) => {
+        console.error("Error updating document: ", error);
+        // Handle the error, such as displaying an error message to the user
+      });
   }
 }
 
-document.getElementById("edit-pupprofile-btn").addEventListener("click", function () {
+var editButton = document.getElementById("edit-pupprofile-btn");
+
+// Add event listener to the button
+editButton.addEventListener("click", function () {
   // Toggle edit mode
   toggleEditMode();
 });
-
-
