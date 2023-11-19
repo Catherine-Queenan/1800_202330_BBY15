@@ -23,6 +23,10 @@ body {
     .padding {
         padding: 1rem
     }
+
+    .pup-card-container > .pup-card {
+        margin-top: 10px;
+    }
 }
 
 .padding {

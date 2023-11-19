@@ -29,6 +29,8 @@
 
     <!-- Link to styles of your own -->
     <link rel="stylesheet" href="./styles/style.css">
+    <link rel="stylesheet" href="./styles/eachpp-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -50,36 +52,38 @@
                 <div class="card" style="margin-top: 50px;">
                     <div class="card-body">
                         <div class="card-title mb-4">
-                            <div class="d-flex justify-content-start">
-                                <div class="image-container">
-                                    <img src="http://placehold.it/150x150" id="imgProfile"
-                                        style="width: 150px; height: 150px" class="img-thumbnail" />
-                                    <div class="middle">
-                                        <input type="button" class="btn btn-secondary" id="btnChangePicture"
-                                            value="Change" />
-                                        <input type="file" style="display: none;" id="profilePicture" name="file" />
-                                    </div>
+
+                            <div class="d-flex flex-column align-text-center">
+                                <div class="edit-btn-container">
+                                    <button class="btn" id="edit-pupprofile-btn">
+                                        <i class="fas fa-edit" id="editIcon"></i></button>
+                                    <!-- <button class="btn" id="save-pupprofile-btn">
+                                        <i class="fas fa-check" id="saveIcon" style="display: none;"></i></button> -->
                                 </div>
-                                <div class="userData ml-3">
-                                    <h2 class="d-block pupName" style="font-size: 1.5rem; font-weight: bold" ><a
+                                
+                                <div class="userData ml-3 text-center">
+                                    <h2 class="d-block pupName"
+                                        style="font-size: 1.5rem; font-weight: bold; text-transform: capitalize;"><a
                                             href="javascript:void(0);">Pup Name</a></h2>
-                                    <!-- <h6 class="d-block"><a href="javascript:void(0)">1,500</a> Video Uploads</h6>
-                                    <h6 class="d-block"><a href="javascript:void(0)">300</a> Blog Posts</h6> -->
                                 </div>
-                                <div class="ml-auto">
-                                    <input type="button" class="btn btn-primary d-none" id="btnDiscard"
-                                        value="Discard Changes" />
+
+                                <div class="image-container text-center">
+                                    <div class="profile-pic" id="profilePic">
+                                        <label class="-label" for="file" onmouseover="changeImage()">
+                                          <span class="glyphicon glyphicon-camera"></span>
+                                          <span>Change Image</span>
+                                        </label>
+                                        <input id="file" type="file" onchange="loadFile(event)" />
+                                        <img src="https://returntofreedom.org/store/wp-content/uploads/default-placeholder.png" id="output" width="200" />
+                                      </div>
                                 </div>
-                            </div>
-                        </div>
 
                         <div class="row">
                             <div class="col-12">
                                 <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link active" id="pupInfo-tab" data-toggle="tab"
-                                            href="#pupInfo" role="tab" aria-controls="pupInfo"
-                                            aria-selected="true">Pup Info</a>
+                                        <a class="nav-link active" id="pupInfo-tab" data-toggle="tab" href="#pupInfo"
+                                            role="tab" aria-controls="pupInfo" aria-selected="true">Pup Info</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" id="connectedServices-tab" data-toggle="tab"
@@ -96,8 +100,10 @@
                                             <div class="col-sm-3 col-md-2 col-5">
                                                 <label style="font-weight:bold;">Name</label>
                                             </div>
-                                            <div class="col-md-8 col-6 pupName">
-                                                Pup Name
+                                            <div class="col-md-8 col-6 pupName edit-field" style="text-transform: capitalize;" id="pupNameId">
+                                                <div class="existing-mode" id="pupNameEditing" contenteditable="false">
+                                                    Pup Name
+                                                </div>
                                             </div>
                                         </div>
                                         <hr />
@@ -106,8 +112,9 @@
                                             <div class="col-sm-3 col-md-2 col-5">
                                                 <label style="font-weight:bold;">Breed</label>
                                             </div>
-                                            <div class="col-md-8 col-6" id="pupBreed">
-                                                Pup Breed
+                                            <div class="col-md-8 col-6 edit-field" id="pupBreed"
+                                                style="text-transform: capitalize;">
+                                                <div class="existing-mode" id="pupBreedEditing" contenteditable="false">Pup Breed</div>
                                             </div>
                                         </div>
                                         <hr />
@@ -116,8 +123,8 @@
                                             <div class="col-sm-3 col-md-2 col-5">
                                                 <label style="font-weight:bold;">Birth Date</label>
                                             </div>
-                                            <div class="col-md-8 col-6" id="pupBday">
-                                                March 22, 1994.
+                                            <div class="col-md-8 col-6 edit-field" id="pupBday">
+                                                <div class="existing-mode" id="pupBdEditing" contenteditable="false">Pup Birth date</div>
                                             </div>
                                         </div>
                                         <hr />
@@ -127,26 +134,29 @@
                                             <div class="col-sm-3 col-md-2 col-5">
                                                 <label style="font-weight:bold;">Age</label>
                                             </div>
-                                            <div class="col-md-8 col-6" id="pupAge">
-                                                Pup age
+                                            <div class="col-md-8 col-6 edit-field" id="pupAge">
+                                                <!-- Pup Age -->
+                                                <div class="existing-mode" contenteditable="false">Pup age</div>
                                             </div>
                                         </div>
                                         <hr />
+
                                         <div class="row">
                                             <div class="col-sm-3 col-md-2 col-5">
                                                 <label style="font-weight:bold;">Gender</label>
                                             </div>
-                                            <div class="col-md-8 col-6" id="pupGender">
-                                                Pup gender
+                                            <div class="col-md-8 col-6 edit-field" id="pupGender">
+                                                <div class="existing-mode" contenteditable="false">Pup gender</div>
                                             </div>
+
                                         </div>
                                         <hr />
                                         <div class="row">
                                             <div class="col-sm-3 col-md-2 col-5">
                                                 <label style="font-weight:bold;">Status</label>
                                             </div>
-                                            <div class="col-md-8 col-6" id="pupStatus">
-                                                Intact spayed or neutered
+                                            <div class="col-md-8 col-6 edit-field" id="pupStatus">
+                                                <div class="existing-mode" contenteditable="false">Intact spayed or neutered</div>
                                             </div>
                                         </div>
                                         <hr />
@@ -154,16 +164,12 @@
                                             <div class="col-sm-3 col-md-2 col-5">
                                                 <label style="font-weight:bold;">About</label>
                                             </div>
-                                            <div class="col-md-8 col-6" id="pupAbout">
-                                                About your pup
+                                            <div class="col-md-8 col-6 edit-field" id="pupAbout">
+                                                <div class="existing-mode" contenteditable="false">About your pup</div>
                                             </div>
                                         </div>
                                         <hr />
 
-                                    </div>
-                                    <div class="tab-pane fade" id="connectedServices" role="tabpanel"
-                                        aria-labelledby="ConnectedServices-tab">
-                                        Facebook, Google, Twitter Account that are connected to this account
                                     </div>
                                 </div>
                             </div>
