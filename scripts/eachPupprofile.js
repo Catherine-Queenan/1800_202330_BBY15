@@ -55,7 +55,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     const pupprofileId = urlParams.get('id');
 
     // Retrieve and display user's image
-    const storageRef = storage.ref();
+    const storageRef = firebase.storage().ref();
     const imagesRef = storageRef.child('images/' + pupprofileId + '_*');
 
     imagesRef.listAll().then((result) => {
