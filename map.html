@@ -39,39 +39,46 @@
     <link rel="stylesheet" href="./styles/modal.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Quicksand:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
 </head>
 
 <body>
-    
+
     <nav id="navbar"></nav>
 
     <nav class="container mt-2 mb-2">
         <button class="btn btn-outline-secondary" onclick="history.back()">Back</button>
     </nav>
-    
+
     <main>
         <div id='map' style='width: 100%; height: 700px;'></div>
     </main>
 
     <div id="modal" class="modal">
-        <span id="closeModal" onclick="closeModal()">X</span>
-        <form>
-            <label>
-                <input type="checkbox" name="Pup1"> Pup 1
-            </label>
-            <label>
-                <input type="checkbox" name="Pup2"> Pup 2
-            </label>
-            <label>
-                <input type="checkbox" name="Pup3"> Pup 3
-            </label>
-            <label>
-                <input type="checkbox" name="Pup4"> Pup 4
-            </label>
-            <input id="playButton" type="submit" value="Let's play!">
-        </form>
+        <div id="modalContent">
+            <span id="closeModal" onclick="closeModal()">X</span>
+            <form>
+                <span>You're at</span>
+                <span id="parkName"></span>
+                <br>
+                <label>
+                    <input type="checkbox" id="dogCheckbox1" name="Pup1"> <span id="dogLabel1"></span>
+                </label>
+                <label>
+                    <input type="checkbox" id="dogCheckbox2" name="Pup2"> <span id="dogLabel2"></span>
+                </label>
+                <label>
+                    <input type="checkbox" id="dogCheckbox3" name="Pup3"> <span id="dogLabel3"></span>
+                </label>
+                <label>
+                    <input type="checkbox" id="dogCheckbox4" name="Pup4"> <span id="dogLabel4"></span>
+                </label>
+                <input id="playButton" type="submit" value="Let's play!">
+            </form>
+        </div>
     </div>
     <div id="overlay" class="overlay"></div>
 
@@ -83,6 +90,7 @@
     <script src="./scripts/script.js"></script>
     <script src="./scripts/map.js"></script>
     <script src="./scripts/geofencing.js"></script>
+    <script src="./scripts/pupsAtParks.js"></script>
 
 </body>
 
