@@ -9,13 +9,15 @@ document.addEventListener("DOMContentLoaded", function () {
         navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
     }, proximityCheckInterval);
 
+    let parks = [];
+
     function fetchParkInformation() {
         // Use Firebase SDK to get park information
         // For example, you might use Firebase Firestore
         // This is a simplified example, adjust it based on your Firebase setup
         return db.collection('parks').get()
             .then(snapshot => {
-                const parks = [];
+                parks = [];
                 snapshot.forEach(doc => {
                     const parkData = doc.data();
                     parks.push({
@@ -42,18 +44,18 @@ document.addEventListener("DOMContentLoaded", function () {
         };
         // Now, you have the user's location.
 
-        fetchParkInformation().then(parks => {
+        fetchParkInformation().then(() => {
             // Assume userLocation is obtained through geolocation
-            const proximityRadius = 15; // in kilometers
+            const proximityRadius = 1; // in kilometers
 
-            checkProximityToParks(userLocation, parks, proximityRadius);
+            checkProximityToParks(userLocation, proximityRadius);
         });
     }
     function errorCallback(error) {
         // Handle location retrieval errors here.
     }
 
-    function checkProximityToParks(userLocation, parks, radius) {
+    function checkProximityToParks(userLocation, radius) {
         const currentUser = getCurrentUser();
 
         if (currentUser) {
@@ -72,6 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         openModal(parkName);
 
                     }
+                    return;
                 }
             });
 
@@ -86,6 +89,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         console.log("User is near a park. Modal may have been opened.");
                     } else {
                         console.log("User is not near any park. isAtPark set to false.");
+                        removeUserDogIdsFromParks(userId);
                     }
                 })
                 .catch(error => {
@@ -93,6 +97,34 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             prevIsNearAnyPark = isNearAnyPark;
         }
+    }
+
+    // Add a new function to remove the user's dog IDs from pupsPlaying arrays
+    function removeUserDogIdsFromParks(userId) {
+        // Fetch the user document to get their dog IDs
+        db.collection('users').doc(userId).get()
+            .then(userDoc => {
+                if (userDoc.exists) {
+                    const userData = userDoc.data();
+                    const userDogIds = userData.dogs || [];
+
+                    // Loop through the parks and remove the user's dog IDs from pupsPlaying
+                    parks.forEach(park => {
+                        db.collection('parks').doc(park.id).update({
+                            pupsPlaying: firebase.firestore.FieldValue.arrayRemove(...userDogIds)
+                        })
+                            .then(() => {
+                                console.log(`User's dog IDs removed from pupsPlaying in park ${park.id}`);
+                            })
+                            .catch(error => {
+                                console.error(`Error removing user's dog IDs from pupsPlaying in park ${park.id}:`, error);
+                            });
+                    });
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching user document:", error);
+            });
     }
 
     function calculateDistance(location1, location2) {
