@@ -33,9 +33,13 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Link to styles of your own -->
     <link rel="stylesheet" href="./styles/style.css">
+    <link rel="stylesheet" href="./styles/review.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Quicksand:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" />
 
 </head>
 
@@ -54,8 +58,6 @@
         <h1><span id="parkName">this park</span></h1>
         <div class="position-relative">
             <img class="park-img responsive" src="" alt="Park photo">
-            <button class="btn btn-primary responsive position-absolute btn-lg bottom-0 end-0 m-3" style="font-weight:bolder;"
-                onclick="saveParkDocumentIDAndRedirect()">Write a Review</button>
         </div>
     </div>
 
@@ -67,16 +69,17 @@
             </div>
         </nav>
     </div>
-    
+
     <div class="container mt-4">
         <h1 style="color:#45503b">Post your adventure!</h1>
         <form>
             <div class="form-group">
                 <label style="font-weight:bolder; color:#45503b">Caption:</label>
-                <textarea id="description" rows="4" cols="50" style="background-color:#f2efe7; color:#45503b; font-weight:bolder;"></textarea>
+                <textarea id="description" rows="4" cols="50"
+                    style="background-color:#f2efe7; color:#45503b; font-weight:bolder;"></textarea>
             </div>
             <div class="container py-3">
-                <input type="file" id="mypic-input" accept="image/*" style="font-weight:bolder;"/>
+                <input type="file" id="mypic-input" accept="image/*" style="font-weight:bolder;" />
                 <img id="mypic-goes-here" style="border-color:#45503b" width=100 height=100 />
             </div>
             <div class="d-flex mt-2">
@@ -85,30 +88,183 @@
         </form>
     </div>
 
-    <div class="container mt-4">
-        <h2 style="color:#45503b">Reviews:</h2>
-        <div id="details-go-here"></div>
-        <!-- Here is the container for cards with horizontal scrolling -->
-        <div class="card-container">
-            <div id="reviewCardGroup" class="row row-cols-auto">
-                <!-- Add your card templates here -->
+
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-8 course-details-content">
+                <div class="course-details-card mt--40">
+                    <div class="course-content">
+                        <h5 class="mb--20">Overall</h5>
+
+                        <div class="row row--30">
+                            <!-- rating box left -->
+                            <div class="col-lg-4">
+                                <div class="rating-box">
+                                    <div class="rating-number">5.0</div>
+                                    <div class="rating"> <i class="fa fa-star" aria-hidden="true"></i> <i
+                                            class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star"
+                                            aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i
+                                            class="fa fa-star" aria-hidden="true"></i> </div>
+                                    <span>(25 Review)</span>
+                                </div>
+                            </div>
+                            <!-- rating bar right -->
+                            <div class="col-lg-8">
+                                <div class="review-wrapper">
+                                    <div class="single-progress-bar">
+                                        <div class="rating-text"> 5 <i class="fa fa-star" aria-hidden="true"></i> </div>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 100%"
+                                                aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <span class="rating-value">23</span>
+                                    </div>
+                                    <div class="single-progress-bar">
+                                        <div class="rating-text"> 4 <i class="fa fa-star" aria-hidden="true"></i> </div>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 80%"
+                                                aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <span class="rating-value">3</span>
+                                    </div>
+                                    <div class="single-progress-bar">
+                                        <div class="rating-text"> 3 <i class="fa fa-star" aria-hidden="true"></i> </div>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 60%"
+                                                aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <span class="rating-value">2</span>
+                                    </div>
+                                    <div class="single-progress-bar">
+                                        <div class="rating-text"> 2 <i class="fa fa-star" aria-hidden="true"></i> </div>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 40%"
+                                                aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <span class="rating-value">3</span>
+                                    </div>
+                                    <div class="single-progress-bar">
+                                        <div class="rating-text"> 1 <i class="fa fa-star" aria-hidden="true"></i> </div>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 20%"
+                                                aria-valuenow="0" aria-valuemin="80" aria-valuemax="100"></div>
+                                        </div>
+                                        <span class="rating-value">2</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- write review section -->
+                        <div class="row mt-5">
+                            <button id="review-add-btn" aria-label="add review" title="Add Review"><i
+                                    class="fa fa-pencil-square-o" aria-hidden="true"></i> Write a Review</button>
+                            <div id="modal" role="dialog" aria-modal="true" aria-labelledby="add-review-header"
+                                class="">
+                                <button class="close-btn" aria-label="close" title="Close">x</button>
+                                <div id="review-form-container">
+                                    <h2 id="add-review-header">Review for <span id="parkName-review"> Park Name</span>
+                                    </h2>
+                                    <form id="review-form">
+                                        <div class="fieldset">
+                                            <label for="reviewName">Title</label>
+                                            <input name="reviewName" id="reviewName" required="">
+                                        </div>
+                                        <div class="fieldset">
+                                            <label>Rate your overall experience:</label>
+                                            <div class="rate">
+                                                <input type="radio" id="star5" name="rate" value="5" />
+                                                <label for="star5" title="text">5 stars</label>
+                                                <input type="radio" id="star4" name="rate" value="4" />
+                                                <label for="star4" title="text">4 stars</label>
+                                                <input type="radio" id="star3" name="rate" value="3" />
+                                                <label for="star3" title="text">3 stars</label>
+                                                <input type="radio" id="star2" name="rate" value="2" />
+                                                <label for="star2" title="text">2 stars</label>
+                                                <input type="radio" id="star1" name="rate" value="1" />
+                                                <label for="star1" title="text">1 star</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="fieldset">
+                                            <label for="reviewComments">What did you think of the park?</label>
+                                            <textarea name="reviewComments" id="reviewComments" cols="20" rows="5"
+                                                required=""></textarea>
+                                        </div>
+                                        <div class="fieldset right">
+                                            <button id="submit-review-btn" class="btn btn-primary"
+                                                onclick="writeReview()">Submit</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-overlay"></div>
+
+                        </div>
+
+
+                        <div class="comment-wrapper pt--40">
+                            <div class="section-title">
+                                <h5 class="mb--25">Reviews</h5>
+                            </div>
+                            <div id="details-go-here"></div>
+                            <!-- Here is the container for cards with horizontal scrolling -->
+                            <div class="card-container">
+                                <div id="reviewCardGroup" class="row">
+                                    <!-- Add your card templates here -->
+                                </div>
+                            </div>
+
+                            <!--  Comment Box start--->
+                            <template id="reviewCardTemplate">
+                                <div class="review-card">
+                                    <!-- Three dots menu start -->
+                                    <div class="dropdown">
+                                        <!-- three dots -->
+                                        <ul class="dropbtn icons " onclick="toggleDropdown(event)">
+                                            <li></li>
+                                            <li></li>
+                                            <li></li>
+                                        </ul>
+                                        <!-- menu -->
+                                        <div id="myDropdown" class="dropdown-content">
+                                            <span id="edit-review-btn">Edit review</span>
+                                            <span id="delete-review-btn">Delete review</span>
+                                            <span id="report-review-btn">Report</span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="thumbnail card-img-top"> <img src=""
+                                            alt="Comment Images"> </div>
+                                    <div class="comment-content card-body">
+                                        <div class="comment-top">
+                                            <h6 class="title">Review Title</h6>
+                                            
+                                            <!-- <div class="rating"> <i class="fa fa-star" aria-hidden="true"></i> <i
+                                                    class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star"
+                                                    aria-hidden="true"></i><i class="fa fa-star"
+                                                    aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i>
+                                            </div> -->
+                                        </div>
+                                        <p class="star-rating"></p>
+                                        <p class="time">placeholder</p>
+                                        <!-- <span class="subtitle">“ Review subtitle ”</span> -->
+                                        <p class="description">reveiw comment</p>
+                                    </div>
+                                </div>
+
+                            </template>
+                            <!--  Comment Box end--->
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <template id="reviewCardTemplate">
-        <div class="card" style="background-color:#45503b">
-            <img class="card-img-top">
-            <div class="card-body" style="background-color:#c9d5b5">
-                <h5 class="title">placeholder</h5>
-                <p class="star-rating"></p>
-                <p class="time">placeholder</p>
-                <br>
-                <p class="description">This card has supporting text below as a natural lead-in to additional content.
-                </p>
-            </div>
-        </div>
-    </template>
 
     <footer id="footer"></footer>
     <!---------------------------------------------->
@@ -119,6 +275,7 @@
     <script src="./scripts/firebaseAPI_BBY15.js"></script>
     <script src="./scripts/skeleton.js"></script>
     <script src="./scripts/eachPark.js"></script>
+    <script src="./scripts/review.js"></script>
     <!-- <script src="./scripts/script.js"></script> -->
 
 </body>

@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         fetchParkInformation().then(parks => {
             // Assume userLocation is obtained through geolocation
-            const proximityRadius = 25; // in kilometers
+            const proximityRadius = 15; // in kilometers
 
             checkProximityToParks(userLocation, parks, proximityRadius);
         });
@@ -65,11 +65,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (distance <= radius) {
                     isNearAnyPark = true;
                     parkName = park.name;
+                    parkCode = park.id;
 
                     // Open modal only if user has just entered proximity
                     if (!prevIsNearAnyPark) {
                         openModal(parkName);
-                        
+
                     }
                 }
             });
@@ -131,7 +132,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById('parkName').innerText = parkName;
         document.getElementById('modal').style.display = 'block';
         document.getElementById('overlay').style.display = 'block';
-        fetchUserDataAndPopulateCheckboxes();    
+        fetchUserDataAndPopulateCheckboxes();
     }
 
     function closeModal() {
@@ -147,6 +148,32 @@ document.addEventListener("DOMContentLoaded", function () {
         event.preventDefault();
 
         console.log("Play button clicked!");
+
+        const checkedDogIds = [];
+
+        // Iterate over checkboxes to find checked ones
+        for (let i = 1; i <= 4; i++) {
+            const checkboxId = 'dogCheckbox' + i;
+            const checkboxElement = document.getElementById(checkboxId);
+
+            if (checkboxElement && checkboxElement.checked) {
+                checkedDogIds.push(checkboxElement.dataset.dogId);
+            }
+        }
+
+        console.log(parkCode);
+
+        // Update the Firebase document for the current park with the checked dog IDs
+        db.collection('parks').doc(parkCode).update({
+            pupsPlaying: checkedDogIds
+        })
+            .then(() => {
+                console.log("Park document successfully updated with pupsPlaying!");
+            })
+            .catch((error) => {
+                console.error("Error updating park document with pupsPlaying: ", error);
+            });
+
         // Update the Firebase document for the current user
         updateFirebaseDocumentForCurrentUser();
         // Close the modal after updating the document
@@ -176,22 +203,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function fetchUserDataAndPopulateCheckboxes() {
         const currentUser = getCurrentUser();
-    
+
         if (currentUser) {
             const userId = currentUser.uid;
-    
+            let dogIdsArray;
+
             // Fetch user document from Firebase
             db.collection('users').doc(userId).get()
                 .then(userDoc => {
                     if (userDoc.exists) {
                         const userData = userDoc.data();
-    
+
                         // Assuming dogs is an array of dog IDs in the user document
-                        const dogIdsArray = userData.dogs || [];
-    
+                        dogIdsArray = userData.dogs || [];
+
+                        console.log(dogIdsArray);
+
                         // Array to store promises for fetching dog names
                         const fetchDogNamePromises = [];
-    
+
                         // Loop through the dog IDs and create promises to fetch dog names
                         dogIdsArray.forEach(dogId => {
                             const fetchDogNamePromise = db.collection('dog-profiles').doc(dogId).get()
@@ -199,7 +229,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                     if (dogProfileDoc.exists) {
                                         // Assuming the dog profile document has a field 'name'
                                         return dogProfileDoc.data().name;
-                                        
+
                                     } else {
                                         return null; // Handle the case where the dog profile document doesn't exist
                                     }
@@ -208,10 +238,10 @@ document.addEventListener("DOMContentLoaded", function () {
                                     console.error("Error fetching dog profile document:", error);
                                     return null;
                                 });
-    
+
                             fetchDogNamePromises.push(fetchDogNamePromise);
                         });
-                        
+
                         // Resolve all promises
                         return Promise.all(fetchDogNamePromises);
                     } else {
@@ -226,9 +256,10 @@ document.addEventListener("DOMContentLoaded", function () {
                         const labelId = 'dogLabel' + (i + 1);
                         const checkboxElement = document.getElementById(checkboxId);
                         const labelElement = document.getElementById(labelId);
-    
+
                         if (checkboxElement && labelElement) {
                             checkboxElement.value = dogNamesArray[i];
+                            checkboxElement.dataset.dogId = dogIdsArray[i];
                             checkboxElement.disabled = false; // Enable the checkbox
                             labelElement.innerText = dogNamesArray[i];
                         }
@@ -240,14 +271,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
         }
     }
-    
+
 
     function getCurrentUser() {
         return firebase.auth().currentUser;
     }
-
-    
-
 
 });
 
