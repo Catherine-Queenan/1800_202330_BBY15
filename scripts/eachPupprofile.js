@@ -132,7 +132,7 @@ function uploadImage(event) {
 
     if (fileInput && fileInput.files && fileInput.files.length > 0) {
       const file = fileInput.files[0];
-      const storageRef = storage.ref();
+      const storageRef = firebase.storage().ref();
 
       // Generate a unique by using pupprofileId
       const imageName = pupprofileId + '_' + new Date().getTime();
