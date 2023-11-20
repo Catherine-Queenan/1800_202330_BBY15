@@ -165,7 +165,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Update the Firebase document for the current park with the checked dog IDs
         db.collection('parks').doc(parkCode).update({
-            pupsPlaying: checkedDogIds
+            pupsPlaying: firebase.firestore.FieldValue.arrayUnion(...checkedDogIds)
         })
             .then(() => {
                 console.log("Park document successfully updated with pupsPlaying!");
