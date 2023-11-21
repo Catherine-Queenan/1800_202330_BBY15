@@ -58,7 +58,9 @@ function savePost() {
                 console.log("1. Post document added!");
                 console.log(doc.id);
                 uploadPic(doc.id);
-            })
+            }).then(() => {
+                window.location.href = "thanks.html"; // Redirect to the thanks page
+          });
         } else {
             // No user is signed in.
             console.log("Error, no user signed in");
