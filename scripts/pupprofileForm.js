@@ -2,7 +2,6 @@ function addDogProfiles() {
     var name = document.getElementById("name").value;
     var breed = document.getElementById("breed").value;
     var gender = document.getElementById("gender").value;
-    var age = document.getElementById("age").value;
     var status = document.getElementById("status").value;
     var about = document.getElementById("about").value;
     var birthday = document.getElementById("birthday").value;
@@ -24,7 +23,6 @@ function addDogProfiles() {
                 name: name,
                 breed: breed,
                 gender: gender,
-                age: age,
                 status: status,
                 about: about,
                 birthday: birthday,
@@ -42,7 +40,6 @@ function addDogProfiles() {
                     document.getElementById("name").value = "";
                     document.getElementById("breed").value = "";
                     document.getElementById("gender").value = "";
-                    document.getElementById("age").value = "";
                     document.getElementById("status").value = "";
                     document.getElementById("about").value = "";
                     document.getElementById("birthday").value = "";
