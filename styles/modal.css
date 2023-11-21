@@ -1,3 +1,4 @@
+
 /* Styles for the modal window */
 .modal {
     display: none;
@@ -6,13 +7,15 @@
     left: 50%;
     transform: translate(-50%, -50%);
     padding: 20px;
-    background-color: #fff;
-    border: 1px solid #ccc;
+    background-color: #c9d5b5ff;
+    border: 2px solid black;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 1000;
     width: 80%;
-    max-width: 400px;
+    max-width: 300px;
     height: 400px;
+    border-radius: 5px;
+    font-family: 'Quicksand', sans-serif;
  
 }
 
@@ -26,4 +29,27 @@
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
     z-index: 999;
+}
+
+#closeModal {
+    display: flex;
+    justify-content: right;
+    text-decoration: none;
+    color:black;
+}
+
+#dog_checkbox_container label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+#play_button_container {
+    display: flex;
+    justify-content: right;
+}
+
+#playButton {
+    background-color: #fd5821;
+    border-radius: 5px;
+    color: white;
 }

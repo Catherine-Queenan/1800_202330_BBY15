@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         fetchParkInformation().then(() => {
             // Assume userLocation is obtained through geolocation
-            const proximityRadius = 1; // in kilometers
+            const proximityRadius = 25; // in kilometers
 
             checkProximityToParks(userLocation, proximityRadius);
         });
@@ -161,7 +161,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function openModal(parkName) {
-        document.getElementById('parkName').innerText = parkName;
+        document.getElementById('parkName').innerText = parkName + "!";
         document.getElementById('modal').style.display = 'block';
         document.getElementById('overlay').style.display = 'block';
         fetchUserDataAndPopulateCheckboxes();

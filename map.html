@@ -59,24 +59,33 @@
 
     <div id="modal" class="modal">
         <div id="modalContent">
-            <span id="closeModal" onclick="closeModal()">X</span>
+            <a href="#"><span id="closeModal" onclick="closeModal()">X</span></a>
             <form>
                 <span>You're at</span>
                 <span id="parkName"></span>
                 <br>
-                <label>
-                    <input type="checkbox" id="dogCheckbox1" name="Pup1" data-dog-id=""> <span id="dogLabel1"></span>
-                </label>
-                <label>
-                    <input type="checkbox" id="dogCheckbox2" name="Pup2" data-dog-id=""> <span id="dogLabel2"></span>
-                </label>
-                <label>
-                    <input type="checkbox" id="dogCheckbox3" name="Pup3" data-dog-id=""> <span id="dogLabel3"></span>
-                </label>
-                <label>
-                    <input type="checkbox" id="dogCheckbox4" name="Pup4" data-dog-id=""> <span id="dogLabel4"></span>
-                </label>
-                <input id="playButton" type="submit" value="Let's play!">
+                <p>Who's with you today?</p>
+                <div id="dog_checkbox_container">
+                    <label>
+                        <input type="checkbox" id="dogCheckbox1" name="Pup1" data-dog-id=""> <span
+                            id="dogLabel1"></span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="dogCheckbox2" name="Pup2" data-dog-id=""> <span
+                            id="dogLabel2"></span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="dogCheckbox3" name="Pup3" data-dog-id=""> <span
+                            id="dogLabel3"></span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="dogCheckbox4" name="Pup4" data-dog-id=""> <span
+                            id="dogLabel4"></span>
+                    </label>
+                </div>
+                <div id="play_button_container">
+                    <input id="playButton" type="submit" value="Let's play!">
+                </div>
             </form>
         </div>
     </div>
