@@ -16,7 +16,7 @@
     height: 400px;
     border-radius: 5px;
     font-family: 'Quicksand', sans-serif;
- 
+    font-size: 1.2em;
 }
 
 /* Styles for the overlay */
@@ -33,9 +33,10 @@
 
 #closeModal {
     display: flex;
-    justify-content: right;
+    justify-content: left;
     text-decoration: none;
     color:black;
+    margin-bottom: 10px;
 }
 
 #dog_checkbox_container label {
