@@ -98,7 +98,7 @@ function trapTabKey(e) {
 }
 
 
-var parkDocID = localStorage.getItem("parkDocID"); 
+var parkDocID = localStorage.getItem("parkDocID");
 
 function getParkName(id) {
     return db.collection("parks")
@@ -149,6 +149,7 @@ stars.forEach((star, index) => {
     });
 });
 
+
 function writeReview() {
     console.log("inside write review");
     let parkTitle = document.getElementById("reviewName").value;
@@ -164,31 +165,49 @@ function writeReview() {
 
     console.log(parkTitle, parkDescription, parkRating);
 
-    // console.log(parkTitle, parkLevel, parkSeason, parkDescription, parkFlooded, parkScrambled, parkRating);
-
-
     var user = firebase.auth().currentUser;
     if (user) {
         var currentUser = db.collection("users").doc(user.uid);
         var userID = user.uid;
 
-        // Get the document for the current user.
-        db.collection("reviews").add({
-            parkDocID: parkDocID,
-            user: currentUser,
-            userID: userID,
-            title: parkTitle,
-            description: parkDescription,
-            rating: parkRating, // Include the rating in the review
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
-        }).then(() => {
-            window.location.href = "thanks.html"; // Redirect to the thanks page
-        });
+        // Get the document for the current user
+        currentUser.get()
+            .then((doc) => {
+                // Check if the user document exists
+                if (doc.exists) {
+                    // Add the review to the reviews collection
+                    db.collection("reviews").add({
+                        parkDocID: parkDocID,
+                        user: currentUser,
+                        userID: userID,
+                        title: parkTitle,
+                        description: parkDescription,
+                        rating: parkRating,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                    }).then((docRef) => {
+                        console.log("Review added with ID: ", docRef.id);
+                        // Save the review_id under the user's document
+                        currentUser.update({
+                            reviewsID: firebase.firestore.FieldValue.arrayUnion(docRef.id)
+                        }).then(() => {
+                            console.log("Review ID saved to user's document!");
+                            // window.location.href = "thanks.html"; // Redirect to the thanks page
+                        });
+                    }).catch((error) => {
+                        console.error("Error adding review: ", error);
+                    });
+                } else {
+                    console.log("User document not found");
+                }
+            }).catch((error) => {
+                console.log("Error getting user document: ", error);
+            });
     } else {
         console.log("No user is signed in");
-        // window.location.href = 'review.html';
     }
 }
+
+
 
 function saveReviewIDforUser(reviewDocID) {
     firebase.auth().onAuthStateChanged(user => {
@@ -223,13 +242,13 @@ function uploadPic(postDocID) {
     var storageRef = storage.ref("images/" + postDocID + ".jpg");
 
     storageRef.put(ImageFile)   //global variable ImageFile
-       
-                   // AFTER .put() is done
+
+        // AFTER .put() is done
         .then(function () {
             console.log('2. Uploaded to Cloud Storage.');
             storageRef.getDownloadURL()
 
-                 // AFTER .getDownloadURL is done
+                // AFTER .getDownloadURL is done
                 .then(function (url) { // Get URL of the uploaded file
                     console.log("3. Got the download URL.");
 
@@ -237,9 +256,9 @@ function uploadPic(postDocID) {
                     // post document, and update it with an "image" field
                     // that contains the url of where the picture is stored.
                     db.collection("posts").doc(postDocID).update({
-                            "image": url // Save the URL into users collection
-                        })
-                         // AFTER .update is done
+                        "image": url // Save the URL into users collection
+                    })
+                        // AFTER .update is done
                         .then(function () {
                             console.log('4. Added pic URL to Firestore.');
                             // One last thing to do:
@@ -250,7 +269,7 @@ function uploadPic(postDocID) {
                 })
         })
         .catch((error) => {
-             console.log("error uploading to cloud storage");
+            console.log("error uploading to cloud storage");
         })
 }
 
@@ -259,24 +278,36 @@ function uploadPic(postDocID) {
 //--------------------------------------------
 function savePostIDforUser(postDocID) {
     firebase.auth().onAuthStateChanged(user => {
-          console.log("user id is: " + user.uid);
-          console.log("postdoc id is: " + postDocID);
-          db.collection("users").doc(user.uid).update({
-                myposts: firebase.firestore.FieldValue.arrayUnion(postDocID)
-          })
-          .then(() =>{
+        console.log("user id is: " + user.uid);
+        console.log("postdoc id is: " + postDocID);
+        db.collection("users").doc(user.uid).update({
+            myposts: firebase.firestore.FieldValue.arrayUnion(postDocID)
+        })
+            .then(() => {
                 console.log("5. Saved to user's document!");
-                                alert ("Post is complete!");
+                alert("Post is complete!");
                 //window.location.href = "showposts.html";
-           })
-           .catch((error) => {
+            })
+            .catch((error) => {
                 console.error("Error writing document: ", error);
-           });
+            });
     })
 }
 
+
+// Function to create an "Edit" button for each review
+function createEditButton(reviewId) {
+    const editButton = document.createElement('button');
+    editButton.classList.add('edit-review-btn');
+    editButton.textContent = 'Edit Review';
+    // Add an event listener to handle the edit button click
+    editButton.addEventListener('click', () => handleEditButtonClick(reviewId));
+    return editButton;
+}
+
+
 function populateReviews() {
-    console.log("test");
+    console.log("populate review starts");
     let parkCardTemplate = document.getElementById("reviewCardTemplate");
     let parkCardGroup = document.getElementById("reviewCardGroup");
 
@@ -295,8 +326,7 @@ function populateReviews() {
                 var description = doc.data().description;
                 var time = doc.data().timestamp.toDate();
                 var rating = doc.data().rating; // Get the rating value
-                console.log(rating)
-
+                console.log(rating);
                 console.log(time);
 
                 let reviewCard = parkCardTemplate.content.cloneNode(true);
@@ -305,6 +335,11 @@ function populateReviews() {
                     time
                 ).toLocaleString();
                 reviewCard.querySelector(".description").innerHTML = description;
+
+                // !!!!!NEW THING FOR EDITING REVIEW!!!!!
+                // Create and append the "Edit" button for each review
+                const editButton = createEditButton(doc.id); // Assuming doc.id is the review ID
+                reviewCard.querySelector(".edit-review-btn").dataset.reviewId = doc.id;
 
                 // Populate the star rating based on the rating value
 
@@ -331,19 +366,139 @@ populateReviews();
 function toggleDropdown(event) {
     const dropdownContent = event.target.nextElementSibling;
     dropdownContent.classList.toggle("show");
-  }
-  
-  window.onclick = function(event) {
-    if (!event.target.classList.contains('dropbtn'))  {
-      const dropdowns = document.getElementsByClassName("dropdown-content");
-      for (let i = 0; i < dropdowns.length; i++) {
-        const openDropdown = dropdowns[i];
-        if (openDropdown.classList.contains('show')) {
-          openDropdown.classList.remove('show');
+}
+
+window.onclick = function (event) {
+    if (!event.target.classList.contains('dropbtn')) {
+        const dropdowns = document.getElementsByClassName("dropdown-content");
+        for (let i = 0; i < dropdowns.length; i++) {
+            const openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+            }
         }
-      }
     }
-  }
+}
 
 
-  
+
+// Edit submitted reviews part
+async function getReviewData(reviewId) {
+    try {
+        const reviewDoc = await db.collection('reviews').doc(reviewId).get();
+        if (reviewDoc.exists) {
+            return reviewDoc.data();
+        } else {
+            throw new Error(`Review with ID ${reviewId} not found.`);
+        }
+    } catch (error) {
+        throw new Error(`Error fetching review data: ${error.message}`);
+    }
+}
+
+function updateReviewData(reviewId, newData) {
+    newData.timestamp = firebase.firestore.FieldValue.serverTimestamp();
+    db.collection("reviews")
+        .doc(reviewId)
+        .update(newData)
+        .then(() => {
+            console.log(`Review ${reviewId} data updated successfully.`);
+        })
+        .catch((error) => {
+            console.error(`Error updating review ${reviewId} data:`, error);
+        });
+}
+
+let editMode = false;
+let currentReviewId;
+let originalReviewData;
+
+async function editReview(event) {
+    const reviewId = event.currentTarget.dataset.reviewId;
+
+    try {
+        // Get review data from Firebase
+        originalReviewData = await getReviewData(reviewId);
+
+        // Check if the current user is the author of the review
+        const authorId = originalReviewData.userID; // Assuming the field is named 'userId'
+        const currentUser = firebase.auth().currentUser;
+
+        if (currentUser && currentUser.uid === authorId) {
+            // Get edit form elements
+            const titleElement = document.getElementById('edit-review-title');
+            const ratingElement = document.getElementById('edit-review-rating');
+            const descriptionElement = document.getElementById('edit-review-description');
+            const saveButton = document.querySelector('#save-edited-review-btn');
+
+            // Populate the edit form with the retrieved data
+            titleElement.textContent = originalReviewData.title;
+            ratingElement.textContent = originalReviewData.rating;
+            descriptionElement.textContent = originalReviewData.description;
+
+            // Record the current review ID
+            currentReviewId = reviewId;
+
+            // Enter edit mode
+            editMode = true;
+
+            // Show the edit form and save button
+            titleElement.contentEditable = 'true';
+            ratingElement.contentEditable = 'true';
+            descriptionElement.contentEditable = 'true';
+            saveButton.style.display = 'inline-block';
+        } else {
+            console.log("UserID didn't match. Cannot edit this review.");
+        } 
+    } catch (error) {
+            console.error('Error fetching review data:', error);
+        }
+    }
+
+
+
+async function saveEditedReview() {
+        const titleElement = document.getElementById('edit-review-title');
+        const ratingElement = document.getElementById('edit-review-rating');
+        const descriptionElement = document.getElementById('edit-review-description');
+        const timeElement = document.querySelector('.time');
+
+        const newTitle = titleElement.textContent;
+        const newRating = ratingElement.textContent;
+        const newDescription = descriptionElement.textContent;
+
+        try {
+            // Update the review data on the server
+            await updateReviewData(currentReviewId, {
+                title: newTitle,
+                rating: newRating,
+                description: newDescription,
+            });
+
+            // Display the current time
+            const currentTime = new Date();
+            const formattedTime = currentTime.toLocaleString(); // Customize the formatting if needed
+
+            timeElement.textContent = formattedTime; // Update the time element content
+
+            // Reset the UI to its original state
+            titleElement.textContent = newTitle;
+            ratingElement.textContent = newRating;
+            descriptionElement.textContent = newDescription;
+
+            // Set contenteditable attribute to false
+            titleElement.contentEditable = 'false';
+            ratingElement.contentEditable = 'false';
+            descriptionElement.contentEditable = 'false';
+
+            // currentReviewId = null;
+            editMode = false;
+
+            // Hide the save button
+            const saveButton = document.querySelector('#save-edited-review-btn');
+            saveButton.style.display = 'none';
+        } catch (error) {
+            console.error('Error updating review data:', error);
+        }
+    }
+

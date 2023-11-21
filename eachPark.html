@@ -230,7 +230,7 @@
                                         </ul>
                                         <!-- menu -->
                                         <div id="myDropdown" class="dropdown-content">
-                                            <span id="edit-review-btn">Edit review</span>
+                                            <span class="edit-review-btn" onclick="editReview(event)" data-review-id="{{review_id}}">Edit review</span>
                                             <span id="delete-review-btn">Delete review</span>
                                             <span id="report-review-btn">Report</span>
                                         </div>
@@ -241,7 +241,7 @@
                                             alt="Comment Images"> </div>
                                     <div class="comment-content card-body">
                                         <div class="comment-top">
-                                            <h6 class="title">Review Title</h6>
+                                            <h6 class="title" id="edit-review-title" contenteditable="false">Review Title</h6>
                                             
                                             <!-- <div class="rating"> <i class="fa fa-star" aria-hidden="true"></i> <i
                                                     class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star"
@@ -249,11 +249,12 @@
                                                     aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i>
                                             </div> -->
                                         </div>
-                                        <p class="star-rating"></p>
-                                        <p class="time">placeholder</p>
+                                        <p class="star-rating" id="edit-review-rating" contenteditable="false"></p>
+                                        <p class="time" id="edit-review-time">placeholder</p>
                                         <!-- <span class="subtitle">“ Review subtitle ”</span> -->
-                                        <p class="description">reveiw comment</p>
-                                    </div>
+                                        <p class="description" id="edit-review-description" contenteditable="false">reveiw comment</p>
+                                        <button class="save-edited-review-btn" id="save-edited-review-btn" style="display: none;" onclick="saveEditedReview('{{review_id}}')">Save</button>
+                                        <!-- <button id="save-edited-review-btn" style="display: none;" onclick="saveEditedReview()">Save</button>                                        </div> -->
                                 </div>
 
                             </template>
