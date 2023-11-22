@@ -40,23 +40,48 @@
 
     <nav class="container mt-4">
       <button class="btn btn-outline-secondary" onclick="history.back()">Back</button>
-  </nav>
+    </nav>
+
+    <h1 style="color:#45503b; text-align:center">User Settings</h1>
 
     <div class="user mt-2" style="text-decoration: none">
       <a href="userFeed.html"><img src="https://cdn-icons-png.flaticon.com/128/9480/9480279.png" width="70" height="70"></a>
-      <a href="userFeed.html"><span id="name-goes-here" style="color:black;"></span></a>
+      <a href="userFeed.html"><span id="name-goes-here" style="color:#45503b;"></span></a>
     </div>
     <div class="user">
       <img src="https://cdn-icons-png.flaticon.com/128/11117/11117306.png" width="70" height="auto">
-      <span id="email-goes-here"></span>
+      <span id="email-goes-here" style="color:#45503b"></span>
     </div>
+    <br>
     
+    <div class="container">
+      <form>
+          <fieldset class="mb-3" id="personalInfoFields" disabled>
+              <div class="form-group">
+                  <label style="color:#45503b">Change Your Display Name</label>
+                  <input type="text" id="nameInput" class="form-control" style="background-color:#c9d5b5; color:#45503b" placeholder="Enter your name">
+              </div>
+              <br>
+              <div class="form-group">
+                  <label style="color:#45503b">Your Home City</label>
+                  <input type="text" id="cityInput" class="form-control" style="background-color:#c9d5b5; color:#45503b" placeholder="Enter your city">
+              </div>
+          </fieldset>
+          <div class="d-flex justify-content-end mt-5">
+              <button type="button" class="btn btn-outline-secondary" onclick="editUserInfo()">Edit</button>
+              <span style="width: 10px"></span>
+              <button type="button" class="btn btn-primary" onclick="saveUserInfo()">Save</button>
+          </div>
+        </form>
+    </div>
+
+    <div class="container">
+      <nav>
+        <button class="btn btn-outline-secondary" onclick="location.href = './userPosts.html';">View and Delete Your Posts and Reviews</button>
+      </nav>
+    </div>
       
     <footer id="footer"></footer>
-    <!------------------------------>
-    <!-- Your HTML Layout go here -->
-    <!------------------------------>
-    <!-- Stuff for body goes here -->
 
 
     <!---------------------------------------------->
