@@ -58,8 +58,6 @@ function savePost() {
                 console.log("1. Post document added!");
                 console.log(doc.id);
                 uploadPic(doc.id);
-            }).then(() => {
-                window.location.href = "thanks.html"; // Redirect to the thanks page
           });
         } else {
             // No user is signed in.
@@ -88,23 +86,14 @@ function uploadPic(postDocID) {
         .then(function () {
             console.log('2. Uploaded to Cloud Storage.');
             storageRef.getDownloadURL()
-
-                // AFTER .getDownloadURL is done
                 .then(function (url) { // Get URL of the uploaded file
                     console.log("3. Got the download URL.");
-
-                    // Now that the image is on Storage, we can go back to the
-                    // post document, and update it with an "image" field
-                    // that contains the url of where the picture is stored.
                     db.collection("posts").doc(postDocID).update({
                         "image": url // Save the URL into users collection
                     })
                         // AFTER .update is done
                         .then(function () {
                             console.log('4. Added pic URL to Firestore.');
-                            // One last thing to do:
-                            // save this postID into an array for the OWNER
-                            // so we can show "my posts" in the future
                             savePostIDforUser(postDocID);
                         })
                 })
@@ -128,9 +117,8 @@ function savePostIDforUser(postDocID) {
                 console.log("5. Saved to user's document!");
                 alert("Post is complete!");
                 //window.location.href = "showposts.html";
-            })
-            .catch((error) => {
-                console.error("Error writing document: ", error);
+            }).then(() => {
+            window.location.href = "thanks.html"; // Redirect to the thanks page
             });
     })
 }
