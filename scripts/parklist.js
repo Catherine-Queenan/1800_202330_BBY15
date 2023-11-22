@@ -98,7 +98,7 @@ function displayCardsDynamically(collection) {
                 
                 currentUser.get().then(userDoc => {
                     //get the user name
-                    let favorites = userDoc.data().favorites;
+                    let favorites = userDoc.data().favorites || [];
                     if (favorites.includes(docID)) {
                        document.getElementById('save-' + docID).innerText = 'favorite';
                     } else {
@@ -122,7 +122,7 @@ displayCardsDynamically("parks");  //input param is the name of the collection
 //-----------------------------------------------------------------------------
 function updateFavorite(parkDocID) {
     currentUser.get().then(userDoc => {
-        let favorites = userDoc.data().favorites;
+        let favorites = userDoc.data().favorites || [];
         let iconID = 'save-' + parkDocID;
         let isFavorited = favorites.includes(parkDocID);
 
