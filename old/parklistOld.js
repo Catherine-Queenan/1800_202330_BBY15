@@ -17,8 +17,7 @@ function doAll() {
 }
 doAll();
 
-
-function addPark(code, name, city, details, lat, lng) {
+function addPark(code, name, city, province, busyness, details, lat, lng) {
     var parksRef = db.collection("parks");
     parksRef.doc(code).get()
         .then((doc) => {
@@ -29,6 +28,8 @@ function addPark(code, name, city, details, lat, lng) {
                     code: code,
                     name: name,
                     city: city,
+                    province: province,
+                    busyness: busyness,
                     details: details,
                     lat: lat,
                     lng: lng,
@@ -44,29 +45,20 @@ function addPark(code, name, city, details, lat, lng) {
 
 
 function addMultipleParks(parksToAdd) {
-    // Check if parksToAdd is defined and is an array
-    if (Array.isArray(parksToAdd)) {
-        parksToAdd.forEach((park) => {
-            addPark(park.code, park.name, park.city, park.details, park.lat, park.lng);
-        });
-    } else {
-        console.error('Invalid data format for parksToAdd');
-    }
+    // Example parks, you can add more or modify as needed
+    const parksToAdd = [
+        { code: "BBY01", name: "Burnaby Lake Park ", city: "Burnaby", province: "BC", busyness: "low", details: "A lovely place for small pups", lat: 49.2467097082573, lng: -122.9187029619698 },
+        { code: "AM01", name: "Buntzen Park", city: "Anmore", province: "BC", busyness: "moderate", details: "Close to town, and relaxing", lat: 49.3399431028579, lng: -122.85908496766939 },
+        { code: "NV01", name: "Mount Seymour Park", city: "North Vancouver", province: "BC", busyness: "crowd", details: "Amazing ski slope views", lat: 49.38847101455571, lng: -122.94092543551031 }, 
+    ];
+
+
+    parksToAdd.forEach((park) => {
+        addPark(park.code, park.name, park.city, park.province, park.busyness, park.details, park.lat, park.lng);
+    });
 }
 
-fetch('/scripts/parksData.json')
-  .then(response => {
-    // Check if the response is valid JSON
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return response.json();
-  })
-  .then(data => {
-    // Call addMultipleParks inside the then block
-    addMultipleParks(data);
-  })
-  .catch(error => console.error('Error fetching or parsing data:', error));
+
 
 addMultipleParks();
 
