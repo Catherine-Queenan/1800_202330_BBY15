@@ -63,7 +63,7 @@ function writeReview() {
         }
     });
 
-    // console.log(parkTitle, parkLevel, parkSeason, parkDescription, parkFlooded, parkScrambled, parkRating);
+    // console.log(parkTitle, parkRating);
     console.log(parkTitle, parkDescription, parkRating);
 
 

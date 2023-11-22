@@ -32,7 +32,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     
 </head>
 
@@ -41,65 +40,32 @@
 
     <nav class="container mt-4">
         <button class="btn btn-outline-secondary" onclick="history.back()">Back</button>
-    </nav>
+    </nav> 
 
-    <div class="container mt-3">
-            <h1 style="color:#45503b">View and Delete your Reviews and Posts</h1>
-    </div>
-        
-    <div class="container mt-4">
-            <h2 style="color:#45503b">My Posts</h2>
-        <div id="myposts-go-here" class="row row-cols-auto">
-        </div>
-    </div>
-        
-        
-        <!-- Templates for general use, not displayed -->
-        <!-- Has a "card-image", "card-title", and "card-description" -->
-    <template id="postCardTemplate">
-            <div class="card py-2 m-2" style="width: 18rem; background-color:#c9d5b5; color:#45503b; font-weight:bolder;">
-                <img class="card-image card-img-top" src=" ..." alt="...">
-                <div class="card-body">
-                    <p class="card-description" style="font-weight:bolder; font-size:1.5em">placeholder</p>
-                    <p class="parkID" style="font-size:1.2em">placeholder</p>
-                    <i class="material-icons" id="delete-icon">delete</i>
-                </div>
+    <form>
+        <div class="container py-3">
+            <div class="form-group" style="color:#45503b; font-weight:bolder">
+                <label for="exampleFormControlTextarea1">What is your reason for reporting?</label>
+                <textarea class="form-control" id="description" rows="3"></textarea>
             </div>
-    </template>
-
-    <div class="container mt-4">
-            <h2 style="color:#45503b">My Reviews</h2>
-        <div id="myreviews-go-here" class="row row-cols-auto">
-        </div>
-    </div>
-
-    <template id="reviewCardTemplate">
-        <div class="reviewCard" style="background-color:#45503b">
-            <img class="card-image card-img-top" src=" ..." alt="...">
-            <div class="card-body" style="background-color:#c9d5b5; padding:1em">
-                <h5 class="title">placeholder</h5>
-                <p class="star-rating"></p>
-                <p class="time">placeholder</p>
-                <br>
-                <p class="description">This card has supporting text below as a natural lead-in to additional content.
-                </p>
-                <i class="material-icons" id="delete-icon">delete</i>
-            </div>
-        </div>
-    </template>
+            <br>
             
+
+            <br>
+            <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-lg btn-primary pull-right" style="font-weight:bolder;" onclick="writeReport()">Submit</button>
+            </div>
+        </div>
+    </form>
+      
     <footer id="footer"></footer>
-
-
-    <!---------------------------------------------->
-    <!-- Your own JavaScript functions go here    -->
-    <!---------------------------------------------->
+    
 
     <!-- Link to scripts of your own -->
     <script src="./scripts/firebaseAPI_BBY15.js"></script>
     <script src="./scripts/skeleton.js"></script>
     <script src="./scripts/script.js"></script>
-    <script src="./scripts/userPosts.js"></script>
+    <script src="/scripts/report.js"></script>
 
 </body>
 

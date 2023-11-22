@@ -1,3 +1,21 @@
+//Global variable pointing to the current user's Firestore document
+var currentUser;  
+
+//Function that calls everything needed for the main page  
+function doAll() {
+  firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+          currentUser = db.collection("users").doc(user.uid); //global
+          console.log(currentUser);
+      } else {
+          // No user is signed in.
+          console.log("No user is signed in");
+          window.location.href = "login.html";
+      }
+  });
+}
+doAll();
+
 function displayParkInfo() {
     let params = new URL(window.location.href); //get URL of search bar
     let ID = params.searchParams.get("docID"); //get value for key "id"
@@ -25,6 +43,13 @@ function saveParkDocumentIDAndRedirect() {
     let ID = params.searchParams.get("docID");
     localStorage.setItem('parkDocID', ID);
     window.location.href = 'review.html';
+}
+
+function reportReview() {
+  let params = new URL(window.location.href) //get the url from the search bar
+  let ID = params.searchParams.get("reviewID");
+  localStorage.setItem('reviewID', ID);
+  window.location.href = 'report.html';
 }
 
 var ImageFile;
@@ -123,9 +148,6 @@ function savePostIDforUser(postDocID) {
     })
 }
 
-
-
-
 function populateReviews() {
     console.log("test");
     let parkCardTemplate = document.getElementById("reviewCardTemplate");
@@ -157,7 +179,9 @@ function populateReviews() {
                 reviewCard.querySelector(".time").innerHTML = new Date(
                     time
                 ).toLocaleString();
-                reviewCard.querySelector( ".description").innerHTML = `Description: ${description}`;
+                reviewCard.querySelector( ".description").innerHTML = description;
+                
+                reviewCard.querySelector('#report-icon').onclick = () => reportReview(doc.id);
 
                 // Populate the star rating based on the rating value
                 

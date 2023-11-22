@@ -76,7 +76,7 @@ function deleteFromMyPosts(postid) {
 
 function deleteFromStorage(postid) {
     // Create a reference to the file to delete
-    var imageRef = storage.ref.child('images/' + postid + '.jpg');
+    var imageRef = storageRef.child('images/' + postid + '.jpg');
 
     // Delete the file
     imageRef.delete().then(() => {
@@ -183,7 +183,7 @@ function deleteFromMyReviews(reviewID) {
 
 function deleteFromReviewStorage(reviewID) {
     // Create a reference to the file to delete
-    var reviewImageRef = storage.ref.child('images/' + reviewID + '.jpg');
+    var reviewImageRef = storageRef.child('images/' + reviewID + '.jpg');
 
     // Delete the file
     reviewImageRef.delete().then(() => {
