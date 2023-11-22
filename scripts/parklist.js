@@ -1,5 +1,6 @@
 //Global variable pointing to the current user's Firestore document
-var currentUser;   
+var currentUser;  
+
 
 //Function that calls everything needed for the main page  
 function doAll() {
@@ -81,11 +82,11 @@ function displayCardsDynamically(collection) {
                 newcard.querySelector('.card-image').src = `./images/${parkCode}.jpg`; //Example: NV01.jpg
                 newcard.querySelector('a').href = "eachPark.html?docID="+docID;
                 newcard.querySelector('i').id = 'save-' + docID;   //guaranteed to be unique
-                newcard.querySelector('i').onclick = () => updatefavorite(docID);
+                newcard.querySelector('i').onclick = () => updateFavorite(docID);
                 
                 currentUser.get().then(userDoc => {
                     //get the user name
-                    var favorites = userDoc.data().favorites;
+                    let favorites = userDoc.data().favorites;
                     if (favorites.includes(docID)) {
                        document.getElementById('save-' + docID).innerText = 'favorite';
                     } else {
@@ -96,7 +97,6 @@ function displayCardsDynamically(collection) {
                 //attach to gallery, Example: "parks-go-here"
                 document.getElementById(collection + "-go-here").appendChild(newcard);
 
-                //i++;   //Optional: iterate variable to serve as unique ID
             })
         })
 }
@@ -108,7 +108,7 @@ displayCardsDynamically("parks");  //input param is the name of the collection
 // It adds the park to the "favorites" array
 // Then it will change the favorite icon from the hollow to the solid version. 
 //-----------------------------------------------------------------------------
-function updatefavorite(parkDocID) {
+function updateFavorite(parkDocID) {
     currentUser.get().then(userDoc => {
         let favorites = userDoc.data().favorites;
         let iconID = 'save-' + parkDocID;
@@ -133,3 +133,5 @@ function updatefavorite(parkDocID) {
         }
     });
 }
+
+

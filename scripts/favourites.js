@@ -1,12 +1,8 @@
-//----------------------------------------------------------
-// This function is the only function that's called.
-// This strategy gives us better control of the page.
-//----------------------------------------------------------
 function doAll() {
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
             insertNameFromFirestore(user);
-            getfavorites(user)
+            getFavorites(user)
         } else {
             console.log("No user is signed in");
         }
@@ -33,7 +29,7 @@ function insertNameFromFirestore(user) {
 // and retrieves the "saved" array (of favorites) 
 // and dynamically displays them in the gallery
 //----------------------------------------------------------
-function getfavorites(user) {
+function getFavorites(user) {
     db.collection("users").doc(user.uid).get()
         .then(userDoc => {
 
