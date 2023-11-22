@@ -143,6 +143,7 @@ function populateReviews() {
             console.log(reviews);
             reviews.forEach((doc) => {
                 var title = doc.data().title;
+                var image = doc.data().image;
                 var description = doc.data().description;
                 var time = doc.data().timestamp.toDate();
                 var rating = doc.data().rating; // Get the rating value
@@ -152,6 +153,7 @@ function populateReviews() {
 
                 let reviewCard = parkCardTemplate.content.cloneNode(true);
                 reviewCard.querySelector(".title").innerHTML = title;
+                reviewCard.querySelector(".card-image").src = image;
                 reviewCard.querySelector(".time").innerHTML = new Date(
                     time
                 ).toLocaleString();
