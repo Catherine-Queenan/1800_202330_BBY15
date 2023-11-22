@@ -1,6 +1,7 @@
+
 function writeReport() {
-    console.log("inside write review");
-    let docID = document.getElementById("reviewID");
+    // console.log("inside write review");
+    // let docID = document.getElementById("reviewid").value;
     var user = firebase.auth().currentUser;
     if (user) {
         var currentUser = db.collection("users").doc(user.uid);
@@ -8,7 +9,7 @@ function writeReport() {
         // Get the document for the current user.
         db.collection("reports").add({
             user: currentUser,
-            documentID: docID,
+            // documentID: docID,
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
 
         }).then(doc => {
