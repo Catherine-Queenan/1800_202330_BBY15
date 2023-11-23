@@ -43,7 +43,7 @@
     <nav id="navbar"></nav>
 
     <nav class="container mt-4">
-        <button class="btn btn-outline-secondary" onclick="history.back()">Back</button>
+        <button class="btn btn-outline-secondary" onclick="navigateToPage()">Back</button>
     </nav>
 
     <div class="container">
@@ -69,12 +69,12 @@
 
                                 <div class="image-container text-center">
                                     <div class="profile-pic" id="profilePic">
-                                        <label class="-label" for="file" onclick="uploadImage(event)">
+                                        <label class="-label" for="file" onclick="uploadImage()">
                                           <span class="glyphicon glyphicon-camera"></span>
                                           <span>Change Image</span>
                                         </label>
-                                        <input id="file" type="file" onchange="uploadImage(event)" />
-                                        <img src="https://returntofreedom.org/store/wp-content/uploads/default-placeholder.png" id="output" width="2000" />
+                                        <input id="file" type="file" accept="image/*" onchange="uploadImage()" />
+                                        <img src="https://returntofreedom.org/store/wp-content/uploads/default-placeholder.png" id="pupImg" width="2000" />
                                       </div>
                                 </div>
 
@@ -121,11 +121,10 @@
 
                                         <div class="row" style="font-size: 1.5em">
                                             <div class="col-sm-3 col-md-2 col-5">
-                                                <label style="font-weight:bold;">Age</label>
+                                                <label style="font-weight:bold;">Weight</label>
                                             </div>
-                                            <div class="col-md-8 col-6 edit-field" id="pupAge">
-                                                <!-- Pup Age -->
-                                                <div class="existing-mode" contenteditable="false">Pup age</div>
+                                            <div class="col-md-8 col-6 edit-field" id="pupWeight">
+                                                <div class="existing-mode" contenteditable="false">Pup weight</div>
                                             </div>
                                         </div>
                                         <hr />

@@ -27,11 +27,11 @@ firebase.auth().onAuthStateChanged(function (user) {
                     $('.pupName').text(data.name);
                     $('#pupBreed').text(data.breed);
                     $('#pupBday').text(data.birthday);
-                    $('#pupAge').text(data.age);
+                    $('#pupWeight').text(data.weight);
                     $('#pupGender').text(data.gender);
                     $('#pupStatus').text(data.status);
                     $('#pupAbout').text(data.about);
-                    // $('#imgProfile').attr('src', data.profilePicture);
+                    // $('#pupImg').attr('src', data.ppimgUrl);
 
                   } else {
                     console.log("No such document!");
@@ -85,24 +85,24 @@ window.onload = function () {
     // get the corresponding dog-profile data from Firebase Database 
     const userImageRef = db.collection("dog-profiles").doc(pupprofileId);
 
-    // check if the ppimg-url exists
+    // check if the ppimgUrl exists
     userImageRef.get().then((doc) => {
       if (doc.exists) {
         // check if there is existing URL
-        const existingUrl = doc.data()['ppimg-url'];
-    
+        const existingUrl = doc.data()['ppimgUrl'];
+
         if (existingUrl) {
-          // console.log("URL already exists:", existingUrl);
+          console.log("URL already exists:", existingUrl);
 
           const profilePicImg = document.getElementById('profilePic').getElementsByTagName('img')[0];
           profilePicImg.src = existingUrl;
         } else {
           // update URL
           userImageRef.update({
-            'ppimg-url': downloadURL
+            'ppimgUrl': downloadURL
           }).then(() => {
             console.log("Document successfully updated!");
-    
+
             // Set the upload image's URL into the id=profilePic element
             const profilePicImg = document.getElementById('profilePic').getElementsByTagName('img')[0];
             profilePicImg.src = downloadURL;
@@ -122,25 +122,32 @@ window.onload = function () {
 }
 
 
-function uploadImage(event) {
-  // get the current URL id 
-  const urlParams = new URLSearchParams(window.location.search);
-  const pupprofileId = urlParams.get('id');
+function uploadImage() {
+  // Check if there is a user authenticated
+  const user = firebase.auth().currentUser;
 
-  if (pupprofileId) {
-    const fileInput = event.target;
+  if (user) {
+    const userId = user.uid;
 
+    // Get the pupprofileId from the current URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const pupprofileId = urlParams.get('id');
+
+    // Change the image name to use the current user's UID
+    const imageName = userId + '_' + new Date().getTime();
+
+    // Get the file input element
+    const fileInput = document.getElementById('file');
+
+    // Check if a file is selected
     if (fileInput && fileInput.files && fileInput.files.length > 0) {
       const file = fileInput.files[0];
       const storageRef = firebase.storage().ref();
 
-      // Generate a unique by using pupprofileId
-      const imageName = pupprofileId + '_' + new Date().getTime();
-
-      // Upload images to Firebase Storage
+      // Upload the image to Firebase Storage
       const uploadTask = storageRef.child('images/' + imageName).put(file);
 
-      //  Listen for state changes, errors, and completion of the upload
+      // Listen for state changes, errors, and completion of the upload
       uploadTask.on(
         'state_changed',
         (snapshot) => {
@@ -159,30 +166,30 @@ function uploadImage(event) {
           // Get the download URL for the image
           uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
             // Display the image on the webpage
-            document.getElementById('output').src = downloadURL;
+            document.getElementById('pupImg').src = downloadURL;
 
-            // Store the upload images' URL into Firebase Database 
+            // Update the pup profile in the database with the new image URL
             const userImageRef = db.collection("dog-profiles").doc(pupprofileId);
 
             userImageRef.update({
-              'ppimg-url': downloadURL
+              'ppimgUrl': downloadURL
             }).then(() => {
               console.log("Document successfully updated!");
 
-              // Set the upload image's URL into the id=profilePic element
+              // Set the uploaded image's URL into the id=profilePic element
               const profilePicImg = document.getElementById('profilePic').getElementsByTagName('img')[0];
               profilePicImg.src = downloadURL;
-            }).catch((error) => {
-              console.error("Error updating document: ", error);
+            }).catch((updateError) => {
+              console.error("Error updating document: ", updateError);
             });
           });
-        }
+        } 
       );
     } else {
       console.error('No file selected.');
     }
   } else {
-    console.error('No pupprofileId found in the URL.');
+    console.log("User is not signed in.");
   }
 }
 
@@ -224,7 +231,7 @@ async function saveChangesToFirebase() {
     // Define the elements to edit
     const elementsToEdit = [
       { id: "pupNameId", type: "text", field: "name" },
-      { id: "pupAge", type: "number", field: "age" },
+      { id: "pupWeight", type: "number", field: "weight" },
       { id: "pupBreed", type: "text", field: "breed" },
       { id: "pupAbout", type: "textarea", field: "about" },
       { id: "pupBday", type: "date", field: "birthday" },
@@ -253,6 +260,7 @@ async function saveChangesToFirebase() {
         const inputElement = element.querySelector(elementInfo.type === "textarea" ? "textarea" : "input");
         newValue = inputElement ? inputElement.value : "";
       }
+
 
       // Check if the value has changed
       if (editedValues[elementInfo.id] !== newValue) {
@@ -348,7 +356,7 @@ function toggleEditModeElements() {
   // Define the elements to edit
   const elementsToEdit = [
     { id: "pupNameId", type: "text" },
-    { id: "pupAge", type: "number" },
+    { id: "pupWeight", type: "number" },
     { id: "pupBreed", type: "text" },
     { id: "pupAbout", type: "textarea" },
     { id: "pupBday", type: "date" },
@@ -504,3 +512,10 @@ editButton.addEventListener("click", function () {
   // Toggle edit mode
   toggleEditMode();
 });
+
+
+// Back button function
+function navigateToPage() {
+  // Replace 'page.html' with the actual page URL you want to navigate to.
+  window.location.href = 'pupprofileList.html';
+}
