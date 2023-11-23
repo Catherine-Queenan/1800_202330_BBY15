@@ -19,6 +19,14 @@ a[href] {
     font-family: 'Quicksand', sans-serif;
 }
 
+h1 {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bolder;
+    color:#45503b;
+    letter-spacing: 0.05em;
+    text-align: center;
+}
+
 .bg-light {
     color:#45503b;
     letter-spacing: 0.2em;
