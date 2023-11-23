@@ -17,7 +17,7 @@ firebase.auth().onAuthStateChanged(function (user) {
                             var data = doc.data();
 
                             // Check if ppimg-url exists, otherwise use a default image URL
-                            var imgUrl = data['ppimg-url'] || 'https://returntofreedom.org/store/wp-content/uploads/default-placeholder.png';
+                            var imgUrl = data['ppimgUrl'] || 'https://returntofreedom.org/store/wp-content/uploads/default-placeholder.png';
 
                             // Create card template using jQuery UI draggable
                             var cardTemplate = `
