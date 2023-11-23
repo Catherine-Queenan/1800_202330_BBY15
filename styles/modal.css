@@ -54,5 +54,6 @@
 #playButton {
     background-color: #fd5821;
     border-radius: 5px;
+    font-weight:bolder;
     color: #f5c78e;
 }
