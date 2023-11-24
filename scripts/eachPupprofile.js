@@ -183,7 +183,7 @@ function uploadImage() {
               console.error("Error updating document: ", updateError);
             });
           });
-        } 
+        }
       );
     } else {
       console.error('No file selected.');
@@ -352,6 +352,14 @@ function updatePageWithNewData(updatedData) {
 }
 
 
+// Function to extract dog profile ID from the URL
+function getDogProfileIdFromURL() {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get("id");
+}
+
+
+
 function toggleEditModeElements() {
   // Define the elements to edit
   const elementsToEdit = [
@@ -451,16 +459,22 @@ function toggleEditModeElements() {
       inputElement.focus();
     }
   });
+
+  const deleteButton = document.getElementById("delete-pupprofile-btn");
+  const cancelButton = document.getElementById("cancel-pupprofile-btn");
+
+  if (isEditMode) {
+    // Show delete and cancel buttons in edit mode
+    deleteButton.style.display = "block";
+    cancelButton.style.display = "block";
+  } else {
+    // Hide delete and cancel buttons when not in edit mode
+    deleteButton.style.display = "none";
+    cancelButton.style.display = "none";
+  }
 }
 
 
-// Function to extract dog profile ID from the URL
-function getDogProfileIdFromURL() {
-  const urlParams = new URLSearchParams(window.location.search);
-  return urlParams.get("id");
-}
-
-// Change between edit and save pup profile by clicking the button
 function toggleEditMode() {
   console.log("Entering toggleEditMode");
 
@@ -513,6 +527,58 @@ editButton.addEventListener("click", function () {
   toggleEditMode();
 });
 
+// Cancel editing pup profile
+function cancelEditMode() {
+  // Reload the page to display the original data from before entering edit mode
+  location.reload();
+}
+var cancelButton = document.getElementById("cancel-pupprofile-btn");
+cancelButton.addEventListener("click", function() {
+// Call the cancelEditMode function when the cancel button is clicked
+cancelEditMode();
+});
+
+
+// ===== Delete confirmation pop up ======
+function getCurrentPupId() {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get('id');
+}
+
+function deletePupProfileFromFirebase(pupId) {
+  const pupProfilesRef = db.collection("dog-profiles");
+  return pupProfilesRef.doc(pupId).delete();
+}
+
+document.getElementById("confirm-delete-btn").addEventListener("click", function () {
+  const currentPupId = getCurrentPupId();
+
+  deletePupProfileFromFirebase(currentPupId)
+      .then(() => {
+        // hide the delete confirmation modal
+        const deleteConfirmationModal = document.getElementById('delete-confirmation-modal');
+        if (deleteConfirmationModal) {
+            deleteConfirmationModal.style.display = 'none';
+        } else {
+            console.error("Delete confirmation modal not found");
+        }
+
+        showSuccessConfirmationModal();
+      })
+      .catch((error) => {
+          console.error("Error deleting document: ", error);
+      });
+});
+
+
+function showSuccessConfirmationModal() {
+  const confirmationModal = new bootstrap.Modal(document.getElementById('success-delete-confirmation'));
+  confirmationModal.show();
+}
+
+document.getElementById("confirm-ok-btn").addEventListener("click", function () {
+  navigateToPage();
+});
 
 // Back button function
 function navigateToPage() {
