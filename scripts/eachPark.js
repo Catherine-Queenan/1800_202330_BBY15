@@ -140,7 +140,10 @@ function savePostIDforUser(postDocID) {
         })
             .then(() => {
                 console.log("5. Saved to user's document!");
-                alert("Post is complete!");
+                Swal.fire({
+                  title: "Post complete!",
+                  icon: "success"
+                });
                 //window.location.href = "showposts.html";
             }).then(() => {
             window.location.href = "thanks.html"; // Redirect to the thanks page

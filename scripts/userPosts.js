@@ -82,7 +82,10 @@ function deleteFromStorage(postid) {
     imageRef.delete().then(() => {
         // File deleted successfully
         console.log("3. image deleted from storage");
-        alert("DELETE is completed!");
+        Swal.fire({
+            title: "Post deleted!",
+            icon: "success"
+          });
         location.reload();
     }).catch((error) => {
         // Uh-oh, an error occurred!
@@ -189,7 +192,10 @@ function deleteFromReviewStorage(reviewID) {
     reviewImageRef.delete().then(() => {
         // File deleted successfully
         console.log("3. image deleted from storage");
-        alert("DELETE is completed!");
+        Swal.fire({
+            title: "Review deleted!",
+            icon: "success"
+          });
         location.reload();
     }).catch((error) => {
         // Uh-oh, an error occurred!

@@ -1,25 +1,26 @@
-
 function writeReport() {
-    // console.log("inside write review");
-    // let docID = document.getElementById("reviewid").value;
     var user = firebase.auth().currentUser;
-    if (user) {
-        var currentUser = db.collection("users").doc(user.uid);
-
-        // Get the document for the current user.
-        db.collection("reports").add({
-            user: currentUser,
-            // documentID: docID,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
-
-        }).then(doc => {
-          console.log("1. Report document added!");
-          console.log(doc.id);
-        }).then(() => {
-          window.location.href = "thanks.html"; // Redirect to the thanks page
-      })
+    var postid = localStorage.getItem('postid');
+    var reportedPost = JSON.parse(localStorage.getItem('reportedPost'));
+  
+    if (user && postid && reportedPost) {
+      var currentUser = db.collection("users").doc(user.uid);
+  
+      db.collection("reports").add({
+        user: currentUser,
+        postid: postid,
+        reportedPost: reportedPost, // Include the reported post data
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(doc => {
+        console.log("1. Report document added!");
+        console.log(doc.id);
+      }).then(() => {
+        localStorage.removeItem('postid');
+        localStorage.removeItem('reportedPost');
+        window.location.href = "thanks.html";
+      });
     } else {
-        console.log("No user is signed in");
-        window.location.href = 'report.html';
+      console.log("No user is signed in or postid or reportedPost is missing");
+      window.location.href = 'report.html';
     }
-}
+  }

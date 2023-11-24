@@ -16,10 +16,10 @@ function doAll() {
 }
 doAll();
 
-function makeReport() {
-  let params = new URL(window.location.href) //get the url from the search bar
-  let ID = params.searchParams.get("postid");
-  localStorage.setItem('postid', ID);
+function makeReport(postid, post) {
+  // Pass both postid and post data to the report page
+  localStorage.setItem('postid', postid);
+  localStorage.setItem('reportedPost', JSON.stringify(post));
   window.location.href = 'report.html';
 }
 
@@ -48,19 +48,16 @@ showPosts();
 // from the post document extracted (name, description, image)
 //------------------------------------------------------------
 function displayPostCard(doc) {
-       var desc = doc.data().description; //gets the length field
-       var image = doc.data().image; //the field that contains the URL
-       var user = doc.data().name; // display name
-       var postid = doc.id;
+  var desc = doc.data().description;
+  var image = doc.data().image;
+  var user = doc.data().name;
+  var postid = doc.id;
 
-       //clone the new card
-       let newcard = document.getElementById("postCardTemplate").content.cloneNode(true);
-       //populate with image and caption
-       newcard.querySelector('.card-image').src = image;
-       newcard.querySelector('.card-description').innerHTML = desc;
-       newcard.querySelector('.card-user').innerHTML = user;
-       newcard.querySelector('#report-icon').onclick = () => makeReport(doc.id);
-         
-       //append to the posts
-       document.getElementById("posts-go-here").append(newcard);
+  let newcard = document.getElementById("postCardTemplate").content.cloneNode(true);
+  newcard.querySelector('.card-image').src = image;
+  newcard.querySelector('.card-description').innerHTML = desc;
+  newcard.querySelector('.card-user').innerHTML = user;
+  newcard.querySelector('#report-icon').onclick = () => makeReport(postid, doc.data()); // Pass both postid and post data
+
+  document.getElementById("posts-go-here").append(newcard);
 }
