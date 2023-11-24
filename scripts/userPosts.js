@@ -46,18 +46,32 @@ function displayMyPostCard(doc) {
 }
 
 function deletePost(postid) {
-    var result = confirm("Want to delete?");
-    if (result) {
-        //Logic to delete the item
-        db.collection("posts").doc(postid)
-                        .delete()
-        .then(() => {
-            console.log("1. Document deleted from Posts collection");
+    var result = Swal.fire({
+        title: "Are you sure?",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Delete",
+        denyButtonText: `Don't Delete`
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          db.collection("posts").doc(postid)
+                                .delete()
+          .then(() => {
+            console.log("1. Document deleted from posts collection");
             deleteFromMyPosts(postid);
-        }).catch((error) => {
-            console.error("Error removing document: ", error);
+            Swal.fire({
+                title: "Deleted!",
+                icon: "success"
+              }) 
+          .then(() => {
+            location.reload();
         });
-    }
+          });
+        } else if (result.isDenied) {
+          Swal.fire("Post not deleted", "", "info");
+        };
+      });
 }
 
 
@@ -82,11 +96,6 @@ function deleteFromStorage(postid) {
     imageRef.delete().then(() => {
         // File deleted successfully
         console.log("3. image deleted from storage");
-        Swal.fire({
-            title: "Post deleted!",
-            icon: "success"
-          });
-        location.reload();
     }).catch((error) => {
         // Uh-oh, an error occurred!
     });
@@ -158,18 +167,32 @@ function displayMyReviewCard(doc) {
 }
 
 function deleteReview(reviewID) {
-    var result = confirm("Want to delete?");
-    if (result) {
-        //Logic to delete the item
-        db.collection("reviews").doc(reviewID)
-                        .delete()
-        .then(() => {
-            console.log("1. Document deleted from Posts collection");
-            deleteFromMyReviews(reviewID);
-        }).catch((error) => {
-            console.error("Error removing document: ", error);
+    var result = Swal.fire({
+        title: "Are you sure?",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Delete",
+        denyButtonText: `Don't Delete`
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          db.collection("reviews").doc(reviewID)
+                                .delete()
+          .then(() => {
+            console.log("1. Document deleted from reviews collection");
+            deleteFromMyPosts(reviewID);
+            Swal.fire({
+                title: "Deleted!",
+                icon: "success"
+              }) 
+          .then(() => {
+            location.reload();
         });
-    }
+          });
+        } else if (result.isDenied) {
+          Swal.fire("Review not deleted", "", "info");
+        };
+      });
 }
 
 function deleteFromMyReviews(reviewID) {
@@ -178,7 +201,7 @@ function deleteFromMyReviews(reviewID) {
                 myreviews: firebase.firestore.FieldValue.arrayRemove(reviewID)
             })
             .then(() => {
-                console.log("2. post deleted from user doc");
+                console.log("2. review deleted from user doc");
                 deleteFromStorage(reviewID);
             })
     })
@@ -192,11 +215,6 @@ function deleteFromReviewStorage(reviewID) {
     reviewImageRef.delete().then(() => {
         // File deleted successfully
         console.log("3. image deleted from storage");
-        Swal.fire({
-            title: "Review deleted!",
-            icon: "success"
-          });
-        location.reload();
     }).catch((error) => {
         // Uh-oh, an error occurred!
     });

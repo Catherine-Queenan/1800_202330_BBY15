@@ -138,7 +138,6 @@ function saveReviewIDforUser(reviewDocID) {
         })
         .then(() =>{
               console.log("5. Saved to user's document!");
-                              alert ("Review is complete!");
               //window.location.href = "showposts.html";
          }).then(() => {
           window.location.href = "thanks.html"; // Redirect to the thanks page
