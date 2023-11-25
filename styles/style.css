@@ -79,10 +79,13 @@ h1 {
 
 .form-control:focus {
     background-color:#f5c78e;
+    color:#45503b;
+    font-weight:bolder;
 }
 
 .form-control:disabled {
     background-color:#f5c78e;
+    color:#45503b;
 }
 
 .navbar {
