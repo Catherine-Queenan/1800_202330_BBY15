@@ -151,7 +151,7 @@
         "lat": 49.20730204969371, 
         "lng": -122.96158249094469,
         "water fountain": false,
-        "poop bag station": false,
+        "poop bag station": true,
         "agility park": false,
         "notice board": true,
         "shaded areas": true,
