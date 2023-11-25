@@ -50,7 +50,10 @@ function saveUserInfo() {
     })
     .then(() => {
         console.log("Document successfully updated!");
-        alert("Information updated!");
+        Swal.fire({
+            title: "Information Updated!",
+            icon: "success"
+          });
     })
     //c) disable edit
     document.getElementById('personalInfoFields').disabled = true;
