@@ -30,8 +30,9 @@ function displayParkInfo() {
             parkCode = thisPark.code;
             parkName = doc.data().name;
 
+
             // only populate title, and image
-            document.getElementById("parkName").innerHTML = parkName;
+            document.getElementById("park_Name").innerHTML = parkName;
             let imgEvent = document.querySelector(".park-img");
             imgEvent.src = "../images/" + parkCode + ".jpg";
         });
