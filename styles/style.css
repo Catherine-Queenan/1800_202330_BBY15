@@ -147,3 +147,14 @@ h1 {
 .card-image {
     max-height: 200px;
 }
+
+.position-relative {
+    width: 400px;
+    height: 300px;
+    overflow: hidden;
+}
+
+.park-img {
+    width: 400px;
+    height: auto;
+}
