@@ -59,3 +59,9 @@ const createbtn = document.getElementById("btn-createPupprofile");
 createbtn.addEventListener("click", () => {
     window.location.href = 'pupprofileForm.html';
 });
+
+// Back button function
+function navigateToPage() {
+    // Replace 'page.html' with the actual page URL you want to navigate to.
+    window.location.href = 'homepage.html';
+  }
