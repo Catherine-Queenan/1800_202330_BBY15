@@ -1,6 +1,99 @@
 //Global variable pointing to the current user's Firestore document
 var currentUser;  
 
+// Global variable for parks collection 
+var parksRef;
+
+var parks = [];
+
+// Geolocation API
+if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+        function (position) {
+            const userLatitude = position.coords.latitude;
+            const userLongitude = position.coords.longitude;
+
+            // Call a function to sort and display parks based on distance
+            getAndSortParksByDistance(userLatitude, userLongitude);
+        },
+        function (error) {
+            console.error("Error getting location: " + error.message);
+        }
+    );
+} else {
+    console.error("Geolocation is not supported by this browser");
+}
+
+function getAndSortParksByDistance(userLat, userLng) {
+    const parksRef = db.collection('parks');
+
+    parksRef.get()
+        .then(querySnapshot => {
+            parks = [];
+
+            querySnapshot.forEach(doc => {
+                const parkData = doc.data();
+                const distance = calculateDistance(userLat, userLng, parkData.lat, parkData.lng);
+
+                parks.push({
+                    key: doc.id,
+                    name: parkData.name,
+                    city: parkData.city,
+                    details: parkData.details,
+                    distance: distance
+                });
+            });
+
+            // Sort the parks by distance
+            parks.sort((park1, park2) => park1.distance - park2.distance);
+
+            // Update your UI with the sorted parks
+            updateParksList(parks);
+        })
+        .catch(error => {
+            console.error("Error fetching parks from Firestore: ", error);
+        });
+}
+
+
+// Haversine formula to calculate distance between user and a park
+function calculateDistance(userLat, userLng, parkLat, parkLng) {
+    const earthRadius = 6371; // Radius of the Earth in kilometers
+
+    const dLat = toRadians(parkLat - userLat);
+    const dLng = toRadians(parkLng - userLng);
+
+    const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(toRadians(userLat)) * Math.cos(toRadians(parkLat)) *
+        Math.sin(dLng / 2) * Math.sin(dLng / 2);
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    const distance = earthRadius * c; // Distance in kilometers
+
+    return distance;
+}
+
+function toRadians(degrees) {
+    return degrees * (Math.PI / 180);
+}
+
+function sortParksByDistance(userLat, userLng) {
+    // Assuming parks is an array of objects with latitude and longitude properties
+    parks.sort((park1, park2) => {
+        const distance1 = calculateDistance(userLat, userLng, park1.latitude, park1.longitude);
+        const distance2 = calculateDistance(userLat, userLng, park2.latitude, park2.longitude);
+
+        return distance1 - distance2;
+    });
+
+    // Now, you can use the sorted parks list to update your page
+    updateParksList(parks);
+}
+
+
+
 
 //Function that calls everything needed for the main page  
 function doAll() {
@@ -19,7 +112,7 @@ doAll();
 
 
 function addPark(code, name, city, details, lat, lng) {
-    var parksRef = db.collection("parks");
+    parksRef = db.collection("parks"); // Global
     parksRef.doc(code).get()
         .then((doc) => {
             if (doc.exists) {
@@ -63,12 +156,16 @@ fetch('/scripts/parksData.json')
     return response.json();
   })
   .then(data => {
+    console.log(data);
     // Call addMultipleParks inside the then block
     addMultipleParks(data);
+    console.log(parks);
+
+    displayCardsDynamically("parks");  //input param is the name of the collection
   })
   .catch(error => console.error('Error fetching or parsing data:', error));
 
-addMultipleParks();
+
 
 //------------------------------------------------------------------------------
 // Input parameter is a string representing the collection we are reading from
@@ -113,7 +210,7 @@ function displayCardsDynamically(collection) {
         })
 }
 
-displayCardsDynamically("parks");  //input param is the name of the collection
+
 
 //-----------------------------------------------------------------------------
 // This function is called whenever the user clicks on the "favorite" icon.
@@ -145,5 +242,52 @@ function updateFavorite(parkDocID) {
         }
     });
 }
+
+function updateParksList(parks) {
+    // Assuming "parks-go-here" is the ID of the element where you want to display the parks
+    const container = document.getElementById("parks-go-here");
+
+    // Clear the existing content in the container
+    container.innerHTML = '';
+
+    // Iterate through the sorted parks and create cards dynamically
+    parks.forEach(park => {
+        const cardTemplate = document.getElementById("parkCardTemplate");
+        const newCard = cardTemplate.content.cloneNode(true);
+
+        // Fill in the card content with park data
+        newCard.querySelector('.card-title').innerHTML = park.name;
+        newCard.querySelector('.card-city').innerHTML = park.city;
+        // newCard.querySelector('.card-text').innerHTML = `Distance: ${park.distance.toFixed(2)} km`;
+        newCard.querySelector('.card-text').innerHTML = park.details;
+        newCard.querySelector('.card-image').src = `./images/${park.key}.jpg`;
+        newCard.querySelector('a').href = "eachPark.html?docID=" + park.key;
+        newCard.querySelector('i').id = 'save-' + park.key;
+
+        currentUser.get().then(userDoc => {
+            // Get the user's favorites
+            const favorites = userDoc.data().favorites || [];
+            
+            // Check if the current park is in the user's favorites
+            if (favorites.includes(park.key)) {
+                document.getElementById('save-' + park.key).innerText = 'favorite';
+            } else {
+                document.getElementById('save-' + park.key).innerText = 'favorite_border';
+            }
+        });
+
+        // Attach the new card to the container
+        container.appendChild(newCard);
+    });
+}
+
+// ... (your existing code)
+
+// Call this function after getting and sorting the parks
+updateParksList(parks);
+
+
+
+
 
 

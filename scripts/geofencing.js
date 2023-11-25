@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         fetchParkInformation().then(() => {
             // Assume userLocation is obtained through geolocation
-            const proximityRadius = 1; // in kilometers
+            const proximityRadius = 15; // in kilometers
 
             checkProximityToParks(userLocation, proximityRadius);
         });
