@@ -92,9 +92,6 @@ function sortParksByDistance(userLat, userLng) {
     updateParksList(parks);
 }
 
-
-
-
 //Function that calls everything needed for the main page  
 function doAll() {
     firebase.auth().onAuthStateChanged(user => {
@@ -161,7 +158,9 @@ fetch('/scripts/parksData.json')
     addMultipleParks(data);
     console.log(parks);
 
-    displayCardsDynamically("parks");  //input param is the name of the collection
+
+
+    // displayCardsDynamically("parks");  //input param is the name of the collection
   })
   .catch(error => console.error('Error fetching or parsing data:', error));
 
@@ -170,45 +169,45 @@ fetch('/scripts/parksData.json')
 //------------------------------------------------------------------------------
 // Input parameter is a string representing the collection we are reading from
 //------------------------------------------------------------------------------
-function displayCardsDynamically(collection) {
-    let cardTemplate = document.getElementById("parkCardTemplate"); // Retrieve the HTML element with the ID "parkCardTemplate" and store it in the cardTemplate variable. 
+// function displayCardsDynamically(collection) {
+//     let cardTemplate = document.getElementById("parkCardTemplate"); // Retrieve the HTML element with the ID "parkCardTemplate" and store it in the cardTemplate variable. 
 
-    db.collection(collection).get()   //the collection called "parks"
-        .then(allParks => {
-            //var i = 1;  //Optional: if you want to have a unique ID for each park
-            allParks.forEach(doc => { //iterate thru each doc
-                var title = doc.data().name;       // get value of the "name" key
-                var details = doc.data().details;  // get value of the "details" key
-                var parkCode = doc.data().code;    //get unique ID to each park to be used for fetching right image
-                var parkCity = doc.data().city; //gets the length field
-                var docID = doc.id;
-                let newcard = cardTemplate.content.cloneNode(true); // Clone the HTML template to create a new card (newcard) that will be filled with Firestore data.
+//     db.collection(collection).get()   //the collection called "parks"
+//         .then(allParks => {
+//             //var i = 1;  //Optional: if you want to have a unique ID for each park
+//             allParks.forEach(doc => { //iterate thru each doc
+//                 var title = doc.data().name;       // get value of the "name" key
+//                 var details = doc.data().details;  // get value of the "details" key
+//                 var parkCode = doc.data().code;    //get unique ID to each park to be used for fetching right image
+//                 var parkCity = doc.data().city; //gets the length field
+//                 var docID = doc.id;
+//                 let newcard = cardTemplate.content.cloneNode(true); // Clone the HTML template to create a new card (newcard) that will be filled with Firestore data.
 
-                //update title and text and image
-                newcard.querySelector('.card-title').innerHTML = title;
-                newcard.querySelector('.card-city').innerHTML = parkCity;
-                newcard.querySelector('.card-text').innerHTML = details;
-                newcard.querySelector('.card-image').src = `./images/${parkCode}.jpg`; //Example: NV01.jpg
-                newcard.querySelector('a').href = "eachPark.html?docID="+docID;
-                newcard.querySelector('i').id = 'save-' + docID;   //guaranteed to be unique
-                newcard.querySelector('i').onclick = () => updateFavorite(docID);
+//                 //update title and text and image
+//                 newcard.querySelector('.card-title').innerHTML = title;
+//                 newcard.querySelector('.card-city').innerHTML = parkCity;
+//                 newcard.querySelector('.card-text').innerHTML = details;
+//                 newcard.querySelector('.card-image').src = `./images/${parkCode}.jpg`; //Example: NV01.jpg
+//                 newcard.querySelector('a').href = "eachPark.html?docID="+docID;
+//                 newcard.querySelector('i').id = 'save-' + docID;   //guaranteed to be unique
+//                 newcard.querySelector('i').onclick = () => updateFavorite(docID);
                 
-                currentUser.get().then(userDoc => {
-                    //get the user name
-                    let favorites = userDoc.data().favorites || [];
-                    if (favorites.includes(docID)) {
-                       document.getElementById('save-' + docID).innerText = 'favorite';
-                    } else {
-                        document.getElementById('save-' + docID).innerText = 'favorite_border';
-                    }
-                })
+//                 currentUser.get().then(userDoc => {
+//                     //get the user name
+//                     let favorites = userDoc.data().favorites || [];
+//                     if (favorites.includes(docID)) {
+//                        document.getElementById('save-' + docID).innerText = 'favorite';
+//                     } else {
+//                         document.getElementById('save-' + docID).innerText = 'favorite_border';
+//                     }
+//                 })
 
-                //attach to gallery, Example: "parks-go-here"
-                document.getElementById(collection + "-go-here").appendChild(newcard);
+//                 //attach to gallery, Example: "parks-go-here"
+//                 document.getElementById(collection + "-go-here").appendChild(newcard);
 
-            })
-        })
-}
+//             })
+//         })
+// }
 
 
 
@@ -263,6 +262,7 @@ function updateParksList(parks) {
         newCard.querySelector('.card-image').src = `./images/${park.key}.jpg`;
         newCard.querySelector('a').href = "eachPark.html?docID=" + park.key;
         newCard.querySelector('i').id = 'save-' + park.key;
+        newCard.querySelector('i').onclick = () => updateFavorite(park.key);
 
         currentUser.get().then(userDoc => {
             // Get the user's favorites
@@ -281,10 +281,8 @@ function updateParksList(parks) {
     });
 }
 
-// ... (your existing code)
 
-// Call this function after getting and sorting the parks
-updateParksList(parks);
+
 
 
 
