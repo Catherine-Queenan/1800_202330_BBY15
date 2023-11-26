@@ -196,17 +196,8 @@ option {
     color:#c9d5b5 !important;
 }
 
-#confirmButtonColor {
-    background-color:#fd5821;
-    color:#f5c78e;
-}
-
-#denyButtonColor {
-    background-color:#f5c78e;
-    color:#fd5821;
-}
-
-#cancelButtonColor {
-    background-color:#c9d5b5;
+.lead {
     color:#45503b;
+    text-align: center;
+    margin-top: 1rem;
 }
