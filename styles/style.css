@@ -189,3 +189,24 @@ option {
     padding: 0.25em;
     border-color:#c9d5b5;
 }
+
+.swal2-popup {
+    background:#45503b !important;
+    border: 1px solid #c9d5b5 !important;
+    color:#c9d5b5 !important;
+}
+
+#confirmButtonColor {
+    background-color:#fd5821;
+    color:#f5c78e;
+}
+
+#denyButtonColor {
+    background-color:#f5c78e;
+    color:#fd5821;
+}
+
+#cancelButtonColor {
+    background-color:#c9d5b5;
+    color:#45503b;
+}
