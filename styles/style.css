@@ -145,7 +145,8 @@ h1 {
 }
 
 .card-image {
-    max-height: 200px;
+    height:auto;
+    width: auto;
 }
 
 .position-relative {
@@ -159,4 +160,33 @@ h1 {
 .park-img {
     width: 400px;
     height: auto;
+}
+
+input {
+    color:#45503b;
+    background-color:#f2efe7;
+    padding: 0.25em;
+    border-color:#c9d5b5;
+}
+
+textarea {
+    background-color:#f2efe7;
+    color:#45503b;
+    padding: 0.25em;
+    border-color:#c9d5b5;
+}
+
+select {
+    background-color:#f2efe7;
+    color:#45503b;
+    padding: 0.25em;
+    border-color:#c9d5b5;
+}
+
+option {
+    background-color:#f2efe7;
+    color:#45503b;
+    font-size: 0.7em;
+    padding: 0.25em;
+    border-color:#c9d5b5;
 }
