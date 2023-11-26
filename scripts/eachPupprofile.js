@@ -545,15 +545,54 @@ function getCurrentPupId() {
   return urlParams.get('id');
 }
 
-function deletePupProfileFromFirebase(pupId) {
+function getUserId() {
+  // Get the current user from Firebase Authentication
+  const user = firebase.auth().currentUser;
+
+  if (user) {
+    // If a user is authenticated, return the user's UID
+    return user.uid;
+  } else {
+    console.error("No authenticated user found");
+  }
+}
+
+function deletePupProfileFromFirebase(pupId, userId) {
   const pupProfilesRef = db.collection("dog-profiles");
-  return pupProfilesRef.doc(pupId).delete();
+  const usersRef = db.collection("users");
+
+  // Fetch the user document
+  return usersRef
+    .doc(userId)
+    .get()
+    .then((userDoc) => {
+      // Check if the user document exists
+      if (userDoc.exists) {
+        // Get the current dogs array
+        const dogsArray = userDoc.data().dogs || [];
+
+        // Remove the pupId from the array
+        const updatedDogsArray = dogsArray.filter((dogId) => dogId !== pupId);
+
+        // Update the user document with the new dogs array
+        return usersRef.doc(userId).update({ dogs: updatedDogsArray });
+      } else {
+        // Handle the case where the user document does not exist
+        console.error("User document not found");
+        throw new Error("User document not found");
+      }
+    })
+    .then(() => {
+      // After updating the user document, delete the pup profile
+      return pupProfilesRef.doc(pupId).delete();
+    });
 }
 
 document.getElementById("confirm-delete-btn").addEventListener("click", function () {
   const currentPupId = getCurrentPupId();
+  const userId = getUserId();
 
-  deletePupProfileFromFirebase(currentPupId)
+  deletePupProfileFromFirebase(currentPupId, userId)
       .then(() => {
         // hide the delete confirmation modal
         const deleteConfirmationModal = document.getElementById('delete-confirmation-modal');

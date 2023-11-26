@@ -3,7 +3,7 @@ function addDogProfiles() {
     var name = document.getElementById("name").value;
     var breed = document.getElementById("breed").value;
     var birthday = document.getElementById("birthday").value;
-    var gender = document.getElementById("gender").value;
+    var gender = document.querySelector('input[name="gender"]:checked').value;
     var weight = document.getElementById("weight").value;
     var status = document.getElementById("status").value;
     var about = document.getElementById("about").value;
