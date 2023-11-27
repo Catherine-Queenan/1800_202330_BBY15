@@ -1,0 +1,21 @@
+.pupsPlayingDiv {
+    font-family: 'Barlow', sans-serif;
+    margin-top: 10vh;
+    margin-bottom: 7vh;
+    color: #45503b;
+    border: 2px solid #45503b;
+    border-radius: 20px;
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-bottom: 0.5%;
+    padding-top: 1%;
+}
+.pups-playing-img {
+    width: 6%;
+    height: auto;
+    border-radius: 50%;
+}
+
+.pups-playing-list {
+    font-size: 20px;
+}
