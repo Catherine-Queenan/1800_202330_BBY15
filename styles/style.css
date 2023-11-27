@@ -201,3 +201,31 @@ option {
     text-align: center;
     margin-top: 1rem;
 }
+
+.pupsPlayingDiv {
+    font-family: 'Barlow', sans-serif;
+    margin-top: 10vh;
+    margin-bottom: 7vh;
+    color: #45503b;
+    border: 2px solid #45503b;
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-bottom: 1%;
+    padding-top: 1%;
+    border-radius: 0%;
+}
+.pups-playing-img {
+    width: 4%;
+    height: auto;
+    border-radius: 50%;
+}
+
+.form-group {
+    display: flex;
+    align-items: top;
+    margin-top: 20px;
+}
+
+.adventure_post_container {
+    margin-bottom: 3.5vh;
+}
