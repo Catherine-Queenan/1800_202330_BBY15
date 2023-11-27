@@ -1,18 +1,18 @@
 //Global variable pointing to the current user's Firestore document
-var currentUser;  
+var currentUser;
 
 //Function that calls everything needed for the main page  
 function doAll() {
-  firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-          currentUser = db.collection("users").doc(user.uid); //global
-          console.log(currentUser);
-      } else {
-          // No user is signed in.
-          console.log("No user is signed in");
-          window.location.href = "login.html";
-      }
-  });
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            currentUser = db.collection("users").doc(user.uid); //global
+            console.log(currentUser);
+        } else {
+            // No user is signed in.
+            console.log("No user is signed in");
+            window.location.href = "login.html";
+        }
+    });
 }
 doAll();
 
@@ -47,24 +47,24 @@ function saveParkDocumentIDAndRedirect() {
 }
 
 function reportReview() {
-  let params = new URL(window.location.href) //get the url from the search bar
-  let ID = params.searchParams.get("reviewID");
-  localStorage.setItem('reviewID', ID);
-  window.location.href = 'report.html';
+    let params = new URL(window.location.href) //get the url from the search bar
+    let ID = params.searchParams.get("reviewID");
+    localStorage.setItem('reviewID', ID);
+    window.location.href = 'report.html';
 }
 
 var ImageFile;
 function listenFileSelect() {
-      // listen for file selection
-      var fileInput = document.getElementById("mypic-input"); // pointer #1
-      const image = document.getElementById("mypic-goes-here"); // pointer #2
+    // listen for file selection
+    var fileInput = document.getElementById("mypic-input"); // pointer #1
+    const image = document.getElementById("mypic-goes-here"); // pointer #2
 
-			// When a change happens to the File Chooser Input
-      fileInput.addEventListener('change', function (e) {
-          ImageFile = e.target.files[0];   //Global variable
-          var blob = URL.createObjectURL(ImageFile);
-          image.src = blob; // Display this image
-      })
+    // When a change happens to the File Chooser Input
+    fileInput.addEventListener('change', function (e) {
+        ImageFile = e.target.files[0];   //Global variable
+        var blob = URL.createObjectURL(ImageFile);
+        image.src = blob; // Display this image
+    })
 }
 listenFileSelect();
 
@@ -84,7 +84,7 @@ function savePost() {
                 console.log("1. Post document added!");
                 console.log(doc.id);
                 uploadPic(doc.id);
-          });
+            });
         } else {
             // No user is signed in.
             console.log("Error, no user signed in");
@@ -143,7 +143,7 @@ function savePostIDforUser(postDocID) {
                 console.log("5. Saved to user's document!");
                 //window.location.href = "showposts.html";
             }).then(() => {
-            window.location.href = "thanks.html"; // Redirect to the thanks page
+                window.location.href = "thanks.html"; // Redirect to the thanks page
             });
     })
 }
@@ -179,19 +179,19 @@ function populateReviews() {
                 reviewCard.querySelector(".time").innerHTML = new Date(
                     time
                 ).toLocaleString();
-                reviewCard.querySelector( ".description").innerHTML = description;
-                
+                reviewCard.querySelector(".description").innerHTML = description;
+
                 reviewCard.querySelector('#report-icon').onclick = () => reportReview(doc.id);
 
                 // Populate the star rating based on the rating value
-                
-	              // Initialize an empty string to store the star rating HTML
-								let starRating = "";
-								// This loop runs from i=0 to i<rating, where 'rating' is a variable holding the rating value.
+
+                // Initialize an empty string to store the star rating HTML
+                let starRating = "";
+                // This loop runs from i=0 to i<rating, where 'rating' is a variable holding the rating value.
                 for (let i = 0; i < rating; i++) {
                     starRating += '<span class="material-icons">star</span>';
                 }
-								// After the first loop, this second loop runs from i=rating to i<5.
+                // After the first loop, this second loop runs from i=rating to i<5.
                 for (let i = rating; i < 5; i++) {
                     starRating += '<span class="material-icons">star_outline</span>';
                 }
@@ -203,3 +203,57 @@ function populateReviews() {
 }
 
 populateReviews();
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    var parkData;
+
+    // Get the document ID from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const docId = urlParams.get('docID');
+
+    if (docId) {
+        // Fetch the specific park document
+        const parkRef = db.collection('parks').doc(docId);
+
+        parkRef.get().then((doc) => {
+            if (doc.exists) {
+                parkData = doc.data();
+
+                const pupsPlaying = parkData.pupsPlaying || [];
+
+                // Map each dog ID to a promise that fetches the dog's data
+                const dogPromises = pupsPlaying.map(dogProfileId => {
+                    return db.collection('dog-profiles').doc(dogProfileId).get();
+                });
+
+                // Fetch all dog data asynchronously
+                Promise.all(dogPromises).then(dogSnapshots => {
+                    const dogDataArray = dogSnapshots.map(dogProfileDoc => dogProfileDoc.data());
+
+                    // Create HTML content for the Popup, including dog information
+                    const pupsPlayingContent = `
+                        <ul class="pups-playing-list">
+                            ${dogDataArray.map(dogData => `<li><img class="pups-playing-img" src="${dogData.ppimgUrl}" alt="Dog Image"> ${dogData.name}</li>`).join('')}
+                        </ul>
+                    `;
+
+                    // Set the innerHTML of the selected div to the pupsPlayingContent
+                    const pupsPresentDiv = document.querySelector('.pupsPresent');
+                    if (pupsPresentDiv) {
+                        pupsPresentDiv.innerHTML = pupsPlayingContent;
+                    } else {
+                        console.error('Element with class name "pupsPresent" not found.');
+                    }
+                });
+            } else {
+                console.error('Park document not found with ID:', docId);
+            }
+        }).catch(error => {
+            console.error('Error getting park document:', error);
+        });
+    } else {
+        console.error('Document ID not found in the URL.');
+    }
+});
+

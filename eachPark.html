@@ -59,15 +59,19 @@
             <img class="park-img responsive" src="" alt="Park photo">
         </div>
         <div class="review_btn_container">
-            <button class="btn btn-primary position-absolute btn-lg end-0 m-3"
-                style="font-weight:bolder;" onclick="saveParkDocumentIDAndRedirect()">Write a Review</button>
+            <button class="btn btn-primary position-absolute btn-lg end-0 m-3" style="font-weight:bolder;"
+                onclick="saveParkDocumentIDAndRedirect()">Write a Review</button>
         </div>
 
     </div>
 
     <div class="container mt-4">
+        <div class="pupsPlayingDiv">
+            <h2>Pups Playing: </h2>
+            <div class="pupsPresent"></div>
+        </div>
         <h2 style="color:#45503b">Share your adventure with a post!</h2>
-        <form>
+        <form class="adventure_post_container">
             <div class="form-group">
                 <label style="font-weight:bolder; color:#45503b">Caption:</label>
                 <textarea id="description" rows="4" cols="50"
