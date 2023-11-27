@@ -33,6 +33,7 @@ function showPosts() {
     // let timestamp = params.searchParams.get("last_updated");
     db.collection("posts")
             // .where("name", "==", parkID) Attempt to link to specific park.
+            .orderBy("last_updated" , "desc") // Orders by the timestamp in firestore
             .get()
             .then(snap => {
                snap.forEach(doc => {
