@@ -17,5 +17,32 @@
 }
 
 .pups-playing-list {
+    list-style-type: none;
     font-size: 20px;
+    text-transform: capitalize;
 }
+
+/* Park features styles */
+.park-features-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 9%;
+    margin-left: 9%;
+}
+#park-features-container h5 {
+    width: 100%;
+    margin-bottom: 10px;
+}
+.park-features-style {
+    flex: 1 0 calc(33.33% -10px);
+    box-sizing: border-box;
+    margin: 5px;
+    width: 150px;
+    padding: 10px;
+    background-color: #45503b;
+    border-radius:20px;
+    color: #c9d5b5;
+    text-align: center;
+    text-transform: capitalize;
+}
+

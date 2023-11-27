@@ -6,16 +6,18 @@
         "details": "Seasonal time restrictions on the trail and open area have been lifted. The park and trail are now open for off-leash activity year-round from dawn until dusk. Dogs must be leashed outside of designated off-leash area.",
         "lat": 49.29048,
         "lng": -122.93014,
-        "water fountain": true,
-        "poop bag station": false,
-        "agility park": false,
-        "notice board": false,
-        "shaded areas": true,
-        "seating": true,
-        "listed rules": true,
-        "walking trails": true,
-        "swimming area": true,
-        "astro-turf": false
+        "features": {
+            "water fountain": true,
+            "poop bag station": false,
+            "agility park": false,
+            "notice board": false,
+            "shaded areas": true,
+            "seating": true,
+            "listed rules": true,
+            "walking trails": true,
+            "swimming area": true,
+            "astro-turf": false
+        }
     },
     {
         "code": "OLB02",
@@ -24,16 +26,18 @@
         "details": "Also known locally as Eastlake Park. Partial enclosure with access year-round adjacent to a fully enclosed basketball court. ",
         "lat": 49.2523,
         "lng": -122.90488,
-        "water fountain": false,
-        "poop bag station": false,
-        "agility park": false,
-        "notice board": false,
-        "shaded areas": true,
-        "seating": true,
-        "listed rules": false,
-        "walking trails": false,
-        "swimming area": false,
-        "astro-turf": true
+        "features": {
+            "water fountain": false,
+            "poop bag station": false,
+            "agility park": false,
+            "notice board": false,
+            "shaded areas": true,
+            "seating": true,
+            "listed rules": false,
+            "walking trails": false,
+            "swimming area": false,
+            "astro-turf": true
+        }
     },
     {
         "code": "OLB03",
@@ -42,16 +46,18 @@
         "details": "Open area and trail on Byrne Creek Dike with access year-round. Dogs must be leashed outside of designated off-leash area and trail. Please use caution at road crossings on Byrne Creek Dike off-leash trail.",
         "lat": 49.1925934,
         "lng": -122.9994676,
-        "water fountain": true,
-        "poop bag station": false,
-        "agility park": true,
-        "notice board": false,
-        "shaded areas": true,
-        "seating": true,
-        "listed rules": false,
-        "walking trails": true,
-        "swimming area": true,
-        "astro-turf": false
+        "features": {
+            "water fountain": true,
+            "poop bag station": false,
+            "agility park": true,
+            "notice board": false,
+            "shaded areas": true,
+            "seating": true,
+            "listed rules": false,
+            "walking trails": true,
+            "swimming area": true,
+            "astro-turf": false
+        }
     },
     {
         "code": "OLB04",
@@ -60,16 +66,18 @@
         "details": "Enclosed area with access year-round.",
         "lat": 49.288521912596465, 
         "lng": -123.01923908938134,
-        "water fountain": true,
-        "poop bag station": false,
-        "agility park": false,
-        "notice board": false,
-        "shaded areas": true,
-        "seating": true,
-        "listed rules": false,
-        "walking trails": false,
-        "swimming area": false,
-        "astro-turf": false
+        "features": {
+            "water fountain": true,
+            "poop bag station": false,
+            "agility park": false,
+            "notice board": false,
+            "shaded areas": true,
+            "seating": true,
+            "listed rules": false,
+            "walking trails": false,
+            "swimming area": false,
+            "astro-turf": false
+        }
     },
     {
         "code": "OLB05",
@@ -78,16 +86,18 @@
         "details": "Fenced enclosure for all dogs, separate fenced enclosure for small dogs only, and off-leash loop trail north of Penzance Dr with access year-round.",
         "lat": 45.42079,
         "lng": -75.69362,
-        "water fountain": true,
-        "poop bag station": false,
-        "agility park": false,
-        "notice board": true,
-        "shaded areas": true,
-        "seating": true,
-        "listed rules": false,
-        "walking trails": true,
-        "swimming area": false,
-        "astro-turf": false
+        "features": {
+            "water fountain": true,
+            "poop bag station": false,
+            "agility park": false,
+            "notice board": true,
+            "shaded areas": true,
+            "seating": true,
+            "listed rules": false,
+            "walking trails": true,
+            "swimming area": false,
+            "astro-turf": false
+        }
     },
     {
         "code": "OLB06",
@@ -96,16 +106,18 @@
         "details": "Fenced enclosure with separate area for small dogs only, access year-round.",
         "lat": 49.216405,
         "lng": -123.007392,
-        "water fountain": true,
-        "poop bag station": true,
-        "agility park": false,
-        "notice board": false,
-        "shaded areas": true,
-        "seating": true,
-        "listed rules": false,
-        "walking trails": false,
-        "swimming area": false,
-        "astro-turf": false
+        "features": {
+            "water fountain": true,
+            "poop bag station": true,
+            "agility park": false,
+            "notice board": false,
+            "shaded areas": true,
+            "seating": true,
+            "listed rules": false,
+            "walking trails": false,
+            "swimming area": false,
+            "astro-turf": false
+        }
     },
     {
         "code": "OLB07",
@@ -114,16 +126,18 @@
         "details": "Trail and open area with access year-round.",
         "lat": 49.23003599437195, 
         "lng": -122.9477045037491,
-        "water fountain": true,
-        "poop bag station": false,
-        "agility park": true,
-        "notice board": false,
-        "shaded areas": true,
-        "seating": false,
-        "listed rules": false,
-        "walking trails": true,
-        "swimming area": false,
-        "astro-turf": false
+        "features": {
+            "water fountain": true,
+            "poop bag station": false,
+            "agility park": true,
+            "notice board": false,
+            "shaded areas": true,
+            "seating": false,
+            "listed rules": false,
+            "walking trails": true,
+            "swimming area": false,
+            "astro-turf": false
+        }
     },
     {
         "code": "OLB08",
@@ -132,16 +146,18 @@
         "details": "Trail and open area (hydro corridor and lawn area west of Ramsay Creek) with access year-round. Dogs must be leashed outside of designated off-leash area.",
         "lat": 49.23351800019934, 
         "lng": -122.93343261253905,
-        "water fountain": false,
-        "poop bag station": true,
-        "agility park": true,
-        "notice board": true,
-        "shaded areas": true,
-        "seating": true,
-        "listed rules": false,
-        "walking trails": true,
-        "swimming area": false,
-        "astro-turf": false
+        "features": {
+            "water fountain": false,
+            "poop bag station": true,
+            "agility park": true,
+            "notice board": true,
+            "shaded areas": true,
+            "seating": true,
+            "listed rules": false,
+            "walking trails": true,
+            "swimming area": false,
+            "astro-turf": false
+        }
     },
     {
         "code": "OLB09",
@@ -150,16 +166,18 @@
         "details": "Fenced enclosure with access year-round.",
         "lat": 49.20730204969371, 
         "lng": -122.96158249094469,
-        "water fountain": false,
-        "poop bag station": true,
-        "agility park": false,
-        "notice board": true,
-        "shaded areas": true,
-        "seating": true,
-        "listed rules": true,
-        "walking trails": false,
-        "swimming area": false,
-        "astro-turf": false
+        "features": {
+            "water fountain": false,
+            "poop bag station": true,
+            "agility park": false,
+            "notice board": true,
+            "shaded areas": true,
+            "seating": true,
+            "listed rules": true,
+            "walking trails": false,
+            "swimming area": false,
+            "astro-turf": false
+        }
     },
     {
         "code": "OLB10",
@@ -168,16 +186,18 @@
         "details": "Fenced enclosure with access year-round, a block away from the Piper Ave entrance of Burnaby Lake Regional Park.",
         "lat": 49.247023324735174, 
         "lng": -122.93523419054927,
-        "water fountain": true,
-        "poop bag station": false,
-        "agility park": false,
-        "notice board": false,
-        "shaded areas": true,
-        "seating": true,
-        "listed rules": true,
-        "walking trails": true,
-        "swimming area": false,
-        "astro-turf": false
+        "features": {
+            "water fountain": true,
+            "poop bag station": false,
+            "agility park": false,
+            "notice board": false,
+            "shaded areas": true,
+            "seating": true,
+            "listed rules": true,
+            "walking trails": true,
+            "swimming area": false,
+            "astro-turf": false
+        }
     },
     {
         "code": "OLB11",
@@ -186,15 +206,17 @@
         "details": "Fenced enclosure with access year-round. Park is open for use while the on-site agility course is being completed.",
         "lat": 49.27186487605657, 
         "lng": -123.01261238992919,
-        "water fountain": true,
-        "poop bag station": true,
-        "agility park": true,
-        "notice board": true,
-        "shaded areas": true,
-        "seating": true,
-        "listed rules": true,
-        "walking trails": false,
-        "swimming area": false,
-        "astro-turf": true
+        "features": {
+            "water fountain": true,
+            "poop bag station": true,
+            "agility park": true,
+            "notice board": true,
+            "shaded areas": true,
+            "seating": true,
+            "listed rules": true,
+            "walking trails": false,
+            "swimming area": false,
+            "astro-turf": true
+        }
     }
 ]

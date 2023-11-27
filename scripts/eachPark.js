@@ -1,3 +1,45 @@
+document.addEventListener("DOMContentLoaded", function () {
+    // Get docID from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const docID = urlParams.get('docID');
+
+    // Fetch park data using docID
+    fetch('/scripts/parksData.json')
+        .then(response => response.json())
+        .then(parksData => {
+            const park = parksData.find(park => park.code === docID);
+            if (park) {
+                // Populate the HTML elements with park data
+                displayParkFeatures(park.features);
+                // Populate other elements as needed
+            } else {
+                console.error('Park not found');
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching park data', error);
+        });
+});
+
+// Function to display park features
+function displayParkFeatures(features) {
+    const featuresContainer = document.getElementById("park-features-container");
+
+    // Clear previous content
+    featuresContainer.innerHTML = "<h5>Features:</h5>";
+
+    // Loop through features and display them
+    for (const feature in features) {
+        if (features[feature]) {
+            const featureElement = document.createElement("div");
+            featureElement.textContent = feature; 
+            // featureElement.textContent = feature + ': ' + features[feature]; // Add feature description
+            featureElement.classList.add("park-features-style"); 
+            featuresContainer.appendChild(featureElement);
+        }
+    }
+}
+
 //Global variable pointing to the current user's Firestore document
 var currentUser;
 
@@ -30,7 +72,6 @@ function displayParkInfo() {
             parkCode = thisPark.code;
             parkName = doc.data().name;
 
-
             // only populate title, and image
             document.getElementById("park_Name").innerHTML = parkName;
             let imgEvent = document.querySelector(".park-img");
@@ -38,6 +79,7 @@ function displayParkInfo() {
         });
 }
 displayParkInfo();
+
 
 function saveParkDocumentIDAndRedirect() {
     let params = new URL(window.location.href) //get the url from the search bar
@@ -204,7 +246,7 @@ function populateReviews() {
 
 populateReviews();
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
 
     var parkData;
 

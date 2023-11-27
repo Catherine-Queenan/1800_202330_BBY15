@@ -621,6 +621,6 @@ document.getElementById("confirm-ok-btn").addEventListener("click", function () 
 
 // Back button function
 function navigateToPage() {
-  // Replace 'page.html' with the actual page URL you want to navigate to.
+  // Navigate to pupprofileList.html when click the back button.
   window.location.href = 'pupprofileList.html';
 }
