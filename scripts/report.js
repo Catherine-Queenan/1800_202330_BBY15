@@ -17,10 +17,11 @@ function writeReport() {
       }).then(() => {
         localStorage.removeItem('postid');
         localStorage.removeItem('reportedPost');
+        console.log(Test);
         window.location.href = "thanks.html";
       });
     } else {
       console.log("No user is signed in or postid or reportedPost is missing");
-      window.location.href = 'report.html';
+      window.location.href = 'thanks.html';
     }
   }
