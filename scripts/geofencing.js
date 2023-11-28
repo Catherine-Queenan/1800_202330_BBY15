@@ -201,6 +201,8 @@ document.addEventListener("DOMContentLoaded", function () {
         })
             .then(() => {
                 console.log("Park document successfully updated with pupsPlaying!");
+
+                showMap();
             })
             .catch((error) => {
                 console.error("Error updating park document with pupsPlaying: ", error);
