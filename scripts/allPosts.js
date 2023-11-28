@@ -16,6 +16,7 @@ function doAll() {
 }
 doAll();
 
+// Function to create a report for a post.
 function makeReport(postid, post) {
   // Pass both postid and post data to the report page
   localStorage.setItem('postid', postid);

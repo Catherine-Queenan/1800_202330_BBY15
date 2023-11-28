@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let parks = [];
 
+    // Function to gather current park information and location.
     function fetchParkInformation() {
         // Use Firebase SDK to get park information
         // For example, you might use Firebase Firestore
@@ -37,6 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
+    // Function to check the user's location
     function successCallback(position) {
         const userLocation = {
             latitude: position.coords.latitude,
@@ -55,6 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Handle location retrieval errors here.
     }
 
+    // Function to compare user location and park locations.
     function checkProximityToParks(userLocation, radius) {
         const currentUser = getCurrentUser();
 
@@ -128,6 +131,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
+    // Function to keep track of distance between users and parks.
     function calculateDistance(location1, location2) {
         // Implement a distance calculation function (e.g., Haversine formula).
         // Return the distance in meters.
@@ -151,16 +155,19 @@ document.addEventListener("DOMContentLoaded", function () {
         return distance;
     }
 
+    // Function to show a message to the user.
     function showMessage(message, parkName) {
         // Implement code to display a message to the user.
         alert(message + ' ' + parkName); // Or use a more customized message display method.
     }
 
+    // Function to wait for user input.
     function promptUserAction() {
         //Implement your action or notification to prompt the user.
         alert("You are near the park! Would you like to ....?")
     }
 
+    // Function for the modal to open.
     function openModal(parkName) {
         document.getElementById('parkName').innerText = parkName + "!";
         document.getElementById('modal').style.display = 'block';
@@ -168,6 +175,7 @@ document.addEventListener("DOMContentLoaded", function () {
         fetchUserDataAndPopulateCheckboxes();
     }
 
+    // Function for the modal to close once it is updated with the user's input.
     function closeModal() {
         document.getElementById('modal').style.display = 'none';
         document.getElementById('overlay').style.display = 'none';
@@ -216,6 +224,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // window.location.reload();
     });
 
+    // Function to hold the data on firebase for the unique user, showing that they are currently at a park.
     function updateFirebaseDocumentForCurrentUser() {
 
         var currentUser = getCurrentUser();
@@ -237,6 +246,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    // Function to gather the user data and create a custom list of dogs.
     function fetchUserDataAndPopulateCheckboxes() {
         const currentUser = getCurrentUser();
 
@@ -309,6 +319,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
+    // Function to get the information for the current user.
     function getCurrentUser() {
         return firebase.auth().currentUser;
     }

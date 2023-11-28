@@ -1,3 +1,4 @@
+// Function to cover a variety of uses, including getting name and favourites.
 function doAll() {
     firebase.auth().onAuthStateChanged(user => {
         if (user) {

@@ -121,7 +121,7 @@ window.onload = function () {
   }
 }
 
-
+// Function to add an image to the pup profile and the database.
 function uploadImage() {
   // Check if there is a user authenticated
   const user = firebase.auth().currentUser;
@@ -202,6 +202,7 @@ let isEditMode = false;
 // Declare the object to store edited values
 let editedValues = {};
 
+// Function to gather the existing data from the database to view.
 async function getExistingDataFromFirebase(pupId) {
   try {
     const db = firebase.firestore();
@@ -220,6 +221,7 @@ async function getExistingDataFromFirebase(pupId) {
   }
 }
 
+// Function that is async to save any changes made to the database.
 async function saveChangesToFirebase() {
   return new Promise(async (resolve, reject) => {
     // Get the dog profile ID from the URL
@@ -304,6 +306,7 @@ async function saveChangesToFirebase() {
   });
 }
 
+// Function to update firebase with the new data.
 function updateFirebaseData(updatedData) {
   // Get the dog profile ID from the URL
   const pupId = getDogProfileIdFromURL();
@@ -336,6 +339,7 @@ function updateFirebaseData(updatedData) {
   });
 }
 
+// Function to update the page when data is changed by the user.
 function updatePageWithNewData(updatedData) {
   // Loop through all properties in updatedData
   for (const field in updatedData) {
@@ -359,7 +363,7 @@ function getDogProfileIdFromURL() {
 }
 
 
-
+// Function to control the edit mode and what users are able to change.
 function toggleEditModeElements() {
   // Define the elements to edit
   const elementsToEdit = [
@@ -474,7 +478,7 @@ function toggleEditModeElements() {
   }
 }
 
-
+// Function to turn on or off the editing mode for the pup profile.
 function toggleEditMode() {
   console.log("Entering toggleEditMode");
 
@@ -519,6 +523,7 @@ function toggleEditMode() {
   }
 }
 
+// Variable for the editing button.
 var editButton = document.getElementById("edit-pupprofile-btn");
 
 // Add event listener to the button
@@ -545,6 +550,7 @@ function getCurrentPupId() {
   return urlParams.get('id');
 }
 
+// Function to gather the user ID.
 function getUserId() {
   // Get the current user from Firebase Authentication
   const user = firebase.auth().currentUser;
@@ -557,6 +563,7 @@ function getUserId() {
   }
 }
 
+// Function to remove pup profiles from the database.
 function deletePupProfileFromFirebase(pupId, userId) {
   const pupProfilesRef = db.collection("dog-profiles");
   const usersRef = db.collection("users");
@@ -588,6 +595,7 @@ function deletePupProfileFromFirebase(pupId, userId) {
     });
 }
 
+// Gets the confirmation button for deleting a pup profile, and deletes the profile if clicked.
 document.getElementById("confirm-delete-btn").addEventListener("click", function () {
   const currentPupId = getCurrentPupId();
   const userId = getUserId();
@@ -609,12 +617,13 @@ document.getElementById("confirm-delete-btn").addEventListener("click", function
       });
 });
 
-
+// Function to pop-up a modal.
 function showSuccessConfirmationModal() {
   const confirmationModal = new bootstrap.Modal(document.getElementById('success-delete-confirmation'));
   confirmationModal.show();
 }
 
+// Gets the okay button for the user on the modal.
 document.getElementById("confirm-ok-btn").addEventListener("click", function () {
   navigateToPage();
 });

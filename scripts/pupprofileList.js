@@ -1,3 +1,5 @@
+
+// Function to show the unique user's pup profiles.
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
         var userId = user.uid;
@@ -44,6 +46,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     }
 });
 
+// Function to redirect to the unique profile.
 function viewProfile(dogId) {
      // Redirect to the specific pupprofile.html page with the corresponding dog ID
   window.location.href = `eachPupprofile.html?id=${dogId}`;

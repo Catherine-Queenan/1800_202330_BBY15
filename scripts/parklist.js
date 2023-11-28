@@ -4,6 +4,7 @@ var currentUser;
 // Global variable for parks collection 
 var parksRef;
 
+// Global variable for the parks.
 var parks = [];
 
 // Geolocation API
@@ -24,6 +25,7 @@ if (navigator.geolocation) {
     console.error("Geolocation is not supported by this browser");
 }
 
+// Function to sort the parks based off of distance from the user that is logged in and their geolocation.
 function getAndSortParksByDistance(userLat, userLng) {
     const parksRef = db.collection('parks');
 
@@ -79,6 +81,7 @@ function toRadians(degrees) {
     return degrees * (Math.PI / 180);
 }
 
+// Function to update and sort the parks based off of their distance that is calculated.
 function sortParksByDistance(userLat, userLng) {
     // Assuming parks is an array of objects with latitude and longitude properties
     parks.sort((park1, park2) => {
@@ -107,7 +110,7 @@ function doAll() {
 }
 doAll();
 
-
+// Function to add parks to the list.
 function addPark(code, name, city, details, lat, lng) {
     parksRef = db.collection("parks"); // Global
     parksRef.doc(code).get()
@@ -132,7 +135,7 @@ function addPark(code, name, city, details, lat, lng) {
         });
 }
 
-
+// Function to allow the adding of multiple parks.
 function addMultipleParks(parksToAdd) {
     // Check if parksToAdd is defined and is an array
     if (Array.isArray(parksToAdd)) {
@@ -163,52 +166,6 @@ fetch('/scripts/parksData.json')
     // displayCardsDynamically("parks");  //input param is the name of the collection
   })
   .catch(error => console.error('Error fetching or parsing data:', error));
-
-
-
-//------------------------------------------------------------------------------
-// Input parameter is a string representing the collection we are reading from
-//------------------------------------------------------------------------------
-// function displayCardsDynamically(collection) {
-//     let cardTemplate = document.getElementById("parkCardTemplate"); // Retrieve the HTML element with the ID "parkCardTemplate" and store it in the cardTemplate variable. 
-
-//     db.collection(collection).get()   //the collection called "parks"
-//         .then(allParks => {
-//             //var i = 1;  //Optional: if you want to have a unique ID for each park
-//             allParks.forEach(doc => { //iterate thru each doc
-//                 var title = doc.data().name;       // get value of the "name" key
-//                 var details = doc.data().details;  // get value of the "details" key
-//                 var parkCode = doc.data().code;    //get unique ID to each park to be used for fetching right image
-//                 var parkCity = doc.data().city; //gets the length field
-//                 var docID = doc.id;
-//                 let newcard = cardTemplate.content.cloneNode(true); // Clone the HTML template to create a new card (newcard) that will be filled with Firestore data.
-
-//                 //update title and text and image
-//                 newcard.querySelector('.card-title').innerHTML = title;
-//                 newcard.querySelector('.card-city').innerHTML = parkCity;
-//                 newcard.querySelector('.card-text').innerHTML = details;
-//                 newcard.querySelector('.card-image').src = `./images/${parkCode}.jpg`; //Example: NV01.jpg
-//                 newcard.querySelector('a').href = "eachPark.html?docID="+docID;
-//                 newcard.querySelector('i').id = 'save-' + docID;   //guaranteed to be unique
-//                 newcard.querySelector('i').onclick = () => updateFavorite(docID);
-                
-//                 currentUser.get().then(userDoc => {
-//                     //get the user name
-//                     let favorites = userDoc.data().favorites || [];
-//                     if (favorites.includes(docID)) {
-//                        document.getElementById('save-' + docID).innerText = 'favorite';
-//                     } else {
-//                         document.getElementById('save-' + docID).innerText = 'favorite_border';
-//                     }
-//                 })
-
-//                 //attach to gallery, Example: "parks-go-here"
-//                 document.getElementById(collection + "-go-here").appendChild(newcard);
-
-//             })
-//         })
-// }
-
 
 
 //-----------------------------------------------------------------------------
@@ -242,6 +199,7 @@ function updateFavorite(parkDocID) {
     });
 }
 
+// Function to display the park list, including the favourite tag (selected or not)
 function updateParksList(parks) {
     // Assuming "parks-go-here" is the ID of the element where you want to display the parks
     const container = document.getElementById("parks-go-here");

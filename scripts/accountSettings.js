@@ -1,5 +1,7 @@
 
 var currentUser;               //points to the document of the user who is logged in
+
+// Function to show all of the user data that is saved and viewable.
 function populateUserInfo() {
             firebase.auth().onAuthStateChanged(user => {
                 // Check if user is signed in:
@@ -32,11 +34,13 @@ function populateUserInfo() {
 //call the function to run it 
 populateUserInfo();
 
+// Function to enable the edit mode.
 function editUserInfo() {
     //Enable the form fields
     document.getElementById('personalInfoFields').disabled = false;
  }
 
+// Function to save the new data and update it.
 function saveUserInfo() {
     //enter code here
 
@@ -59,6 +63,7 @@ function saveUserInfo() {
     document.getElementById('personalInfoFields').disabled = true;
 }
 
+// Function to pull the name from the database and display it.
 function getNameFromAuth() {
     firebase.auth().onAuthStateChanged(user => {
         // Check if a user is signed in:
@@ -80,6 +85,7 @@ function getNameFromAuth() {
 }
 getNameFromAuth(); //run the function
 
+// Function to get the email from the database and display it.
 function getEmailFromAuth() {
     firebase.auth().onAuthStateChanged(user => {
         // Check if a user is signed in:

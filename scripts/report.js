@@ -1,3 +1,4 @@
+// Function to write and save a report for the user, associated with a post or review, and save that information to firebase.
 function writeReport() {
     var user = firebase.auth().currentUser;
     var postid = localStorage.getItem('postid');
