@@ -45,6 +45,7 @@ function displayMyPostCard(doc) {
           document.getElementById("myposts-go-here").append(newcard);
 }
 
+// Function to delete the post from firebase and the page.
 function deletePost(postid) {
     var result = Swal.fire({
         title: "Are you sure?",
@@ -74,7 +75,7 @@ function deletePost(postid) {
       });
 }
 
-
+// Function to delete the post from the user's firebase document.
 function deleteFromMyPosts(postid) {
     firebase.auth().onAuthStateChanged(user => {
         db.collection("users").doc(user.uid).update({
@@ -87,7 +88,7 @@ function deleteFromMyPosts(postid) {
     })
 }
 
-
+// Function to delete images from firebase storage.
 function deleteFromStorage(postid) {
     // Create a reference to the file to delete
     var imageRef = storageRef.child('images/' + postid + '.jpg');
@@ -166,6 +167,7 @@ function displayMyReviewCard(doc) {
     document.getElementById("myreviews-go-here").append(reviewCard);
 }
 
+// Function to delete reviews from the database and the page.
 function deleteReview(reviewID) {
     var result = Swal.fire({
         title: "Are you sure?",
@@ -195,6 +197,7 @@ function deleteReview(reviewID) {
       });
 }
 
+// Function to delete the review from the user's firebase document.
 function deleteFromMyReviews(reviewID) {
     firebase.auth().onAuthStateChanged(user => {
         db.collection("users").doc(user.uid).update({
@@ -207,6 +210,7 @@ function deleteFromMyReviews(reviewID) {
     })
 }
 
+// Function to delete the image from the review from firebase storage.
 function deleteFromReviewStorage(reviewID) {
     // Create a reference to the file to delete
     var reviewImageRef = storageRef.child('images/' + reviewID + '.jpg');

@@ -1,3 +1,4 @@
+// Function to display the map from mapbox.
 function showMap() {
   // Defines basic mapbox data
   mapboxgl.accessToken = 'pk.eyJ1IjoiYWRhbWNoZW4zIiwiYSI6ImNsMGZyNWRtZzB2angzanBjcHVkNTQ2YncifQ.fTdfEXaQ70WoIFLZ2QaRmQ';

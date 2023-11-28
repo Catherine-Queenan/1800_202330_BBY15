@@ -213,16 +213,13 @@ option {
     margin-bottom: 3.5vh;
 }
 
-.card {
-    width: 14rem;
-}
-
 @media (min-width: 350px) and (max-width: 576px) {
     .card {
         width: 96%;
     }
+
+    #cityInput {
+        margin-left: 50px;
+    }
 }
 
-#cityInput {
-    margin-left: 50px;
-}
