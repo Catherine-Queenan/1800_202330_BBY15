@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         fetchParkInformation().then(() => {
             // Assume userLocation is obtained through geolocation
-            const proximityRadius = 0.5; // in kilometers
+            const proximityRadius = 15; // in kilometers
 
             checkProximityToParks(userLocation, proximityRadius);
         });
@@ -202,11 +202,13 @@ document.addEventListener("DOMContentLoaded", function () {
         })
             .then(() => {
                 console.log("Park document successfully updated with pupsPlaying!");
+
+                showMap();
             })
             .catch((error) => {
                 console.error("Error updating park document with pupsPlaying: ", error);
             });
-
+           
         // Update the Firebase document for the current user
         updateFirebaseDocumentForCurrentUser();
         // Close the modal after updating the document
