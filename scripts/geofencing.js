@@ -72,6 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     // Open modal only if user has just entered proximity
                     if (!prevIsNearAnyPark) {
                         openModal(parkName);
+                        console.log("Modal opened");
 
                     }
                     return;
@@ -210,6 +211,7 @@ document.addEventListener("DOMContentLoaded", function () {
         updateFirebaseDocumentForCurrentUser();
         // Close the modal after updating the document
         closeModal();
+        // window.location.reload();
     });
 
     function updateFirebaseDocumentForCurrentUser() {

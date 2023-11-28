@@ -75,3 +75,15 @@ body {
     color:#c9d5b5;
     cursor: default;
 }
+
+.custom-navbar {
+    width: 100%;
+}
+
+.btn {
+    margin-left: 80vw;
+}
+
+p.navbar-brand {
+    margin-top: 20px;
+}
