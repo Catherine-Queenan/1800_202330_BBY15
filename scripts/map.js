@@ -35,10 +35,10 @@ function showMap() {
         </ul>
       `;
 
-      // Create a marker element with the number of dogs on each park marker
-      const markerElement = document.createElement('div');
-      markerElement.className = 'dog-marker';
-      markerElement.innerHTML = `<p class="dog-count">${pupsPlaying.length}</p>`;
+        // Create a marker element with the number of dogs on each park marker
+        const markerElement = document.createElement('div');
+        markerElement.className = 'dog-marker';
+        markerElement.innerHTML = `<p class="dog-count">${pupsPlaying.length}</p>`;
 
 
       // Here can change the color and scale of the marker 
@@ -257,4 +257,3 @@ function showMap() {
 
 // Call the function to display the map with the user's location and event pins
 showMap();
-
