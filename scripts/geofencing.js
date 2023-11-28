@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         fetchParkInformation().then(() => {
             // Assume userLocation is obtained through geolocation
-            const proximityRadius = 15; // in kilometers
+            const proximityRadius = 0.5; // in kilometers
 
             checkProximityToParks(userLocation, proximityRadius);
         });
@@ -72,6 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     // Open modal only if user has just entered proximity
                     if (!prevIsNearAnyPark) {
                         openModal(parkName);
+                        console.log("Modal opened");
 
                     }
                     return;
@@ -212,6 +213,7 @@ document.addEventListener("DOMContentLoaded", function () {
         updateFirebaseDocumentForCurrentUser();
         // Close the modal after updating the document
         closeModal();
+        // window.location.reload();
     });
 
     function updateFirebaseDocumentForCurrentUser() {
