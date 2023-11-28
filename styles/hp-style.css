@@ -1,4 +1,3 @@
-
 /* Here's the new one with bootstrap */
 body {
     background-image: linear-gradient(to bottom, #f2efe7, #f2efe7c7, #f2efe700), url(/images/background_dogs.png);
@@ -11,7 +10,7 @@ body {
 
 .section-lg-bottom {
     padding-bottom: 150px;
-} 
+}
 
 .section {
     padding-top: 10px;
@@ -36,7 +35,7 @@ body {
 }
 
 .card-body a {
-    margin-top: 10px; 
+    margin-top: 10px;
 }
 
 .card-body img {
@@ -51,7 +50,8 @@ body {
     transition: .2s ease;
 } */
 
-.rounded-sm, .team-member::before {
+.rounded-sm,
+.team-member::before {
     border-radius: 15px;
 }
 
@@ -68,22 +68,28 @@ body {
 }
 
 .navbar-brand {
-    color:#c9d5b5;
+    color: #c9d5b5;
 }
 
 .navbar-brand:hover {
-    color:#c9d5b5;
+    color: #c9d5b5;
     cursor: default;
 }
 
-.custom-navbar {
-    width: 100%;
-}
+@media (min-width: 350px) and (max-width: 576px) {
+    .custom-navbar {
+        width: 100%;
+    }
 
-.btn {
-    margin-left: 80vw;
-}
+    .btn {
+        margin-left: 80vw;
+    }
 
-p.navbar-brand {
-    margin-top: 20px;
+    p.navbar-brand {
+        margin-top: 20px;
+    }
+
+    .navbar-brand {
+        font-size: 6vw;
+    }
 }

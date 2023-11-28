@@ -65,3 +65,17 @@ a[href] {
 .firebaseui-textfield.mdl-textfield .firebaseui-label::after {
     background-color: #45503b;
 }
+
+@media (min-width: 350px) and (max-width: 576px) {
+    .custom-navbar {
+        width: 100%;
+    }
+
+    p.navbar-brand {
+        margin-top: 20px;
+    }
+
+    .navbar-brand {
+        font-size: 6vw;
+    }
+}
