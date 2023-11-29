@@ -3,3 +3,9 @@
 node_modules/
 .vscode/
 firebaseAPI_BBY15.js
+.firebaserc
+firebase.json
+firestore.indexes.json
+firestore.rules
+storage.rules
+404.html
