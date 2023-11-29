@@ -143,6 +143,7 @@ h1 {
 
 .material-icons{
     cursor: pointer;
+    color:#fd5821;
 }
 
 .card-image {
@@ -222,4 +223,5 @@ option {
         margin-left: 50px;
     }
 }
+
 
