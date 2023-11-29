@@ -75,7 +75,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 });
 
 
-// ===== Upload pup profile image related =====
+// ======== Upload pup profile image ========
 window.onload = function () {
   // get the pupprofileId from current URL 
   const urlParams = new URLSearchParams(window.location.search);
@@ -192,9 +192,6 @@ function uploadImage() {
     console.log("User is not signed in.");
   }
 }
-
-
-
 
 
 // ======Starts editing and save mode======
@@ -538,13 +535,13 @@ function cancelEditMode() {
   location.reload();
 }
 var cancelButton = document.getElementById("cancel-pupprofile-btn");
-cancelButton.addEventListener("click", function() {
-// Call the cancelEditMode function when the cancel button is clicked
-cancelEditMode();
+cancelButton.addEventListener("click", function () {
+  // Call the cancelEditMode function when the cancel button is clicked
+  cancelEditMode();
 });
 
 
-// ===== Delete confirmation pop up ======
+// ======== Delete confirmation pop up =========
 function getCurrentPupId() {
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.get('id');
@@ -601,20 +598,20 @@ document.getElementById("confirm-delete-btn").addEventListener("click", function
   const userId = getUserId();
 
   deletePupProfileFromFirebase(currentPupId, userId)
-      .then(() => {
-        // hide the delete confirmation modal
-        const deleteConfirmationModal = document.getElementById('delete-confirmation-modal');
-        if (deleteConfirmationModal) {
-            deleteConfirmationModal.style.display = 'none';
-        } else {
-            console.error("Delete confirmation modal not found");
-        }
+    .then(() => {
+      // hide the delete confirmation modal
+      const deleteConfirmationModal = document.getElementById('delete-confirmation-modal');
+      if (deleteConfirmationModal) {
+        deleteConfirmationModal.style.display = 'none';
+      } else {
+        console.error("Delete confirmation modal not found");
+      }
 
-        showSuccessConfirmationModal();
-      })
-      .catch((error) => {
-          console.error("Error deleting document: ", error);
-      });
+      showSuccessConfirmationModal();
+    })
+    .catch((error) => {
+      console.error("Error deleting document: ", error);
+    });
 });
 
 // Function to pop-up a modal.
