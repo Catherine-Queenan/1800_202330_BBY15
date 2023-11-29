@@ -1,4 +1,4 @@
-
+// Function to gather user input for the pup profile, and add the data to firebase.
 function addDogProfiles() {
     var name = document.getElementById("name").value;
     var breed = document.getElementById("breed").value;
@@ -61,7 +61,7 @@ function addDogProfiles() {
     });
 }
 
-
+// Function and querySelector to add an image to the pup profile.
 document.querySelector('.pupprofile-img .file input').addEventListener('change', function () {
     var img = document.querySelector('.pupprofile-img img');
     var file = this.files[0]; // Get the selected image file
@@ -103,6 +103,7 @@ document.querySelector('.pupprofile-img .file input').addEventListener('change',
     });
 });
 
+// Function to change the dimensions of images to the appropriate size
 function updateImageDimensions(img) {
     var container = img.parentNode;
     var containerWidth = container.offsetWidth;
@@ -120,6 +121,7 @@ function updateImageDimensions(img) {
     }
 }
 
+// Event listener to implement the function for updating dimensions.
 window.addEventListener('resize', function () {
     var img = document.querySelector('.pupprofile-img img');
     if (img.src) {

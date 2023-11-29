@@ -1,3 +1,4 @@
+// Event listener to gather data for the park.
 document.addEventListener("DOMContentLoaded", function () {
     // Get docID from URL
     const urlParams = new URLSearchParams(window.location.search);
@@ -58,6 +59,7 @@ function doAll() {
 }
 doAll();
 
+// Function to show the information for the park itself.
 function displayParkInfo() {
     let params = new URL(window.location.href); //get URL of search bar
     let ID = params.searchParams.get("docID"); //get value for key "id"
@@ -80,7 +82,7 @@ function displayParkInfo() {
 }
 displayParkInfo();
 
-
+// Function to save the parkID and redirect to the review page to write a review.
 function saveParkDocumentIDAndRedirect() {
     let params = new URL(window.location.href) //get the url from the search bar
     let ID = params.searchParams.get("docID");
@@ -88,6 +90,7 @@ function saveParkDocumentIDAndRedirect() {
     window.location.href = 'review.html';
 }
 
+// Function to report a review.
 function reportReview() {
     let params = new URL(window.location.href) //get the url from the search bar
     let ID = params.searchParams.get("reviewID");
@@ -95,6 +98,7 @@ function reportReview() {
     window.location.href = 'report.html';
 }
 
+// Function to input an image to a post.
 var ImageFile;
 function listenFileSelect() {
     // listen for file selection
@@ -110,6 +114,7 @@ function listenFileSelect() {
 }
 listenFileSelect();
 
+// Function to save the post to the database.
 function savePost() {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
@@ -136,8 +141,6 @@ function savePost() {
 
 
 //------------------------------------------------
-// So, a new post document has just been added
-// and it contains a bunch of fields.
 // We want to store the image associated with this post,
 // such that the image name is the postid (guaranteed unique).
 // 
@@ -190,6 +193,7 @@ function savePostIDforUser(postDocID) {
     })
 }
 
+// Loads the reviews unique to this parkID.
 function populateReviews() {
     console.log("test");
     let parkCardTemplate = document.getElementById("reviewCardTemplate");
@@ -246,6 +250,7 @@ function populateReviews() {
 
 populateReviews();
 
+// Shows the information for each individual park.
 document.addEventListener('DOMContentLoaded', function () {
 
     var parkData;

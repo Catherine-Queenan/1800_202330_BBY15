@@ -1,5 +1,6 @@
 var parkDocID = localStorage.getItem("parkDocID");    //visible to all functions on this page
 
+// Function to display each inidividual park name
 function getParkName(id) {
     db.collection("parks")
       .doc(id)
@@ -29,6 +30,7 @@ stars.forEach((star, index) => {
     });
 });
 
+// Variable and function to allow users to input their own images.
 var ImageFile;
 function listenFileSelect() {
       // listen for file selection
@@ -44,6 +46,8 @@ function listenFileSelect() {
 }
 listenFileSelect();
 
+
+// Function to take in the information from the user, and create the associated review in firebase.
 function writeReview() {
     console.log("inside write review");
     let parkTitle = document.getElementById("title").value;
@@ -93,8 +97,6 @@ function writeReview() {
 }
 
 //------------------------------------------------
-// So, a new post document has just been added
-// and it contains a bunch of fields.
 // We want to store the image associated with this post,
 // such that the image name is the postid (guaranteed unique).
 // 
@@ -128,7 +130,7 @@ function uploadReviewPic(reviewDocID) {
       })
 }
 
-
+// Function to save the review to each individual user ID.
 function saveReviewIDforUser(reviewDocID) {
   firebase.auth().onAuthStateChanged(user => {
         console.log("user id is: " + user.uid);

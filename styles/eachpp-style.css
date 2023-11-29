@@ -77,3 +77,14 @@
     padding: .2em;
     height: 2em;
   }
+
+  input[type="text"], input[type="number"], textarea {
+    width: 100%;
+    box-sizing: border-box; /* Optional - includes padding and border in the total width */
+  }
+
+  @media (min-width: 577px) {
+    .card {
+      width: 100%;
+    }    
+  }
