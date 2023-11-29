@@ -6,11 +6,13 @@ function writeReport() {
   
     if (user && postid && reportedPost) {
       var currentUser = db.collection("users").doc(user.uid);
-  
+      
+      var desc = document.getElementById("description").value;
       db.collection("reports").add({
         user: currentUser,
         postid: postid,
         reportedPost: reportedPost, // Include the reported post data
+        reportDescription: desc,
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
       }).then(doc => {
         console.log("1. Report document added!");
@@ -18,7 +20,6 @@ function writeReport() {
       }).then(() => {
         localStorage.removeItem('postid');
         localStorage.removeItem('reportedPost');
-        console.log(Test);
         window.location.href = "thanks.html";
       });
     } else {
