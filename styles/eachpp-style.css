@@ -78,7 +78,8 @@
     height: 2em;
   }
 
-  input[type="text"], input[type="number"], textarea {
+  input[type="text"], input[type="number"], textarea,
+  input[type="date"], input[type="select"] {
     width: 100%;
     box-sizing: border-box; /* Optional - includes padding and border in the total width */
   }
