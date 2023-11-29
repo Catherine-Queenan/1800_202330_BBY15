@@ -13,22 +13,33 @@ function getParkName(id) {
 
 getParkName(parkDocID);
 
-// Add this JavaScript code to make stars clickable
 
 // Select all elements with the class name "star" and store them in the "stars" variable
-const stars = document.querySelectorAll('.star');
+const stars = document.querySelectorAll('.rate input[type="radio"]');
 
 // Iterate through each star element
 stars.forEach((star, index) => {
     // Add a click event listener to the current star
     star.addEventListener('click', () => {
+        // Set the value of the clicked star (1 to 5) to the hidden input field
+        document.getElementById('ratingInput').value = index + 1;
+
         // Fill in clicked star and stars before it
         for (let i = 0; i <= index; i++) {
-            // Change the text content of stars to 'star' (filled)
-            document.getElementById(`star${i + 1}`).textContent = 'star';
+            // Change the text content of labels to '★' (filled)
+            const label = document.querySelector(`label[for="star${i + 1}"]`);
+            label.textContent = '★';
+        }
+
+        // Uncheck and update labels for stars after the clicked star
+        for (let i = index + 1; i < stars.length; i++) {
+            const label = document.querySelector(`label[for="star${i + 1}"]`);
+            label.textContent = '☆';
         }
     });
 });
+
+
 
 // Variable and function to allow users to input their own images.
 var ImageFile;
@@ -49,52 +60,42 @@ listenFileSelect();
 
 // Function to take in the information from the user, and create the associated review in firebase.
 function writeReview() {
-    console.log("inside write review");
-    let parkTitle = document.getElementById("title").value;
-    let parkDescription = document.getElementById("description").value;
+  console.log("inside write review");
+  let parkTitle = document.getElementById("title").value;
+  let parkDescription = document.getElementById("description").value;
+  
+  // Get the selected rating from the hidden input field
+  let parkRating = document.querySelector('.rate input[name="rate"]:checked').value;
 
-    // Get the star rating
-		// Get all the elements with the class "star" and store them in the 'stars' variable
-    const stars = document.querySelectorAll('.star');
-		// Initialize a variable 'parkRating' to keep track of the rating count
-    let parkRating = 0;
-		// Iterate through each element in the 'stars' NodeList using the forEach method
-    stars.forEach((star) => {
-				// Check if the text content of the current 'star' element is equal to the string 'star'
-        if (star.textContent === 'star') {
-						// If the condition is met, increment the 'parkRating' by 1
-            parkRating++;
-        }
-    });
+  console.log(parkTitle, parkDescription, parkRating);
 
-    // console.log(parkTitle, parkRating);
-    console.log(parkTitle, parkDescription, parkRating);
+  var user = firebase.auth().currentUser;
+  if (user) {
+      var currentUser = db.collection("users").doc(user.uid);
+      var userID = user.uid;
 
-
-    var user = firebase.auth().currentUser;
-    if (user) {
-        var currentUser = db.collection("users").doc(user.uid);
-        var userID = user.uid;
-
-        // Get the document for the current user.
-        db.collection("reviews").add({
-            parkDocID: parkDocID,
-            user: currentUser,
-            userID: userID,
-            title: parkTitle,
-            description: parkDescription,
-            rating: parkRating, // Include the rating in the review
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
-        }).then(doc => {
+      // Get the document for the current user.
+      db.collection("reviews").add({
+          parkDocID: parkDocID,
+          user: currentUser,
+          userID: userID,
+          title: parkTitle,
+          description: parkDescription,
+          rating: parkRating, // Include the rating in the review
+          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(doc => {
           console.log("1. Review document added!");
           console.log(doc.id);
           uploadReviewPic(doc.id);
-    });
-    } else {
-        console.log("No user is signed in");
-        window.location.href = 'review.html';
-    }
+      });
+  } else {
+      console.log("No user is signed in");
+      window.location.href = 'review.html';
+  }
 }
+
+
+
 
 //------------------------------------------------
 // We want to store the image associated with this post,

@@ -46,3 +46,14 @@
     text-transform: capitalize;
 }
 
+
+/* Rating styles */
+
+.filled-star {
+    color: #ffc700;
+}
+
+/* Outline star color */
+.outline-star {
+    color: #ccc
+}
