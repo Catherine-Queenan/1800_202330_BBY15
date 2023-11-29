@@ -133,14 +133,6 @@ h1 {
     margin-left: 10px;
 }
 
-.acordion-button.collapsed {
-    color:#f5c78e;
-}
-
-.acordion-button-collapsed::after {
-    color:#f5c78e;
-}
-
 .material-icons{
     cursor: pointer;
     color:#fd5821;
