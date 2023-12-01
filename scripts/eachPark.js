@@ -33,9 +33,9 @@ function displayParkFeatures(features) {
     for (const feature in features) {
         if (features[feature]) {
             const featureElement = document.createElement("div");
-            featureElement.textContent = feature; 
+            featureElement.textContent = feature;
             // featureElement.textContent = feature + ': ' + features[feature]; // Add feature description
-            featureElement.classList.add("park-features-style"); 
+            featureElement.classList.add("park-features-style");
             featuresContainer.appendChild(featureElement);
         }
     }
@@ -115,29 +115,92 @@ function listenFileSelect() {
 listenFileSelect();
 
 // Function to save the post to the database.
+// function savePost() {
+//     firebase.auth().onAuthStateChanged(function (user) {
+//         if (user) {
+//             // User is signed in.
+//             // Do something for the user here. 
+//             var desc = document.getElementById("description").value;
+
+//             db.collection("posts").add({
+//                 owner: user.uid,
+//                 name: user.displayName,
+//                 description: desc,
+//                 parkID: parkName,
+//                 last_updated: firebase.firestore.FieldValue.serverTimestamp() //current system time
+//             }).then(doc => {
+//                 console.log("1. Post document added!");
+//                 console.log(doc.id);
+//                 uploadPic(doc.id);
+//             });
+//         } else {
+//             // No user is signed in.
+//             console.log("Error, no user signed in");
+//         }
+//     });
+// }
+
 function savePost() {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             // User is signed in.
             // Do something for the user here. 
-            var desc = document.getElementById("description").value;
-            db.collection("posts").add({
-                owner: user.uid,
-                name: user.displayName,
-                description: desc,
-                parkID: parkName,
-                last_updated: firebase.firestore.FieldValue.serverTimestamp() //current system time
-            }).then(doc => {
-                console.log("1. Post document added!");
-                console.log(doc.id);
-                uploadPic(doc.id);
-            });
+            var description = document.getElementById("description").value;
+            var imageFile = document.getElementById("mypic-input").files[0];
+
+            if (imageFile) {
+                // Create a storage reference with a unique filename
+                var storageRef = storage.ref().child("images/" + user.uid + "_" + Date.now() + "_" + imageFile.name);
+
+                // Upload the image to Cloud Storage
+                storageRef.put(imageFile)
+                    .then(function (snapshot) {
+                        // Get the download URL of the uploaded image
+                        return snapshot.ref.getDownloadURL();
+                    })
+                    .then(function (imageUrl) {
+                        // Save the post with the image URL
+                        return db.collection("posts").add({
+                            owner: user.uid,
+                            name: user.displayName,
+                            description: description,
+                            image: imageUrl,
+                            parkID: parkName,
+                            last_updated: firebase.firestore.FieldValue.serverTimestamp() //current system time
+                        });
+                    })
+                    .then(function (docRef) {
+                        console.log("Post document added with ID: ", docRef.id);
+                        savePostIDforUser(docRef.id);
+                    })
+                    .catch(function (error) {
+                        console.error("Error uploading image: ", error);
+                    });
+            } else {
+                // Save the post without an image URL
+                db.collection("posts").add({
+                    owner: user.uid,
+                    name: user.displayName,
+                    description: description,
+                    parkID: parkName,
+                    last_updated: firebase.firestore.FieldValue.serverTimestamp() //current system time
+                })
+                    .then(function (docRef) {
+                        console.log("Post document added with ID: ", docRef.id);
+                        savePostIDforUser(docRef.id);
+                    })
+                    .catch(function (error) {
+                        console.error("Error saving post: ", error);
+                    });
+            }
         } else {
             // No user is signed in.
             console.log("Error, no user signed in");
         }
     });
 }
+
+
 
 
 //------------------------------------------------
@@ -221,7 +284,14 @@ function populateReviews() {
 
                 let reviewCard = parkCardTemplate.content.cloneNode(true);
                 reviewCard.querySelector(".title").innerHTML = title;
-                reviewCard.querySelector(".card-image").src = image;
+
+                if (image) {
+                    reviewCard.querySelector(".card-image").src = image;
+                } else {
+                    reviewCard.querySelector(".card-image").style.display = "none";
+                }
+                // reviewCard.querySelector(".card-image").src = image;
+
                 reviewCard.querySelector(".time").innerHTML = new Date(
                     time
                 ).toLocaleString();

@@ -3,12 +3,12 @@ var parkDocID = localStorage.getItem("parkDocID");    //visible to all functions
 // Function to display each inidividual park name
 function getParkName(id) {
     db.collection("parks")
-      .doc(id)
-      .get()
-      .then((thisPark) => {
-        var parkName = thisPark.data().name;
-        document.getElementById("parkName").innerHTML = parkName;
-          });
+        .doc(id)
+        .get()
+        .then((thisPark) => {
+            var parkName = thisPark.data().name;
+            document.getElementById("parkName").innerHTML = parkName;
+        });
 }
 
 getParkName(parkDocID);
@@ -44,54 +44,57 @@ stars.forEach((star, index) => {
 // Variable and function to allow users to input their own images.
 var ImageFile;
 function listenFileSelect() {
-      // listen for file selection
-      var fileInput = document.getElementById("mypic-input"); // pointer #1
-      const image = document.getElementById("mypic-goes-here"); // pointer #2
+    // listen for file selection
+    var fileInput = document.getElementById("mypic-input"); // pointer #1
+    const imageContainer = document.getElementById("image-container");
+    // const image = document.getElementById("mypic-goes-here"); // pointer #2
 
-			// When a change happens to the File Chooser Input
-      fileInput.addEventListener('change', function (e) {
-          ImageFile = e.target.files[0];   //Global variable
-          var blob = URL.createObjectURL(ImageFile);
-          image.src = blob; // Display this image
-      })
+    // When a change happens to the File Chooser Input
+    fileInput.addEventListener('change', function (e) {
+        ImageFile = e.target.files[0];   //Global variable
+        var blob = URL.createObjectURL(ImageFile);
+        imageContainer.style.display = "block";
+        document.getElementById("mypic-goes-here").src = blob;
+        // image.src = blob; // Display this image
+    })
 }
 listenFileSelect();
 
 
 // Function to take in the information from the user, and create the associated review in firebase.
 function writeReview() {
-  console.log("inside write review");
-  let parkTitle = document.getElementById("title").value;
-  let parkDescription = document.getElementById("description").value;
-  
-  // Get the selected rating from the hidden input field
-  let parkRating = document.querySelector('.rate input[name="rate"]:checked').value;
+    console.log("inside write review");
+    let parkTitle = document.getElementById("title").value;
+    let parkDescription = document.getElementById("description").value;
 
-  console.log(parkTitle, parkDescription, parkRating);
+    // Get the selected rating from the hidden input field
+    let parkRating = document.querySelector('.rate input[name="rate"]:checked').value;
 
-  var user = firebase.auth().currentUser;
-  if (user) {
-      var currentUser = db.collection("users").doc(user.uid);
-      var userID = user.uid;
+    console.log(parkTitle, parkDescription, parkRating);
 
-      // Get the document for the current user.
-      db.collection("reviews").add({
-          parkDocID: parkDocID,
-          user: currentUser,
-          userID: userID,
-          title: parkTitle,
-          description: parkDescription,
-          rating: parkRating, // Include the rating in the review
-          timestamp: firebase.firestore.FieldValue.serverTimestamp()
-      }).then(doc => {
-          console.log("1. Review document added!");
-          console.log(doc.id);
-          uploadReviewPic(doc.id);
-      });
-  } else {
-      console.log("No user is signed in");
-      window.location.href = 'review.html';
-  }
+    var user = firebase.auth().currentUser;
+    if (user) {
+        var currentUser = db.collection("users").doc(user.uid);
+        var userID = user.uid;
+
+        // Get the document for the current user.
+        db.collection("reviews").add({
+            parkDocID: parkDocID,
+            user: currentUser,
+            userID: userID,
+            title: parkTitle,
+            description: parkDescription,
+            rating: parkRating, // Include the rating in the review
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        }).then(doc => {
+            console.log("1. Review document added!");
+            console.log(doc.id);
+            uploadReviewPic(doc.id);
+        });
+    } else {
+        console.log("No user is signed in");
+        window.location.href = 'review.html';
+    }
 }
 
 
@@ -105,45 +108,53 @@ function writeReview() {
 // and we know the post's document id.
 //------------------------------------------------
 function uploadReviewPic(reviewDocID) {
-  console.log("inside uploadPic " + reviewDocID);
-  var storageRef = storage.ref("images/" + reviewDocID + ".jpg");
 
-  storageRef.put(ImageFile)   //global variable ImageFile
+    if (typeof ImageFile === 'undefined') {
+        console.log('No image uploaded.');
+        saveReviewIDforUser(reviewDocID);
+        return;
+    }
 
-      // AFTER .put() is done
-      .then(function () {
-          console.log('2. Uploaded to Cloud Storage.');
-          storageRef.getDownloadURL()
-              .then(function (url) { // Get URL of the uploaded file
-                  console.log("3. Got the download URL.");
-                  db.collection("reviews").doc(reviewDocID).update({
-                      "image": url // Save the URL into users collection
-                  })
-                      // AFTER .update is done
-                      .then(function () {
-                          console.log('4. Added pic URL to Firestore.');
-                          saveReviewIDforUser(reviewDocID);
-                      })
-              })
-      })
-      .catch((error) => {
-          console.log("error uploading to cloud storage");
-      })
+    console.log("inside uploadPic " + reviewDocID);
+    var storageRef = storage.ref("images/" + reviewDocID + ".jpg");
+
+    storageRef.put(ImageFile)   //global variable ImageFile
+
+        // AFTER .put() is done
+        .then(function () {
+            console.log('2. Uploaded to Cloud Storage.');
+            storageRef.getDownloadURL()
+                .then(function (url) { // Get URL of the uploaded file
+                    console.log("3. Got the download URL.");
+                    db.collection("reviews").doc(reviewDocID).update({
+                        "image": url // Save the URL into users collection
+                    })
+                        // AFTER .update is done
+                        .then(function () {
+                            console.log('4. Added pic URL to Firestore.');
+                            saveReviewIDforUser(reviewDocID);
+                        })
+                })
+        })
+        .catch((error) => {
+            console.log("error uploading to cloud storage");
+        })
+
 }
 
 // Function to save the review to each individual user ID.
 function saveReviewIDforUser(reviewDocID) {
-  firebase.auth().onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged(user => {
         console.log("user id is: " + user.uid);
         console.log("reviewdoc id is: " + reviewDocID);
         db.collection("users").doc(user.uid).update({
-              myreviews: firebase.firestore.FieldValue.arrayUnion(reviewDocID)
+            myreviews: firebase.firestore.FieldValue.arrayUnion(reviewDocID)
         })
-        .then(() =>{
-              console.log("5. Saved to user's document!");
-              //window.location.href = "showposts.html";
-         }).then(() => {
-          window.location.href = "thanks.html"; // Redirect to the thanks page
-      });
-  })
+            .then(() => {
+                console.log("5. Saved to user's document!");
+                //window.location.href = "showposts.html";
+            }).then(() => {
+                window.location.href = "thanks.html"; // Redirect to the thanks page
+            });
+    })
 }

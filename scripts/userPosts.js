@@ -6,21 +6,21 @@
 //------------------------------------------------
 function showMyPosts() {
     firebase.auth().onAuthStateChanged(user => {
-          console.log("user is: " + user.uid);
-          db.collection("users").doc(user.uid)
-                  .get()
-                  .then(doc => {
-                      myposts = doc.data().myposts; //get array of my posts
-                      console.log(myposts);
-                      myposts.forEach(item => {
-                          db.collection("posts")
-                              .doc(item)
-                              .get()
-                              .then(doc => {
-                                  displayMyPostCard(doc);
-                              })
-                      })
-                  })
+        console.log("user is: " + user.uid);
+        db.collection("users").doc(user.uid)
+            .get()
+            .then(doc => {
+                myposts = doc.data().myposts; //get array of my posts
+                console.log(myposts);
+                myposts.forEach(item => {
+                    db.collection("posts")
+                        .doc(item)
+                        .get()
+                        .then(doc => {
+                            displayMyPostCard(doc);
+                        })
+                })
+            })
     })
 }
 showMyPosts();
@@ -30,19 +30,26 @@ showMyPosts();
 // from the post document extracted (name, description, image)
 //------------------------------------------------------------
 function displayMyPostCard(doc) {
-          var desc = doc.data().description; //gets the length field
-          var image = doc.data().image; //the field that contains the URL 
-          var parkID = doc.data().parkID; 
+    var desc = doc.data().description; //gets the length field
+    var image = doc.data().image; //the field that contains the URL 
+    var parkID = doc.data().parkID;
 
-          //clone the new card
-          let newcard = document.getElementById("postCardTemplate").content.cloneNode(true);
-          //populate with image and caption
-          newcard.querySelector('.card-image').src = image;
-          newcard.querySelector('.card-description').innerHTML = desc;
-          newcard.querySelector('.parkID').innerHTML = parkID;
-          newcard.querySelector('#delete-icon').onclick = () => deletePost(doc.id);
-          //append to the posts
-          document.getElementById("myposts-go-here").append(newcard);
+    //clone the new card
+    let newcard = document.getElementById("postCardTemplate").content.cloneNode(true);
+    //populate with image and caption
+
+    //   newcard.querySelector('.card-image').src = image;
+    if (image) {
+        newcard.querySelector(".card-image").src = image;
+    } else {
+        newcard.querySelector(".card-image").style.display = "none";
+    }
+
+    newcard.querySelector('.card-description').innerHTML = desc;
+    newcard.querySelector('.parkID').innerHTML = parkID;
+    newcard.querySelector('#delete-icon').onclick = () => deletePost(doc.id);
+    //append to the posts
+    document.getElementById("myposts-go-here").append(newcard);
 }
 
 // Function to delete the post from firebase and the page.
@@ -53,34 +60,34 @@ function deletePost(postid) {
         showCancelButton: true,
         confirmButtonText: "Delete",
         denyButtonText: `Don't Delete`
-      }).then((result) => {
+    }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
-          db.collection("posts").doc(postid)
-                                .delete()
-          .then(() => {
-            console.log("1. Document deleted from posts collection");
-            deleteFromMyPosts(postid);
-            Swal.fire({
-                title: "Deleted!",
-                icon: "success"
-              }) 
-          .then(() => {
-            location.reload();
-        });
-          });
+            db.collection("posts").doc(postid)
+                .delete()
+                .then(() => {
+                    console.log("1. Document deleted from posts collection");
+                    deleteFromMyPosts(postid);
+                    Swal.fire({
+                        title: "Deleted!",
+                        icon: "success"
+                    })
+                        .then(() => {
+                            location.reload();
+                        });
+                });
         } else if (result.isDenied) {
-          Swal.fire("Post not deleted", "", "info");
+            Swal.fire("Post not deleted", "", "info");
         };
-      });
+    });
 }
 
 // Function to delete the post from the user's firebase document.
 function deleteFromMyPosts(postid) {
     firebase.auth().onAuthStateChanged(user => {
         db.collection("users").doc(user.uid).update({
-                myposts: firebase.firestore.FieldValue.arrayRemove(postid)
-            })
+            myposts: firebase.firestore.FieldValue.arrayRemove(postid)
+        })
             .then(() => {
                 console.log("2. post deleted from user doc");
                 deleteFromStorage(postid);
@@ -110,21 +117,21 @@ function deleteFromStorage(postid) {
 //------------------------------------------------
 function showMyReviews() {
     firebase.auth().onAuthStateChanged(user => {
-          console.log("user is: " + user.uid);
-          db.collection("users").doc(user.uid)
-                  .get()
-                  .then(doc => {
-                      myreviews = doc.data().myreviews; //get array of my posts
-                      console.log(myreviews);
-                      myreviews.forEach(item => {
-                          db.collection("reviews")
-                              .doc(item)
-                              .get()
-                              .then(doc => {
-                                  displayMyReviewCard(doc);
-                              })
-                      })
-                  })
+        console.log("user is: " + user.uid);
+        db.collection("users").doc(user.uid)
+            .get()
+            .then(doc => {
+                myreviews = doc.data().myreviews; //get array of my posts
+                console.log(myreviews);
+                myreviews.forEach(item => {
+                    db.collection("reviews")
+                        .doc(item)
+                        .get()
+                        .then(doc => {
+                            displayMyReviewCard(doc);
+                        })
+                })
+            })
     })
 }
 showMyReviews();
@@ -144,22 +151,29 @@ function displayMyReviewCard(doc) {
 
     let reviewCard = document.getElementById("reviewCardTemplate").content.cloneNode(true);
     reviewCard.querySelector(".title").innerHTML = title;
-    reviewCard.querySelector(".card-image").src = image;    
-    reviewCard.querySelector( ".description").innerHTML = desc;
+
+    if (image) {
+        reviewCard.querySelector(".card-image").src = image;
+    } else {
+        reviewCard.querySelector(".card-image").style.display = "none";
+    }
+
+    // reviewCard.querySelector(".card-image").src = image;    
+    reviewCard.querySelector(".description").innerHTML = desc;
     reviewCard.querySelector(".time").innerHTML = new Date(
         time
     ).toLocaleString();
     reviewCard.querySelector('#delete-icon').onclick = () => deleteReview(doc.id);
 
     // Populate the star rating based on the rating value
-    
-      // Initialize an empty string to store the star rating HTML
-                    let starRating = "";
-                    // This loop runs from i=0 to i<rating, where 'rating' is a variable holding the rating value.
+
+    // Initialize an empty string to store the star rating HTML
+    let starRating = "";
+    // This loop runs from i=0 to i<rating, where 'rating' is a variable holding the rating value.
     for (let i = 0; i < rating; i++) {
         starRating += '<span class="material-icons">star</span>';
     }
-                    // After the first loop, this second loop runs from i=rating to i<5.
+    // After the first loop, this second loop runs from i=rating to i<5.
     for (let i = rating; i < 5; i++) {
         starRating += '<span class="material-icons">star_outline</span>';
     }
@@ -175,34 +189,34 @@ function deleteReview(reviewID) {
         showCancelButton: true,
         confirmButtonText: "Delete",
         denyButtonText: `Don't Delete`
-      }).then((result) => {
+    }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
-          db.collection("reviews").doc(reviewID)
-                                .delete()
-          .then(() => {
-            console.log("1. Document deleted from reviews collection");
-            deleteFromMyPosts(reviewID);
-            Swal.fire({
-                title: "Deleted!",
-                icon: "success"
-              }) 
-          .then(() => {
-            location.reload();
-        });
-          });
+            db.collection("reviews").doc(reviewID)
+                .delete()
+                .then(() => {
+                    console.log("1. Document deleted from reviews collection");
+                    deleteFromMyPosts(reviewID);
+                    Swal.fire({
+                        title: "Deleted!",
+                        icon: "success"
+                    })
+                        .then(() => {
+                            location.reload();
+                        });
+                });
         } else if (result.isDenied) {
-          Swal.fire("Review not deleted", "", "info");
+            Swal.fire("Review not deleted", "", "info");
         };
-      });
+    });
 }
 
 // Function to delete the review from the user's firebase document.
 function deleteFromMyReviews(reviewID) {
     firebase.auth().onAuthStateChanged(user => {
         db.collection("users").doc(user.uid).update({
-                myreviews: firebase.firestore.FieldValue.arrayRemove(reviewID)
-            })
+            myreviews: firebase.firestore.FieldValue.arrayRemove(reviewID)
+        })
             .then(() => {
                 console.log("2. review deleted from user doc");
                 deleteFromStorage(reviewID);

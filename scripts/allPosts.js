@@ -1,17 +1,17 @@
 //Global variable pointing to the current user's Firestore document
-var currentUser;  
+var currentUser;
 
 //Function that calls everything needed for the main page  
 function doAll() {
   firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-          currentUser = db.collection("users").doc(user.uid); //global
-          console.log(currentUser);
-      } else {
-          // No user is signed in.
-          console.log("No user is signed in");
-          window.location.href = "login.html";
-      }
+    if (user) {
+      currentUser = db.collection("users").doc(user.uid); //global
+      console.log(currentUser);
+    } else {
+      // No user is signed in.
+      console.log("No user is signed in");
+      window.location.href = "login.html";
+    }
   });
 }
 doAll();
@@ -29,19 +29,19 @@ function makeReport(postid, post) {
 // stand alone posts collection
 //------------------------------------------------
 function showPosts() {
-    // let params = new URL(window.location.href); // Attempt to link to specific park.
-    // let parkID = params.searchParams.get("name");
-    // let timestamp = params.searchParams.get("last_updated");
-    db.collection("posts")
-            // .where("name", "==", parkID) Attempt to link to specific park.
-            .orderBy("last_updated" , "desc") // Orders by the timestamp in firestore
-            .get()
-            .then(snap => {
-               snap.forEach(doc => {
-                console.log(doc.data());
-                   displayPostCard(doc);
-               })
-           })
+  // let params = new URL(window.location.href); // Attempt to link to specific park.
+  // let parkID = params.searchParams.get("name");
+  // let timestamp = params.searchParams.get("last_updated");
+  db.collection("posts")
+    // .where("name", "==", parkID) Attempt to link to specific park.
+    .orderBy("last_updated", "desc") // Orders by the timestamp in firestore
+    .get()
+    .then(snap => {
+      snap.forEach(doc => {
+        console.log(doc.data());
+        displayPostCard(doc);
+      })
+    })
 }
 showPosts();
 
@@ -56,7 +56,15 @@ function displayPostCard(doc) {
   var postid = doc.id;
 
   let newcard = document.getElementById("postCardTemplate").content.cloneNode(true);
-  newcard.querySelector('.card-image').src = image;
+
+  let cardImage = newcard.querySelector('.card-image');
+  if (image) {
+    cardImage.src = image;
+  } else {
+    cardImage.style.display = "none";
+  }
+
+  // newcard.querySelector('.card-image').src = image;
   newcard.querySelector('.card-description').innerHTML = desc;
   newcard.querySelector('.card-user').innerHTML = user;
   newcard.querySelector('#report-icon').onclick = () => makeReport(postid, doc.data()); // Pass both postid and post data
