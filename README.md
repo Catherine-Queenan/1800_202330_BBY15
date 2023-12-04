@@ -1,8 +1,13 @@
 # Project Title
+Neighbourhood Bark
 
 ## 1. Project Description
 State your app in a nutshell, or one-sentence pitch. Give some elaboration on what the core features are.  
-This browser based web application to ... 
+Neighbourhood Bark is a web-based mobile app for dog owners looking to visit dog parks. The app allows the to 
+reliably find park locations, create pup profiles to show off their dogs, write reviews and posts with or without images, 
+check the features of any given park, and check to see which dogs are currently visiting a park. Users that allow
+the app to track their location will be notified when they arrive at a park, and can select which of their dogs are
+currently with them. 
 
 ## 2. Names of Contributors
 List team members and/or short bio's here... 
@@ -15,27 +20,38 @@ List technologies (with version numbers), API's, icons, fonts, images, media or 
 * HTML, CSS, JavaScript
 * Bootstrap 5.0 (Frontend library)
 * Firebase 8.0 (BAAS - Backend as a Service)
-* MapBox 
-* ...
+* MapBox 3.0
+* Google Fonts: Quicksand and Barlow
+* FlatIcon
+* SweetAlert2 11.10.01
 
 ## 4. Complete setup/installion/usage
 State what a user needs to do when they come to your project.  How do others start using your code or application?
 Here are the steps ...
-* ...
-* ...
-* ...
+* Create an account and read through the welcome page to learn about some key features.
+* Create a pup profile(s) for their dog(s).
+* Browse through parks, either through the parklist, or the map.
+* View park details on individual park pages. Learn more by reading reviews and tags, or seeing the names and images of dogs currently at that park. They can report any posts or reviews they find inappropriate. 
+* Visit a park, responding to the pop-up specifying which dog(s) they have with them, when notified.
+* Leave the park, at which point they will automatically be removed from the list of dogs currently visiting.
+* Optionally write a review for the park, or make a post to share their experience. If they make a mistake, go through user settings to view all of their own posts and reviews and delete any.
+* Optionally change their public name and city of residence.
+* Optionally look through the FAQ page to learn more about the team and the app. 
+
 
 ## 5. Known Bugs and Limitations
 Here are some known bugs:
-* ...
-* ...
+* Photos do not correctly upload from iphones, unless the app is loaded through certain third party sites such as discord.
+* Users cannot edit their posts or reviews once they have created them.
 * ...
 
 ## 6. Features for Future
 What we'd like to build in the future:
-* ...
-* ...
-* ...
+* The ability for users to view each other's pup profiles.
+* Assigning dog's as regular visitors to park pages, as well as currently visiting, so that users know what to expect even more.
+* A search bar with a working filter function to find parks.
+* The ability to message and friend other users.
+* A navigation function within the app to direct users to their park of choice.
 	
 ## 7. Contents of Folder
 Content of the project folder:
