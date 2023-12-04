@@ -3,7 +3,7 @@ Neighbourhood Bark
 
 ## 1. Project Description
 State your app in a nutshell, or one-sentence pitch. Give some elaboration on what the core features are.  
-Neighbourhood Bark is a web-based mobile app for dog owners looking to visit dog parks. The app allows the to 
+Neighbourhood Bark is a web-based mobile app for dog owners looking to visit dog parks. The app allows them to 
 reliably find park locations, create pup profiles to show off their dogs, write reviews and posts with or without images, 
 check the features of any given park, and check to see which dogs are currently visiting a park. Users that allow
 the app to track their location will be notified when they arrive at a park, and can select which of their dogs are
