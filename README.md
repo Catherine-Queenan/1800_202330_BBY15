@@ -28,6 +28,7 @@ List technologies (with version numbers), API's, icons, fonts, images, media or 
 * Google Images (for park images)
 * Google Maps (for park coordinates)
 * SweetAlert2 11.10.01
+* www.burnaby.ca/eplore-outdoors/dog-off-leash-areas (for park descriptions)
 
 ## 4. Complete setup/installion/usage
 State what a user needs to do when they come to your project.  How do others start using your code or application?
