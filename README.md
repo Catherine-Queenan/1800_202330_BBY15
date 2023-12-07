@@ -23,7 +23,10 @@ List technologies (with version numbers), API's, icons, fonts, images, media or 
 * MapBox 3.0
 * Google Fonts: Quicksand and Barlow
 * FlatIcon
+* Fontawesome
 * Unsplash
+* Google Images (for park images)
+* Google Maps (for park coordinates)
 * SweetAlert2 11.10.01
 
 ## 4. Complete setup/installion/usage
