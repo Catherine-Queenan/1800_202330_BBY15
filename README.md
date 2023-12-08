@@ -48,7 +48,7 @@ Here are the steps ...
 Here are some known bugs:
 * Photos do not correctly upload from iphones, unless the app is loaded through certain third party sites such as discord.
 * Users cannot edit their posts or reviews once they have created them.
-* There are only few parks information on the map due to the read / write data limitation in the Firestore database.
+* ...
 
 ## 6. Features for Future
 What we'd like to build in the future:
@@ -57,6 +57,7 @@ What we'd like to build in the future:
 * A search bar with a working filter function to find parks.
 * The ability to message and friend other users.
 * A navigation function within the app to direct users to their park of choice.
+* Expanding the scope beyond parks to pet-related services.
 	
 ## 7. Contents of Folder
 Content of the project folder:
