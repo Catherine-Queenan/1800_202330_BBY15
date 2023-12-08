@@ -48,7 +48,8 @@ Here are the steps ...
 Here are some known bugs:
 * Photos do not correctly upload from iphones, unless the app is loaded through certain third party sites such as discord.
 * Users cannot edit their posts or reviews once they have created them.
-* ...
+* Park list page takes a couple of seconds to load parks.
+* There are only few park information on the map due to read / write data limitation in the Firestore database.
 
 ## 6. Features for Future
 What we'd like to build in the future:
