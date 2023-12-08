@@ -48,7 +48,7 @@ Here are the steps ...
 Here are some known bugs:
 * Photos do not correctly upload from iphones, unless the app is loaded through certain third party sites such as discord.
 * Users cannot edit their posts or reviews once they have created them.
-* ...
+* There are only few parks information on the map due to the read / write data limitation in the Firestore database.
 
 ## 6. Features for Future
 What we'd like to build in the future:
@@ -70,11 +70,11 @@ Content of the project folder:
 ├── homepage.html            # homepate HTML file, after users log in, this page will display for main features
 ├── favourites.html          # favourites HTML file, this page shows the park that users favourite
 ├── parklist.html            # parklist HTML file, this page shows all the parks that stored in Firebase 
-├── eachPark.html            # eachPark HTML file, this page 
+├── eachPark.html            # eachPark HTML file, this page shows the information of specific park 
 ├── review.html              # review HTML file, this page is for users write reviews to each park
 ├── thanks.html              # thanks HTML file, this page will show up after submitting the reviews or posts, let users know they successfully submitted
 ├── map.html                 # map HTML file, this page shows the map using mapbox api 
-├── modal.html               # modal HTML file, 
+├── modal.html               # modal HTML file, this page implements in the map.html for the prompt asking which pup you bring with
 ├── allPosts.html            # allPosts HTML file, this page shows all the posts submitted from users
 ├── report.html              # report HTML file, this page shows a form for users to submit the reason they want to report
 ├── pupprofileList.html      # pupprofileList HTML file, this page shows all the pup profiles created by users
@@ -107,8 +107,8 @@ It has the following subfolders and files:
     /transparent2.jpg        # Acknowledge source
     /transparent3.jpg        # Acknowledge source
 ├── scripts                  # Folder for scripts
-    /skeleton.js             # 
-    /script.js               # 
+    /skeleton.js             # JS for nav and footer shared across pages
+    /script.js               # JS for logout function shared across pages
     /firebaseAPI_BBY15.js    # firebase API stuff, shared across pages
     /authentication.js       # JS for authentication.html
     /homepage.js             # JS for homepage.html
@@ -139,7 +139,7 @@ It has the following subfolders and files:
     /modal.css               # style for modal.html
     /parklist-boots.css      # style for parklist.html
     /review.css              # style for review.html 
-    /style.css               # style for 
+    /style.css               # style for across the pages
     /welcome-boots.css       # style for welcome.html
 ├── text                     # Folder for footer and navbar
     /footer.html             # footer HTML file
