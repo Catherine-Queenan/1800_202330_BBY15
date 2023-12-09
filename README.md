@@ -9,6 +9,8 @@ check the features of any given park, and check to see which dogs are currently 
 the app to track their location will be notified when they arrive at a park, and can select which of their dogs are
 currently with them. 
 
+The app uses geolocation services to ping the distance between the user's location and nearby parks. Pups currently at a park are shown with their pictures on the map pop-up for the park, and the associated park page. Additionally, parks are suggested on the park list page by proximity, while posts and reviews are listed by most recent. Users are not only able to delete their own posts and reviews, but submit reports on other users posts. The reported post, the description of the report, and the user that reported is logged in firebase. Once users create pup profiles, they can edit anything from the picture to information, and change the uploaded pictures. Users are also able to edit their display name and their city. When they find a new great park, users are able to favourite parks, or remove that park from their favourites at any time from the park list page. Finally, a welcome page and an FAQ page allow users to have any questions answered that they have. 
+
 ## 2. Names of Contributors
 List team members and/or short bio's here... 
 * My name is Catherine, and as a professional in the dog industry I am excited for this project to come to fruition!
@@ -59,6 +61,7 @@ What we'd like to build in the future:
 * The ability to message and friend other users.
 * A navigation function within the app to direct users to their park of choice.
 * Expanding the scope beyond parks to pet-related services.
+* Allow users to unfavourite parks from the favourites page, and also favourite or unfavourite from each park page.
 	
 ## 7. Contents of Folder
 Content of the project folder:
